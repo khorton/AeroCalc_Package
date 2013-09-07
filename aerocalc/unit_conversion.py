@@ -27,7 +27,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.27, 30 Jun 2009
+# version 0.29, 07 Sep 2013
 #
 # Version History:
 # vers     date     Notes
@@ -47,6 +47,7 @@
 #                   2.6 and 3.0
 # 0.28   15 Apr 10  Rename len_conv to length_conv
 #                   Add viscosity conversions
+# 0.29   07 Sep 13  Add ft/mn to speed_conv
 # #############################################################################
 
 """ 
@@ -373,7 +374,7 @@ def press_conv(P, from_units=default_press_units,
 def speed_conv(S, from_units=default_speed_units,
                to_units=default_speed_units):
     """ 
-    Convert speed values between kt, mph, km/h, m/s and ft/s.
+    Convert speed values between kt, mph, km/h, m/s, ft/mn and ft/s.
 
     The incoming value is first converted to kt, then it is converted to
     desired return value.
@@ -399,8 +400,11 @@ def speed_conv(S, from_units=default_speed_units,
     elif from_units == 'ft/s':
         S *= length_conv(1, from_units=default_length_units, to_units='nm')\
              * 3600.
+    elif from_units == 'ft/mn':
+        S *= length_conv(1, from_units=default_length_units, to_units='nm')\
+            * 60.
     else:
-        raise ValueError('from_units must be one of "kt", "mph", "km/h", "m/s" and "ft/s".')
+        raise ValueError('from_units must be one of "kt", "mph", "km/h", "m/s", "ft/mn" and "ft/s".')
 
     if to_units == 'kt':
         return S
@@ -416,8 +420,11 @@ def speed_conv(S, from_units=default_speed_units,
     elif to_units == 'ft/s':
         S *= length_conv(1, from_units='nm', to_units=default_length_units)
         return S / 3600.
+    elif to_units == 'ft/mn':
+        S *= length_conv(1, from_units='nm', to_units=default_length_units)
+        return S / 60.
     else:
-        raise ValueError('to_units must be one of "kt", "mph", "km/h", "m/s" and "ft/s".')
+        raise ValueError('to_units must be one of "kt", "mph", "km/h", "m/s", "ft/mn" and "ft/s".')
 
 
 def temp_conv(T, from_units=default_temp_units,
