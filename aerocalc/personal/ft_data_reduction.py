@@ -31,8 +31,11 @@ Performs various flight test data reduction functions.
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 #
-# version 0.2, 19 Nov 2010
+# version 0.21, 07 Sep 2013
 #
+# Version History:
+# vers     date     Notes
+# 0.21   07 Sep 13  Added climb performance data reduction functions
 ##############################################################################
 #
 # To Do:  1.  Add functions:
@@ -685,17 +688,16 @@ def gps2tas(GS, TK, verbose = 0):
             
             Determine the TAS, given the above data from four runs:
             >>> gps2tas(gs, tk)
-            183.72669557114619
+            183.7266955711462
             
             Determine the TAS and standard deviation from the four calculations:
             >>> gps2tas(gs, tk, verbose = 1)
-            (183.72669557114619, 0.82709634705928436)
+            (183.7266955711462, 0.8270963470592844)
             
             Determine the TAS, standard deviation, and wind speed and direction
             for each calculation:
             >>> gps2tas(gs, tk, verbose = 2)
-            (183.72669557114619, 0.82709634705928436, ((5.2608369270843056, 194.51673740323213), (3.5823966532035927, 181.52174627838372), (5.1495218164839995, 162.69803415599802), (6.4436728241320145, 177.94783081049718)))
-
+            (183.7266955711462, 0.8270963470592844, ((5.260836927084306, 194.51673740323213), (3.5823966532035922, 181.52174627838372), (5.1495218164839995, 162.69803415599802), (6.4436728241320145, 177.94783081049718)))
     """
     # confirm GS and TK are valid lengths:
     if 2 < len(GS) < 5:
@@ -1147,9 +1149,41 @@ def cruise_expansion(VIW, PIW, Hp, oat, wt, wt_std, temp_units=default_temp_unit
 
 ##############################################################################
 #
+# Climb performance data reduction and expansion
+#
+##############################################################################
+
+def climb_temp_corr(RoC, T, Ts, temp_units="C", expansion=0):
+    """Correct observed barometric rate of climb to geometric rate of climb or
+    convert geometric rate of climb to barometric rate of climb.
+    
+    RoC = rate of climb
+    T = ambient temperature
+    Ts = standard temperature at altitude
+    expansion = if 0, this is data reduction.  Convert from barometric rate of climb to geometric rate of climb.
+                if 1, whis is data expansion.  Convert from geometric rate of climb to barometric rate of climb.
+                
+    >>> climb_temp_corr(780, 17, 7.4352)
+    806.589228512409
+    
+    >>> climb_temp_corr(806.589228512409, 17, 7.4352, expansion=1)
+    780.0
+    """
+
+    T = U.temp_conv(T, temp_units, "K")
+    Ts = U.temp_conv(Ts, temp_units, "K")
+    
+    if expansion == 0:
+        return RoC * T/Ts
+    else:
+        return RoC * Ts/T
+
+##############################################################################
+#
 # Fixed pitch prop TAS correction for temperature
 #
 ##############################################################################
+# Add someday
 
 if __name__ == "__main__":
     # run doctest to check the validity of the examples in the doc strings.
