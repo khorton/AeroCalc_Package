@@ -1207,6 +1207,36 @@ def climb_wt_corr(RoC, W, Ws, Ve, sigma, b, e=0.8, RoC_units="ft/mn", weight_uni
     
     return RoC_work_corrected - RoC_drag_corr
     
+def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+    """Reduce rate of climb to standard conditions using density altitude method. 
+    Return rate of climb and density altitude.
+    
+    Hp = pressure altitude
+    T = ambient temperature
+    RoC_observed = observed barometric rate of climb
+    W = actual weight
+    Ws = standard weight
+    Ve = equivalent airspeed
+    b = wing span
+    BHP_Hp = brake horsepower at pressure altitude and actual temperature
+    BHP_Hd = brake horsepower at density altitude and standard temperature
+    n = assumed propellor efficiency
+    e = Oswald span efficiency
+    """
+    Hp = U.length_conv(Hp, altitude_units, "ft")
+    T = U.temp_conv(T, temp_units, "K")
+    RoC_observed = U.speed_conv(RoC_observed, RoC_units, "ft/mn")
+    W = U.mass_conv(W, weight_units, "lb")
+    Ws = U.mass_conv(Ws, weight_units, "lb")
+    Ve = U.speed_conv(Ve, speed_units, "ft/s")
+    b = U.length_conv(b, span_units, "ft")
+    
+    Ts = SA.alt2temp(Hp, temp_units="K")
+    RoC_temp_corrected = climb_temp_corr(RoC_observed, T, Ts, "K")
+    
+    return RoC_temp_corrected
+    # return T
+    
 ##############################################################################
 #
 # Fixed pitch prop TAS correction for temperature
