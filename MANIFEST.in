@@ -1,0 +1,6 @@
+include setup.py
+include aerocalc/*.py
+include aerocalc/*.txt
+include aerocalc/test/*
+include aerocalc/engine/*.py
+include aerocalc/engine/lycoming/*.py

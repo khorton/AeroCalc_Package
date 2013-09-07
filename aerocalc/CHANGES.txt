@@ -1,0 +1,46 @@
+Change Log for AeroCalc
+
+Changes for v0.11:
+              * added temperature correction to density for 
+                  aerocalc.unit_conversion.avgas_conv()
+              * added unit tests for aerocalc.unit_conversion.avgas_conv()
+              * reworked exit from interactive mode in aerocalc.airspeed
+              * added unit tests for:
+                  aerocalc.unit_conversion.temp_conv(),  
+                  aerocalc.unit_conversion.wt_conv(),  
+                  aerocalc.unit_conversion.force_conv(),  
+                  aerocalc.unit_conversion.len_conv(), and 
+                  aerocalc.unit_conversion.power_conv().
+              * correct unit validation error in aerocalc.unit_conversion.press_conv()
+                  added unit tests for:
+                    aerocalc.unit_conversion.speed_conv(),  
+                    aerocalc.unit_conversion.area_conv(),  
+                    aerocalc.unit_conversion.press_conv(),  
+                    aerocalc.unit_conversion.vol_conv(), 
+                    aerocalc.unit_conversion.power_conv() and 
+                    aerocalc.unit_conversion.density_conv().
+              * added ssec module - to be fleshed out later
+
+Changes for v0.12:
+              * add cl module - functions relating to lift coefficient
+              * Reworked pressure calculations in std_atm to use all metric 
+                units for internal calculations.
+              * Added cl2eas, cl2cas, cl2tas and associated tests to cl.py
+              * Added newton conversion to unit_conversion.  Added cd.py.
+              * Renamed unit_conversion.wt_conv to mass_conv.  
+              * Updated the lb to kg conversion for increased accuracy.
+              * Added "from __future__ import division" to all modules
+              * Added data_file module, with various functions to work with data
+                files.
+
+Changes for v0.13:
+              * Added io360a and o360a modules to calculate engine power for
+              * Lycoming IO-360-A and O-360-A engines.
+              * Added interpolator module to provide two-way and three-way 
+                interpolation routines
+              * Added least_sq_fit_gnuplot module to support plotting best fit
+                lines in gnuplot.
+              * Made some changes to correct issues with python 3.0.  Very 
+                little testing has been completed on python 3, and no guarantees
+                are made.
+                
