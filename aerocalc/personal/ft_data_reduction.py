@@ -1178,6 +1178,35 @@ def climb_temp_corr(RoC, T, Ts, temp_units="C", expansion=0):
     else:
         return RoC * Ts/T
 
+def climb_wt_corr(RoC, W, Ws, Ve, sigma, b, e=0.8, RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+    """Correct rate of climb for change in weight.
+    
+    RoC = rate of climb
+    sigma = density ratio
+    W = actual weight
+    Ws = standard weight for which rate of climb is desired
+    Ve = equivalent airspeed
+    b = wing span
+    e = Oswald span efficiency
+    
+    >>> climb_wt_corr(807.6, 2800, 3000, 77.022, .8577, 36, e=.85)
+    706.9079451449876
+    """
+
+    RoC = U.speed_conv(RoC, RoC_units, "ft/mn")
+    W = U.mass_conv(W, weight_units, "lb")
+    Ws = U.mass_conv(Ws, weight_units, "lb")
+    Ve = U.speed_conv(Ve, speed_units, "ft/s")
+    b = U.length_conv(b, span_units, "ft")
+    
+    RoC_work_corrected = RoC * W/Ws
+    Drag_corr1 = 0.5 * 0.0023768924 * M.pi * b**2 * e
+    Drag_corr2 = Ws / (Drag_corr1 * Ve * sigma**0.5)
+    RoC_drag_corr = (1 - (W / Ws)**2) * Drag_corr2 * 60
+    
+    
+    return RoC_work_corrected - RoC_drag_corr
+    
 ##############################################################################
 #
 # Fixed pitch prop TAS correction for temperature
