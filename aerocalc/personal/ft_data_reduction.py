@@ -1240,12 +1240,43 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, B
     RoC_wt_corrected = climb_wt_corr(RoC_temp_corrected, W, Ws, Ve, sigma, b, e=e, speed_units="ft/s")
     RoC_pwr_corr = n * (BHP_Hd - BHP_T) * 33000 / Ws
     
-    Hd = SA.SA.density_ratio2alt(sigma)
+    Hd = SA.density_ratio2alt(sigma)
     
     return RoC_wt_corrected + RoC_pwr_corr, Hd
 
-# def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, BHP_Hd, n, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+    """Reduce rate of climb to standard conditions using equivalent altitude method, as described in FAA AC 23-8B. 
+    Return rate of climb and density altitude.
+    
+    Hp = pressure altitude
+    T = ambient temperature
+    RoC_observed = observed barometric rate of climb
+    W = actual weight
+    Ws = standard weight
+    Ve = equivalent airspeed
+    b = wing span
+    e = Oswald span efficiency
+    
+    >>> FT.climb_equivalent_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36,  e=0.85)
+    (706.931926638537, 4414.717856653751)
+    """
+    Hp = U.length_conv(Hp, altitude_units, "ft")
+    T = U.temp_conv(T, temp_units, "K")
+    RoC_observed = U.speed_conv(RoC_observed, RoC_units, "ft/mn")
+    W = U.mass_conv(W, weight_units, "lb")
+    Ws = U.mass_conv(Ws, weight_units, "lb")
+    Ve = U.speed_conv(Ve, speed_units, "ft/s")
+    b = U.length_conv(b, span_units, "ft")
 
+    Ts = SA.alt2temp(Hp, temp_units="K")
+    RoC_temp_corrected = climb_temp_corr(RoC_observed, T, Ts, "K")
+    sigma = SA.alt_temp2density_ratio(Hp, T, temp_units='K')
+    RoC_wt_corrected = climb_wt_corr(RoC_temp_corrected, W, Ws, Ve, sigma, b, e=e, speed_units="ft/s")
+    Hd = SA.density_ratio2alt(sigma)
+    
+    He = Hp - 0.36 * (Hp - Hd)
+    
+    return RoC_wt_corrected, He
     
 ##############################################################################
 #
