@@ -73,6 +73,7 @@ import std_atm as SA
 import unit_conversion as U
 from default_units import *
 import data_file as DF
+import piston as P
 import numpy as N
 import scipy.optimize as O
 import constants
@@ -1243,6 +1244,51 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, B
     Hd = SA.density_ratio2alt(sigma)
     
     return RoC_wt_corrected + RoC_pwr_corr, Hd
+
+def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=29.9216, Hp_off=0):
+    """Returns predicted installed power at sea level, standard temperature.
+    
+    BHP_rated = rated horsepower at sea level, standard temperature, from engine power chart
+    MP_observed = manifold pressure observed at climb airspeed at full throttle at low altitude
+    Hp_observed = pressure altitude at which MP_observed was observed
+    MP_rated = manifold pressure at rated power at sea level, from engine power chart.
+    MP_off = manifold pressure indication with engine off
+    Hp_off = pressure altitude at which MP_off was observed.
+    
+    **** NOTE: function not yet validated as correct ****
+    """
+    
+    MP_error = MP_off - SA.alt2press(Hp_off)
+    MP_observed = MP_observed - MP_error
+    MP_loss = SA.alt2press(Hp_observed) - MP_observed
+    BHP_installed = BHP_rated * (MP_rated - MP_loss) / MP_rated
+    
+    return BHP_installed
+
+def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Installed, n, e=0.8, C=0.2, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+    """Reduce rate of climb to standard conditions using density altitude 
+    method, as described in FAA AC 23-8B, with simplified power calculation. 
+    Return rate of climb and density altitude.
+    
+    Engine power calculation uses Gagg-Farrar power drop-off parametre to 
+    predict power at altitude.  Observed low altitude difference between 
+    manifold pressure and ambient pressure is used to adjust engine rated 
+    power for installation effects.
+    
+    Hp = pressure altitude
+    T = ambient temperature
+    RoC_observed = observed barometric rate of climb
+    W = actual weight
+    Ws = standard weight
+    Ve = equivalent airspeed
+    b = wing span
+    BHP_Installed = installed brake horsepower at sea level and standard temperature
+    BHP_Hd = brake horsepower at test density altitude and standard temperature
+    n = assumed propellor efficiency
+    e = Oswald span efficiency
+    
+    """
+
 
 def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using equivalent altitude method, as described in FAA AC 23-8B. 
