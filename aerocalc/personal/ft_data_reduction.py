@@ -1208,7 +1208,7 @@ def climb_wt_corr(RoC, W, Ws, Ve, sigma, b, e=0.8, RoC_units="ft/mn", weight_uni
     
     return RoC_work_corrected - RoC_drag_corr
     
-def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, BHP_Hd, n, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using density altitude method, as described in FAA AC 23-8B. 
     Return rate of climb and density altitude.
     
@@ -1219,13 +1219,13 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, B
     Ws = standard weight
     Ve = equivalent airspeed
     b = wing span
-    BHP_T = brake horsepower at test pressure altitude and temperature
+    BHP_Hp = brake horsepower at test pressure altitude and standard temperature
     BHP_Hd = brake horsepower at test density altitude and standard temperature
     n = assumed propellor efficiency
     e = Oswald span efficiency
     
-    >>> climb_density_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36, 200, 195, 0.8, e=0.85)
-    (662.9319266415552, 5151.994046260421)
+    >>> climb_density_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36, 196.55, 195, 0.8, e=0.85)
+    (662.9289032606375, 5151.994046260421)
     """
     Hp = U.length_conv(Hp, altitude_units, "ft")
     T = U.temp_conv(T, temp_units, "K")
@@ -1239,7 +1239,9 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_T, B
     RoC_temp_corrected = climb_temp_corr(RoC_observed, T, Ts, "K")
     sigma = SA.alt_temp2density_ratio(Hp, T, temp_units='K')
     RoC_wt_corrected = climb_wt_corr(RoC_temp_corrected, W, Ws, Ve, sigma, b, e=e, speed_units="ft/s")
-    RoC_pwr_corr = n * (BHP_Hd - BHP_T) * 33000 / Ws
+    
+    BHP = BHP_Hp * (T / Ts)**0.5
+    RoC_pwr_corr = n * (BHP_Hd - BHP) * 33000 / Ws
     
     Hd = SA.density_ratio2alt(sigma)
     
@@ -1303,7 +1305,7 @@ def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8
     b = wing span
     e = Oswald span efficiency
     
-    >>> FT.climb_equivalent_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36,  e=0.85)
+    >>> climb_equivalent_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36,  e=0.85)
     (706.931926638537, 4414.717856653751)
     """
     Hp = U.length_conv(Hp, altitude_units, "ft")
