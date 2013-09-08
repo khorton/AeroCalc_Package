@@ -1224,8 +1224,8 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     n = assumed propellor efficiency
     e = Oswald span efficiency
     
-    >>> climb_density_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36, 196.55, 195, 0.8, e=0.85)
-    (662.9289032606375, 5151.994046260421)
+    >>> climb_density_altitude_reduction(4000, 17, 780, 2800, 3000, 77.022, 36, 203.51, 195, 0.8, e=0.85)
+    (662.939768009002, 5151.994046260421)
     """
     Hp = U.length_conv(Hp, altitude_units, "ft")
     T = U.temp_conv(T, temp_units, "K")
@@ -1239,10 +1239,9 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     RoC_temp_corrected = climb_temp_corr(RoC_observed, T, Ts, "K")
     sigma = SA.alt_temp2density_ratio(Hp, T, temp_units='K')
     RoC_wt_corrected = climb_wt_corr(RoC_temp_corrected, W, Ws, Ve, sigma, b, e=e, speed_units="ft/s")
-    
-    BHP = BHP_Hp * (T / Ts)**0.5
+
+    BHP = BHP_Hp * (Ts / T)**0.5
     RoC_pwr_corr = n * (BHP_Hd - BHP) * 33000 / Ws
-    
     Hd = SA.density_ratio2alt(sigma)
     
     return RoC_wt_corrected + RoC_pwr_corr, Hd
@@ -1289,8 +1288,18 @@ def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, 
     n = assumed propellor efficiency
     e = Oswald span efficiency
     
+    >>> climb_density_altitude_reduction_simplified(3720, -6.4, 469, 3136.25, 3200, 73, 36, 222, 0.7, e=0.8)
+    (468.4277793789483, 2002.725619006603)
+    
+    
     """
-
+    sigma_Hp = SA.alt2density_ratio(Hp)
+    sigma = SA.alt_temp2density_ratio(Hp, T, temp_units=temp_units)
+    
+    BHP_Hp = P.power_drop_off(sigma_Hp, BHP_Installed, C=0.11)
+    BHP_Hd = P.power_drop_off(sigma, BHP_Installed, C=0.11)
+    
+    return climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=e, altitude_units=altitude_units, temp_units=temp_units, RoC_units=RoC_units, weight_units=weight_units, speed_units=speed_units, span_units=span_units)
 
 def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using equivalent altitude method, as described in FAA AC 23-8B. 
