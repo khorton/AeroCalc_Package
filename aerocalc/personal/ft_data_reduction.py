@@ -1205,6 +1205,9 @@ def climb_wt_corr(RoC, W, Ws, Ve, sigma, b, e=0.8, RoC_units="ft/mn", weight_uni
     Drag_corr2 = Ws / (Drag_corr1 * Ve * sigma**0.5)
     RoC_drag_corr = (1 - (W / Ws)**2) * Drag_corr2 * 60
     
+    RoC_wt_corrected = RoC_work_corrected - RoC_drag_corr
+
+    return RoC_wt_corrected
     
     return RoC_work_corrected - RoC_drag_corr
     
@@ -1296,8 +1299,8 @@ def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, 
     sigma_Hp = SA.alt2density_ratio(Hp)
     sigma = SA.alt_temp2density_ratio(Hp, T, temp_units=temp_units)
     
-    BHP_Hp = P.power_drop_off(sigma_Hp, BHP_Installed, C=0.11)
-    BHP_Hd = P.power_drop_off(sigma, BHP_Installed, C=0.11)
+    BHP_Hp = P.power_drop_off(sigma_Hp, BHP_Installed, C=C)
+    BHP_Hd = P.power_drop_off(sigma, BHP_Installed, C=C)
     
     return climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=e, altitude_units=altitude_units, temp_units=temp_units, RoC_units=RoC_units, weight_units=weight_units, speed_units=speed_units, span_units=span_units)
 
