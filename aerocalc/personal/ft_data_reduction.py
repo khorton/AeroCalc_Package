@@ -1262,7 +1262,7 @@ def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=2
     MP_error = MP_off - SA.alt2press(Hp_off)
     MP_observed = MP_observed - MP_error
     MP_loss = SA.alt2press(Hp_observed) - MP_observed
-    BHP_installed = BHP_rated * (MP_rated - MP_loss) / MP_rated
+    BHP_installed = BHP_rated * (SA.alt2press(0) - MP_loss) / MP_rated
     
     return BHP_installed
 
