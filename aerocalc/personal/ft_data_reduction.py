@@ -1249,7 +1249,7 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     
     return RoC_wt_corrected + RoC_pwr_corr, Hd
 
-def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=29.9216, Hp_off=0):
+def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=29.9216, Hp_off=0, rpm_rated=2700, rpm_test=2700):
     """Returns predicted installed power at sea level, standard temperature.
     
     BHP_rated = rated horsepower at sea level, standard temperature, from engine power chart
@@ -1267,9 +1267,9 @@ def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=2
     MP_loss = SA.alt2press(Hp_observed) - MP_observed
     BHP_installed = BHP_rated * (SA.alt2press(0) - MP_loss) / MP_rated
     
-    return BHP_installed
+    return BHP_installed * rpm_test / rpm_rated
 
-def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Installed, n, e=0.8, C=0.2, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Installed, n, e=0.8, C=0.2, Pwr_factor=1, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using density altitude 
     method, as described in FAA AC 23-8B, with simplified power calculation. 
     Return rate of climb and density altitude.
@@ -1290,6 +1290,11 @@ def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, 
     BHP_Hd = brake horsepower at test density altitude and standard temperature
     n = assumed propellor efficiency
     e = Oswald span efficiency
+    C = Gagg-Farrar power drop-off parametre = ratio of friction power to rated power. 
+        A value of C = 0.12 is a good fit to engine power charts
+    Pwr_factor = factor to apply to engine power when calculating power at standard altitude.
+                 If pwr_factor > 1, then nominal engine is assumed to have more power than test engine.
+                 If pwr_factor < 1, then nominal engine is assumed to have less power than test engine.
     
     >>> climb_density_altitude_reduction_simplified(3720, -6.4, 469, 3136.25, 3200, 73, 36, 222, 0.7, e=0.8)
     (468.4277793789483, 2002.725619006603)
@@ -1300,7 +1305,7 @@ def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, 
     sigma = SA.alt_temp2density_ratio(Hp, T, temp_units=temp_units)
     
     BHP_Hp = P.power_drop_off(sigma_Hp, BHP_Installed, C=C)
-    BHP_Hd = P.power_drop_off(sigma, BHP_Installed, C=C)
+    BHP_Hd = P.power_drop_off(sigma, BHP_Installed * Pwr_factor, C=C)
     
     return climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=e, altitude_units=altitude_units, temp_units=temp_units, RoC_units=RoC_units, weight_units=weight_units, speed_units=speed_units, span_units=span_units)
 
