@@ -1237,13 +1237,14 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     Ws = U.mass_conv(Ws, weight_units, "lb")
     Ve = U.speed_conv(Ve, speed_units, "ft/s")
     b = U.length_conv(b, span_units, "ft")
-    
     Ts = SA.alt2temp(Hp, temp_units="K")
     RoC_temp_corrected = climb_temp_corr(RoC_observed, T, Ts, "K")
     sigma = SA.alt_temp2density_ratio(Hp, T, temp_units='K')
     RoC_wt_corrected = climb_wt_corr(RoC_temp_corrected, W, Ws, Ve, sigma, b, e=e, speed_units="ft/s")
+    # print RoC_observed, RoC_temp_corrected, RoC_wt_corrected
 
     BHP = BHP_Hp * (Ts / T)**0.5
+    # print BHP_Hp, BHP
     RoC_pwr_corr = n * (BHP_Hd - BHP) * 33000 / Ws
     Hd = SA.density_ratio2alt(sigma)
     
@@ -1308,6 +1309,47 @@ def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, 
     BHP_Hd = P.power_drop_off(sigma, BHP_Installed * Pwr_factor, C=C)
     
     return climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, BHP_Hd, n, e=e, altitude_units=altitude_units, temp_units=temp_units, RoC_units=RoC_units, weight_units=weight_units, speed_units=speed_units, span_units=span_units)
+
+def climb_density_altitude_expansion(Hp, T, RoC_func, Pwr_func, W, Ws, Ve, b, n=0.75, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
+    """Expand rate of climb to arbitrary conditions using the Density Altitude method.
+    
+    Hp = pressure altitude
+    T = ambient temperature
+    RoC_func = function that returns rate of climb as a function of density altitude, at weight Ws
+    Pwr_func = function that returns engine power as a function of pressure altitude and temperature.
+    W = actual weight
+    Ws = standard weight
+    Ve = equivalent airspeed
+    b = wing span
+    e = Oswald span efficiency    
+    """
+    Hp = U.length_conv(Hp, altitude_units, "ft")
+    T = U.temp_conv(T, temp_units, "K")
+    W = U.mass_conv(W, weight_units, "lb")
+    Ws = U.mass_conv(Ws, weight_units, "lb")
+    Ve = U.speed_conv(Ve, speed_units, "ft/s")
+    b = U.length_conv(b, span_units, "ft")
+    
+    Hd = SA.density_alt(Hp, T, temp_units='K')
+    sigma = SA.alt2density_ratio(Hd, alt_units="ft")
+    T_std = SA.alt2temp(Hp, temp_units="K")
+    RoC_Hd = RoC_func(Hd)
+    # print "RoC Hd function= %.1f" % RoC_Hd
+    
+    BHP_Hd = Pwr_func(Hd, T_std, temp_units="K")
+    # print "BHP_Hd = %.1f" % BHP_Hd
+    BHP = Pwr_func(Hp, T, temp_units="K")
+    # print "BHP = %.1f" % BHP
+    # print "Power delta = %.2f" % (BHP - BHP_Hd)
+    
+    RoC_pwr_corr = n * (BHP_Hd - BHP) * 33000 / Ws
+    RoC_pwr_corrected = RoC_Hd - RoC_pwr_corr
+    
+    RoC_wt_corrected = climb_wt_corr(RoC_pwr_corrected, Ws, W, Ve, sigma, b, e=e, speed_units="ft/s")
+    # print RoC_wt_corrected
+    RoC_Baro = climb_temp_corr(RoC_wt_corrected, T_std, T, "K")
+    
+    return RoC_Baro
 
 def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using equivalent altitude method, as described in FAA AC 23-8B. 
