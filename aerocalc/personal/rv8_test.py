@@ -591,9 +591,14 @@ def alt2pwr(alt, rpm = 2700, MP_max = 30, temp  = 'std', alt_units = 'ft', \
     # assume pressure drop is proportional to square of velocity
     MP_loss = MP_loss_base * (rpm / 2700.) ** 2
     MP = min(press - MP_loss, MP_max)
+    # from climb testing, get MP of 0.5 above ambient
+    # get 2650 rpm during climb
+    MP = SA.alt2press(alt) + 0.5 * (2650./rpm) ** 2
     pwr = IO.pwr(rpm, MP, alt, temp = temp, alt_units = alt_units, \
         temp_units = temp_units)
-
+    # decrement power as a function of altitude to make predicted climb perf match flight test resutls
+    # this decrement is optimized for the MT prop
+    pwr = pwr * (0.8525  - 4.35E-10 * alt**2)
     return pwr
 
 def roc_vs_temp(prop, alt_max = 20000, alt_interval=2000, weight=1800, temps=[-20,0,20,40], pwr='max', \
@@ -674,7 +679,7 @@ def alt2roc_speed(alt, climb_speed = 'max'):
     There is an alternative cruise-climb profile.
     """
     if climb_speed == 'max':
-        roc_speed = 100 - (alt/1000.)
+        roc_speed = 102 - (alt/1000.)
     elif climb_speed == 'cc':
         if alt < 10000:
             roc_speed = 120
@@ -731,7 +736,8 @@ def climb_data(prop, weight = 1800., alt_max = 20000., TO_fuel = 0, TO_dist = 0,
     weight = weight - fuel_used
     dist = TO_dist
     if pwr == 'max':
-        rpm = 2700
+        # rpm = 2700
+        rpm = 2650
         MP_max = 30
     elif pwr == 'cc':
         rpm = 2500
