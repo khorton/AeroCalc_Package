@@ -1251,7 +1251,7 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     return RoC_wt_corrected + RoC_pwr_corr, Hd
 
 def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=29.9216, Hp_off=0, rpm_rated=2700, rpm_test=2700):
-    """Returns predicted installed power at sea level, standard temperature.
+    """Returns predicted installed power at sea level, standard temperature and power drop-off parametre.
     
     BHP_rated = rated horsepower at sea level, standard temperature, from engine power chart
     MP_observed = manifold pressure observed at climb airspeed at full throttle at low altitude
@@ -1266,9 +1266,12 @@ def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=2
     MP_error = MP_off - SA.alt2press(Hp_off)
     MP_observed = MP_observed - MP_error
     MP_loss = SA.alt2press(Hp_observed) - MP_observed
-    BHP_installed = BHP_rated * (SA.alt2press(0) - MP_loss) / MP_rated
+    MP_ratio = (SA.alt2press(0) - MP_loss) / MP_rated
+    BHP_friction = 0.11696 * BHP_rated
+    BHP_installed = (BHP_rated + BHP_friction) * MP_ratio - BHP_friction
+    C = 0.11696 / (1.11696 * MP_ratio - 0.11696)
     
-    return BHP_installed * rpm_test / rpm_rated
+    return BHP_installed * rpm_test / rpm_rated, C
 
 def climb_density_altitude_reduction_simplified(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Installed, n, e=0.8, C=0.2, Pwr_factor=1, altitude_units="ft", temp_units="C", RoC_units="ft/mn", weight_units="lb", speed_units="kt", span_units="ft"):
     """Reduce rate of climb to standard conditions using density altitude 
