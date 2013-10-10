@@ -1251,7 +1251,7 @@ def climb_density_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, BHP_Hp, 
     return RoC_wt_corrected + RoC_pwr_corr, Hd
 
 def pwr_installed(BHP_rated, MP_observed, Hp_observed, MP_rated = 28.5, MP_off=29.9216, Hp_off=0, rpm_rated=2700, rpm_test=2700):
-    """Returns predicted installed power at sea level, standard temperature and power drop-off parametre.
+    """Returns predicted installed power at sea level, standard temperature and Gagg-Farrar power drop-off parametre.
     
     BHP_rated = rated horsepower at sea level, standard temperature, from engine power chart
     MP_observed = manifold pressure observed at climb airspeed at full throttle at low altitude
