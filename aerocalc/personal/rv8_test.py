@@ -607,7 +607,7 @@ def roc_vs_temp(prop, alt_max = 20000, alt_interval=2000, weight=1800, temps=[-2
     Returns the rates of climb at various temperatures
     """
     if pwr == 'max':
-        rpm = 2700
+        rpm = 2650
         MP_max = 30
     elif pwr == 'cc':
         rpm = 2500
@@ -631,7 +631,8 @@ def roc_vs_temp(prop, alt_max = 20000, alt_interval=2000, weight=1800, temps=[-2
 #        print '\n',
         print '%.0f\t%.0f\t%.0f\t' % (weight, alt, cas),
         for temp in temps:
-            power = IO.pwr(rpm, MP, alt, temp) * pwr_factor
+            # power = IO.pwr(rpm, MP, alt, temp) * pwr_factor
+            power = alt2pwr(alt, rpm = rpm, MP_max = MP_max, temp = temp)
             ROC = roc(prop, alt, eas, weight, power, rpm, temp) /10
             ROC = int('%.0f' % (ROC)) * 10
             print '%.0f\t' % (ROC), 
