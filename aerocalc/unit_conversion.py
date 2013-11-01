@@ -333,13 +333,13 @@ def press_conv(P, from_units=default_press_units,
     """
 
     if from_units == 'in HG':
-        P *= 3386.38  # from NASA Reference Publication 1046
+        P *= 3386.38  # from NASA Reference Publication 1046 Appendix A28
     elif from_units == 'mm HG':
-        P *= 133.322  # derived from NASA Reference Publication 1046 value
+        P *= 133.322  # derived from NASA Reference Publication 1046 value of pa to in HG
     elif from_units == 'psi':
-        P *= 6894.752  # from NASA Reference Publication 1046 table A27
+        P *= 6894.752  # from NASA Reference Publication 1046 Appendix A27
     elif from_units == 'psf' or from_units == 'lb/ft**2':
-        P *= 47.88026  # from NASA Reference Publication 1046
+        P *= 47.88026  # from NASA Reference Publication 1046 Appendix A27
     elif from_units == 'hpa' or from_units == 'mb':
         P *= 100.
     elif from_units == 'pa':
@@ -352,13 +352,13 @@ def press_conv(P, from_units=default_press_units,
         raise ValueError('from_units must be "in HG", "mm HG", "psi", "psf" (lb per sq. ft), "hpa", "mb", "pa", "in H2O" or, "cm H2O".')
 
     if to_units == 'in HG':
-        return P / 3386.38
+        return P / 3386.38 # from NASA Reference Publication 1046 Appendix A28
     elif to_units == 'mm HG':
-        return P / 133.322
+        return P / 133.322 # derived from NASA Reference Publication 1046 value of pa to in HG
     elif to_units == 'psi':
-        return P / 6894.752
+        return P / 6894.752 # from NASA Reference Publication 1046 Appendix A27
     elif to_units == 'psf' or to_units == 'lb/ft**2':
-        return P / 47.88026
+        return P / 47.88026  # from NASA Reference Publication 1046 Appendix A27
     elif to_units == 'hpa' or to_units == 'mb':
         return P / 100.
     elif to_units == 'pa':
