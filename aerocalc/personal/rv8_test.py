@@ -415,7 +415,7 @@ def prop_test_cases():
 
 def roc(prop, altitude, eas, weight, power, rpm, temp = 'std', temp_units = 'C', \
     rv = '8',  wing_area = 110, speed_units = 'kt', flap = 0, \
-    load_factor = 1, wheel_pants = 1):
+    load_factor = 1, wheel_pants = 1, prop_factor=1):
     """
     Returns the rate of climb or descent.
     """ 
@@ -423,7 +423,7 @@ def roc(prop, altitude, eas, weight, power, rpm, temp = 'std', temp_units = 'C',
     tas = A.eas2tas(eas, altitude, temp = temp, speed_units = speed_units)
     tas_fts = U.speed_conv(tas, from_units = speed_units, to_units = 'ft/s')
     prop_eff = PM.prop_eff(prop, power, rpm, tas, altitude, temp = temp, \
-        temp_units = 'C', speed_units = speed_units)
+        temp_units = 'C', speed_units = speed_units) * prop_factor
     power_avail = power * prop_eff
 
     drag = FT.eas2drag(eas, weight, wing_area, rv = rv, flap = flap, \
@@ -436,18 +436,18 @@ def roc(prop, altitude, eas, weight, power, rpm, temp = 'std', temp_units = 'C',
     return roc
 
 def roca(prop, altitude, weight = 1800, press_drop = 1.2, temp = 'std', \
-    load_factor =1):
+    load_factor =1, prop_factor=1):
     """
     Returns speed for best rate of climb and the rate of climb at that speed.
     """
     MP = SA.alt2press(altitude) - press_drop
     pwr = IO.pwr(2700, MP, altitude, temp = temp)
     roc_max = -100000
-    eass = range(60, 150, 1)
+    eass = range(600, 1500, 1)
     rocs = []
     for eas in eass:
-        rocs.append((roc(prop, altitude, eas, weight, pwr, 2700, temp = temp, \
-            load_factor = load_factor),eas))
+        rocs.append((roc(prop, altitude, eas/10., weight, pwr, 2700, temp = temp, \
+            load_factor = load_factor, prop_factor=prop_factor),eas/10.))
     mroc, meas = max(rocs)
     return meas, mroc
 
