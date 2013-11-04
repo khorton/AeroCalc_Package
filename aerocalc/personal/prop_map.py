@@ -78,7 +78,7 @@ class Prop:
                 elif node_name == 'sage':
                     base_path = '/mnt/hgfs/shared/prop_maps/Hartzell_prop_maps/'
                 elif node_name == 'sage-ubuntu-1204':
-                    base_path = '/mnt/hgfs/shared/prop_maps/Hartzell_prop_maps/'
+                    base_path = '/mnt/hgfs/Shared/prop_maps/Hartzell_prop_maps/'
                 else:
                     raise ValueError, 'Unknown computer'
 
@@ -343,7 +343,7 @@ class Prop:
                 elif node_name == 'sage':
                     base_path = '/mnt/hgfs/shared/prop_maps/'
                 elif node_name == 'sage-ubuntu-1204':
-                    base_path = '/mnt/hgfs/shared/prop_maps/'
+                    base_path = '/mnt/hgfs/Shared/prop_maps/'
                 else:
                     raise ValueError, 'Unknown computer'
 
