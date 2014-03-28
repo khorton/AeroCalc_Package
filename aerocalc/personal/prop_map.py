@@ -417,8 +417,8 @@ class Prop:
                 self.eff_mach_max = max(self.prop_eff_map[:,0,0])
                 self.eff_Cp_min = min(self.prop_eff_map[0,:,0])
                 self.eff_Cp_max = max(self.prop_eff_map[0,:,0])
-                self.eff_J_min = min(self.prop_eff_map[0,0,:])
-                self.eff_J_max = max(self.prop_eff_map[0,0,:])
+                self.eff_J_min = min(self.prop_eff_map[0,0,1:])
+                self.eff_J_max = max(self.prop_eff_map[0,0,1:])
                 
         else:
             print 'prop type not known'
