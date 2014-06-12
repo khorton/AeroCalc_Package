@@ -438,14 +438,14 @@ def ct2thrust(Ct, Rho, rpm, dia, thrust_units = 'lb', density_units = 'lb/ft**3'
     return U.force_conv(thrust, from_units = 'N', to_units = thrust_units)
 
 
-def eff2thrust(eff, bhp, TAS, bhp_units = 'hp', speed_units = 'kt', thrust_units = 'lb'):
+def eff2thrust(eff, bhp, TAS, power_units = 'hp', speed_units = 'kt', thrust_units = 'lb'):
     """
-    Returns thrust, given prop efficiency, true airspeed and bhp.
+    Returns thrust, given prop efficiency, true airspeed and brake power.
     
     Matches the results from the Hartzell prop map program fairly closely.
     """
     TAS = U.speed_conv(TAS, from_units = speed_units, to_units = 'm/s')
-    power = U.power_conv(bhp, from_units = power_units, to_units = 'W')
+    bhp = U.power_conv(bhp, from_units = power_units, to_units = 'W')
     thrust = eff * bhp / TAS
     
     return U.force_conv(thrust, from_units = 'N', to_units = thrust_units)
