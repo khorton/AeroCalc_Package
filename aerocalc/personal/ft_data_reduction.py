@@ -186,18 +186,14 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
 
     The RV-8A CD0 was obtained in the same way was the RV-8 CD0.
     
+    The delta CD0 due to flaps was calculated by XFoil. The results were factored
+    by 0.42, as the flaps cover 42% of the wing span.
+    
     Flaps:
     RV-8 flap chord: 13.25 in
     RV-8 flap span:  58 in
     RV-8 wing chord: 58 in
-    RV-8 wing span: 23 ft
-    
-    if flap < 0.25:
-        B = flap * 0.06
-    elseif flap < 0.42:
-        B = 0.02 + (flap - 0.25) * 0.08666
-    delta Cd0 = 1.3 * 0.42 * 13.25 / 58 * B * flap
-     
+    RV-8 wing span: 23 ft     
     """
     if rv == '6':
         aspect_ratio = 23**2/110.
@@ -225,19 +221,24 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
     else:
         raise ValueError, 'invalid RV model'
 
-    # if flap != 0:
-    #     raise ValueError, 'This function does not yet have data for flap angle other than 0.'
-    if flap < 0.25:
-        B = flap * 0.06
-    elif flap <= 1:
-        B = 0.02 + (flap - 0.25) * 0.08666
-    delta_Cd0 = 1.3 * 0.42 * 13.25 / 58 * B * flap
-    cd0 += delta_Cd0
+    # increased drag due to flaps based on XFoil calculations over a range of flap angles
+    if flap <= 10:
+        delta_cd0_flap = flap * 1E-4
+    elif flap <= 15:
+        delta_cd0_flap = 1E-3 + (flap - 10) * 6E-4
+    elif flap <= 20:
+        delta_cd0_flap = 4E-3 + (flap - 15) * 1.2E-3
+    elif flap <= 30:
+        delta_cd0_flap = 1E-2 + (flap - 20) * 1.8E-3
+    elif flap <= 40:
+        delta_cd0_flap = 2.8E-2 + (flap - 30) * 2.15E-3
+    delta_cd0_flap *= 0.42 # flaps cover 42% of span, so factor flap drag by 42%
+    cd0 += delta_cd0_flap
     
-    if flap > 1:
-        raise ValueError, 'This function does not support flap angle other than 0 to 1'
+    if flap > 40:
+        raise ValueError, 'This function does not support flap angle other than 0 to 40'
     if flap < 0:
-        raise ValueError, 'This function does not support flap angle other than 0 to 1'
+        raise ValueError, 'This function does not support flap angle other than 0 to 40'
     
     if wheel_pants == 0:
     	  cd0 += 0.00155
