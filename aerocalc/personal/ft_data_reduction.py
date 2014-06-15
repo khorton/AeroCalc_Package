@@ -185,6 +185,19 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
     prop). The RV-8 CD0 was adjusted to obtain Van's published speed.
 
     The RV-8A CD0 was obtained in the same way was the RV-8 CD0.
+    
+    Flaps:
+    RV-8 flap chord: 13.25 in
+    RV-8 flap span:  58 in
+    RV-8 wing chord: 58 in
+    RV-8 wing span: 23 ft
+    
+    if flap < 0.25:
+        B = flap * 0.06
+    elseif flap < 0.42:
+        B = 0.02 + (flap - 0.25) * 0.08666
+    delta Cd0 = 1.3 * 0.42 * 13.25 / 58 * B * flap
+     
     """
     if rv == '6':
         aspect_ratio = 23**2/110.
@@ -212,8 +225,19 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
     else:
         raise ValueError, 'invalid RV model'
 
-    if flap != 0:
-        raise ValueError, 'This function does not yet have data for flap angle other than 0.'
+    # if flap != 0:
+    #     raise ValueError, 'This function does not yet have data for flap angle other than 0.'
+    if flap < 0.25:
+        B = flap * 0.06
+    elif flap <= 1:
+        B = 0.02 + (flap - 0.25) * 0.08666
+    delta_Cd0 = 1.3 * 0.42 * 13.25 / 58 * B * flap
+    cd0 += delta_Cd0
+    
+    if flap > 1:
+        raise ValueError, 'This function does not support flap angle other than 0 to 1'
+    if flap < 0:
+        raise ValueError, 'This function does not support flap angle other than 0 to 1'
     
     if wheel_pants == 0:
     	  cd0 += 0.00155
