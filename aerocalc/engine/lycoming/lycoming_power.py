@@ -108,19 +108,24 @@ def power(ff, ff_at_pk_EGT, rpm, CR=8.7, displacement=360, ff_units='USG/h', fri
     SFC_best_mixture = iSFC(CR)
     best_mixture_pwr = ff_best_mixture / SFC_best_mixture
     ihp = best_mixture_pwr * pwr_ratio_vs_ff_ratio(ff / ff_best_mixture)
-    imep = P.BMEP(best_mixture_pwr, rpm, displacement, power_units='hp', vol_units='in**3')
+    try:
+        imep = P.BMEP(best_mixture_pwr, rpm, displacement, power_units='hp', vol_units='in**3')
+        disp_numeric = displacement
+    except TypeError:
+        disp_numeric = int(displacement[:3])
+        imep = P.BMEP(best_mixture_pwr, rpm, disp_numeric, power_units='hp', vol_units='in**3')
 
     if imep < 140:
         imep_best_pwr = imep
         for n in range(10):
             SFC_best_mixture = iSFC(CR, imep_best_pwr)
             best_mixture_pwr = ff_best_mixture / SFC_best_mixture
-            imep_best_pwr = P.BMEP(best_mixture_pwr, rpm, displacement, power_units='hp', vol_units='in**3')
+            imep_best_pwr = P.BMEP(best_mixture_pwr, rpm, disp_numeric, power_units='hp', vol_units='in**3')
             # print 'iSFC = %.4f' % SFC_best_mixture
         ihp = best_mixture_pwr * pwr_ratio_vs_ff_ratio(ff / ff_best_mixture)
 
     bhp = ihp - friction_hp(displacement, rpm) * fric_power_factor
-    
+
     return bhp
 
 def power_fp(
@@ -374,34 +379,39 @@ def friction_hp(disp, n):
     
     n = engine speed in revolutions per minute
     """
-    fhp_data_n = [2000, 2300, 2600, 2900, 3400]
-    fhp_fhp_360 = [17, 22, 28, 34.5, 38]
-    if disp == 235:
+    # fhp_data_n = [2000, 2300, 2600, 2900, 3400]
+    # fhp_fhp_360 = [17, 22, 28, 34.5, 38]
+        
+    if disp == 235 or disp == '235':
         return -29.3467601780368952 + 0.0328180834559705 * n + -0.0000098617092143 * n**2 + 0.0000000015207014 * n**3
-    elif disp == 290:
+    elif disp == 290 or disp == '290':
         return (32.2852879043700369 + -0.0358206349342127 * n + 0.0000160531054837 * n**2 + -0.0000000014770586 * n**3)*290/320.
-    elif disp == 320:
+    elif disp == 320 or disp == '320':
         return 32.2852879043700369 + -0.0358206349342127 * n + 0.0000160531054837 * n**2 + -0.0000000014770586 * n**3
-    elif disp == 340:
+    elif disp == 340 or disp == '340':
         return (32.2852879043700369 + -0.0358206349342127 * n + 0.0000160531054837 * n**2 + -0.0000000014770586 * n**3)*340/320.
-    elif disp == 360:
+    elif disp == 360 or disp == '360':
         return 26.3615029922214319 + -0.0287849165689263 * n + 0.0000145043760676 * n**2 + -0.0000000012253464 * n**3
-    elif disp == 375:
+    elif disp == 375 or disp == '375':
         return (26.3615029922214319 + -0.0287849165689263 * n + 0.0000145043760676 * n**2 + -0.0000000012253464 * n**3) * 375/360.
-    elif disp == 390:
+    elif disp == 390 or disp == '390':
         return (26.3615029922214319 + -0.0287849165689263 * n + 0.0000145043760676 * n**2 + -0.0000000012253464 * n**3) * 390/360.
-    elif disp == 400:
+    elif disp == 400 or disp == '400':
         return (26.3615029922214319 + -0.0287849165689263 * n + 0.0000145043760676 * n**2 + -0.0000000012253464 * n**3) * 400/360.
-    elif disp == 480:
+    elif disp == 409 or disp == '409':
+        return (26.3615029922214319 + -0.0287849165689263 * n + 0.0000145043760676 * n**2 + -0.0000000012253464 * n**3) * 409/360.
+    elif disp == 480 or disp == '480':
         return 23.5315907011200203 + -0.0281685136434028 * n + 0.0000163114436151 * n**2 + -0.0000000014331379 * n**3
-    elif disp == 540 or disp == 541:
+    elif disp == 540 or disp == 541 or disp == '540' or disp == '541':
         return 60.1933087214705722 + -0.0684571189991537 * n + 0.0000322114546823 * n**2 + -0.0000000031506484 * n**3
+    elif disp == 580 or disp == '580':
+        return (60.1933087214705722 + -0.0684571189991537 * n + 0.0000322114546823 * n**2 + -0.0000000031506484 * n**3) * 580/540.
     elif disp == '480S':
         return 34.7592092352365540 + -0.0432705496941272 * n + 0.0000252414999859 * n**2 + -0.0000000022755592 * n**3
-    elif disp == 720 or disp == '540S':
+    elif disp == 720 or disp == '720' or disp == '540S':
         return 17.6480415158379031 + -0.0202542241199032 * n + 0.0000170050762205 * n**2 + -0.0000000008863450 * n**3
     else:
-        return 'The displacement must be one of 235, 290, 320, 340, 360, 375, 390, 400, 480, 480S, 540, 540S, 541 or 720.  The suffix S denotes GSO or IGSO engines.'
+        raise LookupError('ERROR - The displacement must be one of 235, 290, 320, 340, 360, 375, 390, 400, 409, 480, 480S, 540, 540S, 541, 580 or 720.  The suffix S denotes GSO or IGSO engines.')
 
 
 def ff_table(FFP, n, CR, disp):
