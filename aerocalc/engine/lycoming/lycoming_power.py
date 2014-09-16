@@ -27,7 +27,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.24, 02 Mar 2012
+# version 0.24, 16 Aug 2014
 #
 # Version History:
 # vers     date     Notes
@@ -44,6 +44,14 @@
 # 0.23   11 Mar 11  Corrected notes by removing reference to temperature
 #
 # 0.24   02 Mar 12  Add pwr2ff
+#
+# 0.25   16 Aug 14  Add additional engine displacements to friction power calculation.  
+#                   The friction power for the additional displacements is assumed to 
+#                   vary linearly with displacement, based on one of the engines with 
+#                   data from Lycoming.
+#
+#                   Correct logic error that caused crash if using displacement = '540S' 
+#                   (or similar) to designate geared supercharged engines.
 # #############################################################################
 #
 # To Do: 1. Done
