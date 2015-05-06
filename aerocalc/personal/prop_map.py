@@ -69,6 +69,8 @@ class Prop:
                     base_path = '/Users/kwh/RV/Engine_prop/Hartzell_prop_maps/'
                 elif node_name == 'Kevins-MacBook-Air.local':
                     base_path = '/Users/kwh/Documents/RV/Engine_prop/Hartzell_prop_maps/'
+                elif node_name == 'Kevins-MBPr.local':
+                    base_path = '/Users/kwh/Documents/RV/Engine_prop/Hartzell_prop_maps/'
                 elif node_name == 'MacMini.local':
                     base_path = '/Users/kwh/Documents/Flying/RV/Engine_prop/Hartzell_prop_maps/'
                 elif node_name == 'ncrnbhortonk2':
@@ -333,6 +335,8 @@ class Prop:
                 if node_name[:9] == 'PowerBook':
                     base_path = '/Users/kwh/Documents/RV/MT_Prop/'
                 elif node_name == 'Kevins-MacBook-Air.local':
+                    base_path = '/Users/kwh/Documents/RV/Engine_prop/MT_Prop/'
+                elif node_name == 'Kevins-MBPr.local':
                     base_path = '/Users/kwh/Documents/RV/Engine_prop/MT_Prop/'
                 elif node_name == 'MacMini.local':
                     base_path = '/Users/kwh/Documents/Flying/RV/Engine_prop/MT_Prop/'
