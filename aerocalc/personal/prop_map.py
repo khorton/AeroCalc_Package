@@ -344,7 +344,7 @@ class Prop:
                     base_path = 'C:\\Documents and Settings\\hortonk\\My Documents\\rv\\Prop\\MT_Prop\\'
                 elif node_name == 'eeepc':
                     base_path = '/home/kwh/RV/MT_Prop/'
-                elif node_name == 'sage':
+                elif node_name[:4] == 'sage':
                     base_path = '/home/kwh/python/prop_maps/'
                 elif node_name == 'sage-ubuntu-1204':
                     base_path = '/home/kwh/python//prop_maps/'
