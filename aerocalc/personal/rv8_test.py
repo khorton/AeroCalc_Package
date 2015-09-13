@@ -226,7 +226,7 @@ def WOT_speed_orig(prop, altitude, weight = 1800, rpm = 2700, temp = 'std', \
 
 def WOT_speed(engine, prop, altitude, weight = 1800, rpm = 2700, temp = 'std', \
     temp_units = 'C', rv = '8', wing_area = 110, speed_units = 'kt' , \
-    MP_loss = 1.322, ram = 0.5, pwr_factor=1, mixture='pwr', wheel_pants=1):
+    MP_loss = 1.322, ram = 0.5, pwr_factor=0.92, mixture='pwr', wheel_pants=1):
     """
     Returns the predicted speed at full throttle.
     
@@ -255,7 +255,7 @@ def WOT_speed(engine, prop, altitude, weight = 1800, rpm = 2700, temp = 'std', \
 #       print 'CAS =', cas, 'TAS =', tas
 #    print "MP = %.3f" % MP
 #    print "Pwr = %.2f" % pwr
-    return tas, pwr
+    return tas, pwr / pwr_factor
 
 def MP_pred(tas, alt, rpm, rpm_base = 2700., MP_loss = 1.322, ram = 0.5, temp='std'):
     press = SA.alt2press(alt, press_units = 'in HG')

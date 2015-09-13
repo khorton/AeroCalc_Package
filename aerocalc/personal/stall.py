@@ -96,6 +96,6 @@ def gps2stall(GS, TK, Hp, T, temp_units='C', alt_units=default_alt_units, speed_
     tas = U.speed_conv(tas, from_units=GPS_units, to_units=speed_units)
     std_dev = U.speed_conv(std_dev, from_units=GPS_units, to_units=speed_units)
     cas = A.tas2cas(tas, Hp, T, temp_units=temp_units, alt_units=alt_units, speed_units=speed_units)
-    std_dev = std_dev * cas / tas # factor standard deviation, as it is valid for TAS as calculated
+    std_dev = std_dev * cas / tas # factor standard deviation to reference CAS vs TAS
 
     return cas, std_dev
