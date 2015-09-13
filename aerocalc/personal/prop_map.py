@@ -75,9 +75,9 @@ class Prop:
                     base_path = 'C:\\Documents and Settings\\hortonk\\My Documents\\rv\\Prop\\Hartzell_prop_maps\\'
                 elif node_name == 'eeepc':
                     base_path = '/home/kwh/RV/Hartzell_prop_maps/'
-                elif node_name == 'sage':
+                elif node_name[:4] == 'sage':
                     base_path = '/mnt/hgfs/shared/prop_maps/Hartzell_prop_maps/'
-                elif node_name == 'sage-ubuntu-1204':
+                elif node_name == 'sage-ubuntu-1404':
                     base_path = '/mnt/hgfs/Shared/prop_maps/Hartzell_prop_maps/'
                 else:
                     raise ValueError, 'Unknown computer'
