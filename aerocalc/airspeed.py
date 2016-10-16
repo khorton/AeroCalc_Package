@@ -1875,7 +1875,7 @@ def _interactive_interface(data_items):  # pragma: no cover
                           + str(len(func_list)) + ', or "Q"',
                          '0 < int(X) <= ' + str(len(func_list)),
                          'X == "Q"', 'X == "q"', 'X == ""'])
-    if item.upper() == 'Q':
+    if type(item) == 'int' and item.upper() == 'Q':
         return
     elif item == '':
         item = data_items['function']
@@ -1886,8 +1886,8 @@ def _interactive_interface(data_items):  # pragma: no cover
     func_list_num = item - 1
     eval(func_list[func_list_num][0])
     prompt = '\nDo another calculation [Y/n]'
-    # input_data = raw_input(prompt)
-    input_data = input(prompt)
+    input_data = raw_input(prompt)
+    #  input_data = input(prompt)
     if input_data == '' or input_data == 'Y' or input_data == 'y':
         print '\n'
         _interactive_interface(data_items)

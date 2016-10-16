@@ -250,8 +250,8 @@ def get_input2(
     input_validated = False
 
     while not input_validated:
-        # X = raw_input(prompt)
-        X = input(prompt)
+        X = raw_input(prompt)
+        # X = input(prompt)
         validated_any = False
         validated_all = True
 
