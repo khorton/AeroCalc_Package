@@ -1420,6 +1420,14 @@ def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8
 ##############################################################################
 # Add someday
 
+def wd2hp(W, wd, alt_units="ft"):
+    """Return pressure altitude for a given weight and W/delta"""
+    d = W/wd
+    hp = SA.press_ratio2alt(d, alt_units=alt_units)
+    
+    return hp
+
+
 if __name__ == "__main__":
     # run doctest to check the validity of the examples in the doc strings.
     import doctest, sys
