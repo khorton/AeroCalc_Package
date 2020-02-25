@@ -46,6 +46,7 @@ Various functions related to lift coefficients.
 """
 
 import airspeed as A
+import std_atm as S
 import unit_conversion as U
 import constants
 
@@ -176,6 +177,35 @@ def cas2cl(
     return Cl
 
 
+# ############################################################################
+#
+# mach2cl
+#
+# calculate lift coefficient, given mach
+#
+# ############################################################################
+
+def mach2cl(
+    mach,
+    altitude,
+    weight,
+    wing_area,
+    load_factor=1,
+    alt_units=default_alt_units,
+    weight_units=default_weight_units,
+    area_units=default_area_units,
+    ):
+    """
+    """
+    
+    P = S.alt2press(altitude, alt_units=alt_units, press_units="pa")
+    wing_area=U.area_conv(wing_area, from_units=area_units, to_units="m**2")
+    weight=U.wt_conv(weight, from_units=weight_units, to_units="kg")
+    
+    Cl  = (weight * g * load_factor) / (0.7 * P * wing_area * mach**2)
+    
+    return Cl
+    
 # #############################################################################
 #
 # tas2cl
