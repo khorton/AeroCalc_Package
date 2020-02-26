@@ -231,7 +231,7 @@ def alt2temp(H, alt_units=default_alt_units,
     Calculate the standard temperature (in default temperature units) at 
     5,000 (default altitude units):
     >>> alt2temp(5000)
-    5.0939999999999941
+    5.093999999999994
     
     Calculate the standard temperature in deg F at sea level:
     >>> alt2temp(0, temp_units = 'F')
@@ -290,11 +290,11 @@ def alt2temp_ratio(H, alt_units=default_alt_units):
     
     Calculate the temperature ratio at 8,000 (default altitude units)
     >>> alt2temp_ratio(8000)
-    0.94499531494013533
+    0.9449953149401353
     
     Calculate the temperature ratio at 8,000 m.
     >>> alt2temp_ratio(8000, alt_units = 'm')
-    0.81953843484296374
+    0.8195384348429637
     """
 
     # function tested in tests/test_std_atm.py
@@ -331,7 +331,7 @@ def isa2temp(
     Determine the temperature that is 10 deg (default temperature units) warmer 
     than the standard temperature at 8,000 (default altitude units):
     >>> isa2temp(10, 8000)
-    9.1503999999999905
+    9.15039999999999
     
     Determine the temperature that is 25 degrees K cooler than the standard
     temperature at 2000 m.
@@ -380,7 +380,7 @@ def temp2isa(
     Determine the ISA deviation in degrees F for a temperature of 45 deg F
     at an altitude of 1000 m:
     >>> temp2isa(45, 1000, temp_units = 'F', alt_units = 'm')
-    -2.2999999999999972
+    -2.299999999999997
     """
 
     # function tested in tests/test_std_atm.py
@@ -455,7 +455,7 @@ def alt2press_ratio(H, alt_units=default_alt_units):
     
     Calculate the pressure ratio at 1000 m:
     >>> alt2press_ratio(1000, alt_units = 'm')
-    0.88699304638887044
+    0.8869930463888704
     
     The functions are only implemented at altitudes of 84.852 km and lower.
     >>> alt2press_ratio(90, alt_units = 'km')
@@ -514,7 +514,7 @@ def alt2press(H, alt_units=default_alt_units,
     
     Calculate the pressure in pascal at 20 km:
     >>> alt2press(20, press_units = 'pa', alt_units = 'km')
-    5474.8885557436233
+    5474.888555743623
     """
 
     # uses meters, pa and degrees K for the internal calculations
@@ -556,7 +556,7 @@ def pressure_alt(H, alt_setting, alt_units=default_alt_units):
     Calculate the pressure altitude for 1,000 (default altitude units) 
     barometric altitude with altimeter setting of 30.92 in HG:
     >>> pressure_alt(1000, 30.92)
-    88.642443178711801
+    88.6424431787118
     
     Calculate the pressure altitude for 1,000 (default altitude units) 
     barometric altitude with altimeter setting of 1008 mb:
@@ -620,7 +620,7 @@ def alt2density_ratio(H, alt_units=default_alt_units):
     
     Calculate the density ratio at 7,500 (default altitude units):
     >>> alt2density_ratio(7500)
-    0.79825819881753035
+    0.7982581988175304
     
     Calculate the density ratio at 2 km:
     >>> alt2density_ratio(2, alt_units = 'km')
@@ -656,7 +656,7 @@ def alt2density(H, alt_units=default_alt_units,
     
     Calculate the density in kg / m cubed at 0 (default altitude units:
     >>> alt2density(0, density_units = 'kg/m**3')
-    1.2250000000000001
+    1.225
     
     Calculate the density in kg / m cubed at 81,000 m:
     >>> alt2density(81000, density_units = 'kg/m**3', alt_units = 'm')
@@ -735,7 +735,7 @@ def density2alt(Rho, density_units=default_density_units,
     Calculate the altitude in default altitude units where the density is 
     0.056475 in default density units:
     >>> density2alt(.056475)
-    9999.8040934937271
+    9999.804093493727
     
     Calculate the altitude in metres where the density is 0.018012 kg / m 
     cubed:
@@ -851,7 +851,7 @@ def density_alt(
     (default temperature units).  The altimeter setting is not specified, so it 
     defaults to standard pressure of 29.9213 in HG or 1013.25 mb:
     >>> density_alt(7000, 15)
-    8595.3122796056014
+    8595.312279605601
     
     Calculate the density altitude in default altitude units for a pressure 
     altitude of 7000 default altitude units and a temperature of 85 deg F.  
@@ -859,24 +859,24 @@ def density_alt(
     of 29.9213 in HG or 1013.25 mb.  The dew point and relative humidity are 
     not specified, so the air is assumed to be dry:
     >>> density_alt(7000, 85, temp_units = 'F')
-    10159.073046375761
+    10159.07304637576
     
     Calculate the density altitude in default altitude units for a pressure 
     altitude of 7000 default altitude units, an altimeter setting of 29.80 and
     a temperature of 85 deg F and a dew point of 55 deg F:
     >>> density_alt(7000, 85, 29.80, 55, temp_units = 'F')
-    10522.777736545509
+    10522.77773654551
     
     Calculate the density altitude in metres for a pressure altitude of 
     2000 m, an altimeter setting of 1010 mb,  a temperature of 15 deg (default 
     temperature units) and a relative humidity of 50%:
     >>> density_alt(2000, 15, 1010, alt_units = 'm', RH = 0.5)
-    2529.8235607713582
+    2529.823560771358
     
     The dew point may be specified in one of two ways: as the fourth 
     argument on the command line, or via the keyword argument DP.
     >>> density_alt(2000, 15, 1010, alt_units = 'm', DP = 5)
-    2530.7533211614682
+    2530.753321161468
         
     The relative humidity must be in the range of 0 to 1:
     >>> density_alt(2000, 15, 1010, alt_units = 'm', RH = 1.1)
@@ -968,17 +968,17 @@ def sat_press(
     
     Dew point is 65 deg F.  Find the water vapour pressure in default pressure units:
     >>> sat_press(DP=65, temp_units = 'F')
-    0.62207710701956165
+    0.6220771070195616
     
     Dew point is 212 deg F (the boiling point of water at sea level).
     Find the water vapour pressure in lb per sq. inch:
     >>> sat_press(DP=212, temp_units = 'F', press_units = 'psi')
-    14.696764873564959
+    14.696775531500785
 
     Temperature is 30 deg C.  Find the water vapour pressure in default pressure units:
     for 50% relative humidity:
     >>> sat_press(T=30, RH = 0.5)
-    0.62647666996057927
+    0.6264766699605793
     """
 
     if DP != 'FALSE':
@@ -1196,7 +1196,7 @@ def press2alt(P, press_units=default_press_units,
     Calculate the pressure altitude in feet for a pressure of 31.0185 inches
     of HG:
     >>> press2alt(31.0185)
-    -999.96020165971788
+    -999.9602016597179
     
     Calculate the pressure altitude in feet for a pressure of 
     1455.33 lb sq. ft:
@@ -1211,7 +1211,7 @@ def press2alt(P, press_units=default_press_units,
     Calculate the pressure altitude in metres for a pressure of 
     1171.86 pascal:
     >>> press2alt(1171.86, press_units = 'pa', alt_units = 'm')
-    30000.036588693849
+    30000.03658869385
     """
 
     # function tested in tests/test_std_atm.py
@@ -1286,11 +1286,11 @@ def temp2speed_of_sound(temp, temp_units=default_temp_units,
     
     Determine speed of sound in knots at 15 deg (default temperature units):
     >>> temp2speed_of_sound(15)
-    661.47882487301808
+    661.4788248730181
     
     Determine speed of sound in mph at 120 deg F:
     >>> temp2speed_of_sound(120, speed_units = 'mph', temp_units = 'F')
-    804.73500154991291
+    804.7350015499129
     """
 
     # function tested in tests/test_std_atm.py

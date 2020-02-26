@@ -125,7 +125,7 @@ def cd2drag(
     Example:
     >>> cd2drag(.138, 100, 10, speed_units='km/h', area_units='m**2',\
     drag_units='N')
-    652.19907407407425
+    652.1990740740742
     """
 
     eas = U.speed_conv(eas, from_units=speed_units, to_units='m/s')

@@ -95,7 +95,7 @@ def area_conv(A, from_units=default_area_units,
 
     Convert 10 square metres to square inches:
     >>> area_conv(1000, from_units = 'm**2', to_units = 'in**2')
-    1550003.1000061999
+    1550003.1000062
     """
 
     if from_units == 'ft**2':
@@ -143,7 +143,7 @@ def density_conv(D, from_units, to_units):
     
     Convert 1.225 kg per metre cubed to lb per foot cubed:
     >>> density_conv(1.225, from_units = 'kg/m**3', to_units = 'lb/ft**3')
-    0.076474253491112101
+    0.0764742534911121
 
     """
 
@@ -212,11 +212,11 @@ def length_conv(L, from_units=default_length_units,
     Convert 1 nautical mile to feet, with feet already defined as the default
     units:
     >>> length_conv(1, from_units = 'nm')
-    6076.1154855643044
+    6076.115485564304
 
     Convert 1000 metres to kilometres:
     >>> length_conv(1000, from_units = 'm', to_units = 'km')
-    0.99999999999999989
+    0.9999999999999999
     """
 
     if from_units == 'ft':
@@ -325,11 +325,11 @@ def press_conv(P, from_units=default_press_units,
 
     Convert 29.9213 default pressure units to mm of HG:
     >>> press_conv(29.9213, to_units = 'mm HG')
-    760.00128931459176
+    760.0012893145918
     
     Convert 2116.22 lb per sq. ft to lb per sq. inch:
     >>> press_conv(2116.22, from_units = 'psf', to_units = 'psi')
-    14.695973160069311
+    14.695983817430996
     """
 
     if from_units == 'in HG':
@@ -452,7 +452,7 @@ def temp_conv(T, from_units=default_temp_units,
 
     Convert 59 deg F to deg K
     >>> temp_conv(59, from_units = 'F', to_units = 'K')
-    288.14999999999998
+    288.15
     """
 
     if from_units == 'C':
@@ -499,11 +499,11 @@ def vol_conv(V, from_units=default_vol_units,
     Convert 1 Imperial gallon to cubic feet, with cubic feet already defined 
     as the default units:
     >>> vol_conv(1, from_units = 'ImpGal')
-    0.16054365323600001
+    0.160543653236
 
     Convert 10 US gallon to litres:
     >>> vol_conv(10, from_units = 'USG', to_units = 'l')
-    37.854117840125852
+    37.85411784012585
     """
 
     if from_units == 'ft**3':

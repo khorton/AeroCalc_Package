@@ -189,7 +189,7 @@ def dp2cas(dp, press_units=default_press_units,
     Determine the CAS in kt that is equivalent to a differential pressure 
     of 15 in HG:
     >>> dp2cas(15)
-    518.96637566127652
+    518.9663756612765
     
     Determine the CAS in mph that is equivalent to a differential pressure 
     of 0.2 psi:
@@ -823,12 +823,12 @@ def tas2cas(
     Determine the true Air Speed for 250 kt CAS at 10,000 ft with standard
     temperature:
     >>> cas2tas(250, 10000)
-    288.70227972918161
+    288.7022797291816
 
     Determine the true Air Speed for 250 mph CAS at 10,000 ft with standard
     temperature:
     >>> cas2tas(250, 10000, speed_units = 'mph')
-    289.21977666774131
+    289.2197766677413
 
     Determine the true Air Speed for 250 mph CAS at 10,000 ft with 
     temperature of 0 deg C:
@@ -1347,7 +1347,7 @@ def mach2tas(
     Determine the TAS in kt at 0.8 mach at a temperature of 
     -15 deg C:
     >>> mach2tas(0.8, -15)
-    500.87884108468597
+    500.878841084686
     
     Determine the TAS in kt at 0.8 mach at 30,000 ft, assuming 
     standard temperature:
@@ -1357,7 +1357,7 @@ def mach2tas(
     Determine the TAS in mph at 0.8 mach at 5000 m, assuming 
     standard temperature:
     >>> mach2tas(0.8, altitude = 5000, alt_units = 'm', speed_units = 'mph')
-    573.60326790383715
+    573.6032679038371
     
     Determine the TAS in km/h at 0.4 mach at a temperature of 
     300 deg K:
@@ -1449,22 +1449,22 @@ def tas2mach(
     Determine the mach number for a TAS of 500 kt at a temperature of
     -15 deg C:
     >>> tas2mach(500, -15)
-    0.79859632148519943
+    0.7985963214851994
     
     Determine the mach number for a TAS of 500 kt at a temperature of
     0 deg F:
     >>> tas2mach(500, 0, temp_units = 'F')
-    0.80292788758764277
+    0.8029278875876428
     
     Determine the mach number for a TAS of 500 kt at an altitude of
     10,000 ft, assuming standard temperature:
     >>> tas2mach(500, altitude = 10000)
-    0.78328945665870209
+    0.7832894566587021
     
     Determine the mach number for a TAS of 400 mph at an altitude of
     5000 m, assuming standard temperature:
     >>> tas2mach(400, altitude = 5000, speed_units = 'mph', alt_units = 'm')
-    0.55787687746166581
+    0.5578768774616658
     """
 
     if temp == 'std':
@@ -1557,13 +1557,13 @@ def mach2temp(
     -20 deg C at mach 0.6 with a probe recovery factor of 0.8:
     
     >>> mach2temp(0.6, -20, 0.8)
-    -33.787291981845698
+    -33.7872919818457
     
     Determine the ambient temperature with an indicated temperature of
     75 deg F at mach 0.3 with a probe recovery factor of 0.9:
     
     >>> mach2temp(0.3, 75, 0.9, temp_units = 'F')
-    66.476427868529839
+    66.47642786852984
     """
 
     indicated_temp = U.temp_conv(indicated_temp, from_units=temp_units,
