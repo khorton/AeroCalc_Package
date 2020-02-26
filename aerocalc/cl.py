@@ -158,7 +158,7 @@ def cas2cl(
     >>> Alt = 3000
     >>> cas2cl(CAS, Alt, W, S, load_factor = 2**0.5, speed_units='km/h',\
     alt_units='m', weight_units='kg', area_units='m**2') 
-    0.73578131117130885
+    0.7357813111713088
     
     """
 
@@ -196,6 +196,26 @@ def mach2cl(
     area_units=default_area_units,
     ):
     """
+    Returns the coefficient of lift, given equivalent mach, altitude, weight,
+    and wing area.
+    
+    Load factor is an optional input.  The load factor, if not provided, 
+    defaults to 1.
+    
+    Example:
+    if the wing area is 110 square feet,
+    altitude is 10,000 ft,
+    the weight is 1800 lb,
+    and the Mach number is 0.3 kt,
+    in straight and level flight (so the load factor = 1),
+    
+    then:
+    >>> Hp = 10000
+    >>> S = 110
+    >>> W = 1800
+    >>> Mach = 0.3
+    >>> mach2cl(Mach, Hp, W, S, weight_units='lb', area_units='ft**2')
+    0.17847495222708878
     """
     
     P = S.alt2press(altitude, alt_units=alt_units, press_units="pa")
