@@ -99,13 +99,13 @@ Provide interactive airspeed conversions when script is run directly, e.g.
 
 Not compatible with Python 3.  For Python 3, use airspeed_p3k.
 """
-from __future__ import division
+
 import math as M
-import std_atm as SA
-import constants
+from . import std_atm as SA
+from . import constants
 
 try:
-    from default_units import *
+    from .default_units import *
 except ImportError:
     default_area_units = 'ft**2'
     default_power_units = 'hp'
@@ -118,8 +118,8 @@ except ImportError:
     default_alt_units = default_length_units
     default_avgas_units = 'lb'
 
-import unit_conversion as U
-import val_input as VI
+from . import unit_conversion as U
+from . import val_input as VI
 
 Rho0 = constants.Rho0  # Density at sea level, kg/m**3
 P0 = constants.P0  # Pressure at sea level, pa
@@ -163,8 +163,7 @@ def _dp2speed(
 
     speed_kt = U.speed_conv(speed, from_units='m/s', to_units='kt')
     if speed_kt > 661.48:
-        raise ValueError, \
-            'The function _dp2speed only works if the speed is less than or equal to 661.48 kt'
+        raise ValueError('The function _dp2speed only works if the speed is less than or equal to 661.48 kt')
     speed = U.speed_conv(speed, from_units='m/s', to_units=speed_units)
 
     return speed
@@ -224,11 +223,11 @@ def dp2cas(dp, press_units=default_press_units,
 
         dp_low = _super_cas2dp(low)
         if dp_low > dp_seek:
-            raise ValueError, 'Initial lower cas guess is too high.'
+            raise ValueError('Initial lower cas guess is too high.')
 
         dp_high = _super_cas2dp(high)
         if dp_high < dp_seek:
-            raise ValueError, 'Initial upper cas guess is too low.'
+            raise ValueError('Initial upper cas guess is too low.')
 
         guess = (low + high) / 2.
         dp_guess = _super_cas2dp(guess)
@@ -442,8 +441,7 @@ def eas2dp(
 
     keas = U.speed_conv(eas, from_units=speed_units, to_units='kt')
     if keas > 661.48:
-        raise ValueError, \
-            'The function eas2dp only works if the eas is less than or equal to 661.48 kt'
+        raise ValueError('The function eas2dp only works if the eas is less than or equal to 661.48 kt')
 
     P = SA.alt2press(altitude, alt_units=alt_units, press_units='pa')
     dp = _speed2dp(eas, P, Rho0, press_units=press_units,
@@ -486,8 +484,7 @@ def tas2dp(
 
     ktas = U.speed_conv(tas, from_units=speed_units, to_units='kt')
     if ktas > 661.48:
-        raise ValueError, \
-            'The function tas2dp only works if the tas is less than or equal to 661.48 kt'
+        raise ValueError('The function tas2dp only works if the tas is less than or equal to 661.48 kt')
 
     P = SA.alt2press(altitude, alt_units=alt_units, press_units='pa')
 
@@ -546,15 +543,15 @@ def i_cas2eas(data_items):
     data_items['alt_units'] = _get_alt_units(data_items)
     alt_units = data_items['alt_units']
 
-    print
-    print 'CAS = ', cas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print
+    print()
+    print('CAS = ', cas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print()
 
     eas = cas2eas(cas, altitude, speed_units, alt_units)
     data_items['eas'] = eas
     return_string = 'EAS = ' + str(eas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 def cas2tas(
@@ -623,11 +620,11 @@ def i_cas2tas(data_items):
     data_items['temp'] = _get_temp(data_items)
     temp = data_items['temp']
 
-    print
-    print 'CAS = ', cas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature = ', temp, 'deg', temp_units
-    print
+    print()
+    print('CAS = ', cas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature = ', temp, 'deg', temp_units)
+    print()
 
     tas = cas2tas(
         cas,
@@ -639,7 +636,7 @@ def i_cas2tas(data_items):
         )
     data_items['tas'] = tas
     return_string = 'TAS = ' + str(tas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 def eas2tas(
@@ -708,11 +705,11 @@ def i_eas2tas(data_items):
     data_items['temp'] = _get_temp(data_items)
     temp = data_items['temp']
 
-    print
-    print 'EAS = ', eas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature = ', temp, 'deg', temp_units
-    print
+    print()
+    print('EAS = ', eas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature = ', temp, 'deg', temp_units)
+    print()
 
     tas = eas2tas(
         eas,
@@ -724,7 +721,7 @@ def i_eas2tas(data_items):
         )
     data_items['tas'] = tas
     return_string = 'TAS = ' + str(tas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 def eas2cas(
@@ -786,15 +783,15 @@ def i_eas2cas(data_items):
     data_items['alt_units'] = _get_alt_units(data_items)
     alt_units = data_items['alt_units']
 
-    print
-    print 'EAS = ', eas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print
+    print()
+    print('EAS = ', eas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print()
 
     cas = eas2cas(eas, altitude, speed_units, alt_units)
     data_items['cas'] = cas
     return_string = 'CAS = ' + str(cas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 def tas2cas(
@@ -893,11 +890,11 @@ def i_tas2cas(data_items):
     data_items['temp'] = _get_temp(data_items)
     temp = data_items['temp']
 
-    print
-    print 'TAS = ', tas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature = ', temp, 'deg', temp_units
-    print
+    print()
+    print('TAS = ', tas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature = ', temp, 'deg', temp_units)
+    print()
 
     cas = tas2cas(
         tas,
@@ -909,7 +906,7 @@ def i_tas2cas(data_items):
         )
     data_items['cas'] = cas
     return_string = 'CAS = ' + str(cas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 def tas2eas(
@@ -988,11 +985,11 @@ def i_tas2eas(data_items):
     data_items['temp'] = _get_temp(data_items)
     temp = data_items['temp']
 
-    print
-    print 'TAS = ', tas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature = ', temp, 'deg', temp_units
-    print
+    print()
+    print('TAS = ', tas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature = ', temp, 'deg', temp_units)
+    print()
 
     eas = tas2eas(
         tas,
@@ -1004,7 +1001,7 @@ def i_tas2eas(data_items):
         )
     data_items['eas'] = eas
     return_string = 'EAS = ' + str(eas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 # #############################################################################
@@ -1051,11 +1048,11 @@ def dp_over_p2mach(dp_over_p):
 
         dp_over_p_low = mach2dp_over_p(low)
         if dp_over_p_low > dp_over_p_seek:
-            raise ValueError, 'Initial lower mach guess is too high.'
+            raise ValueError('Initial lower mach guess is too high.')
 
         dp_over_p_high = mach2dp_over_p(high)
         if dp_over_p_high < dp_over_p_seek:
-            raise ValueError, 'Initial upper mach guess is too low.'
+            raise ValueError('Initial upper mach guess is too low.')
 
         guess = (low + high) / 2.
         dp_over_p_guess = mach2dp_over_p(guess)
@@ -1148,19 +1145,19 @@ def i_cas_mach2alt(data_items):
     data_items['alt_units'] = _get_alt_units(data_items)
     alt_units = data_items['alt_units']
 
-    print
-    print 'CAS = ', cas, speed_units
-    print 'Mach = ', mach
+    print()
+    print('CAS = ', cas, speed_units)
+    print('Mach = ', mach)
 
 #   print 'Desired altitude units are: ', alt_units
 
-    print
+    print()
 
     alt = cas_mach2alt(cas, mach, speed_units, alt_units)
     data_items['altitude'] = alt
 
     return_string = 'Altitude = ' + str(alt) + ' ' + alt_units
-    print return_string
+    print(return_string)
 
 
 def cas_alt2mach(
@@ -1207,14 +1204,14 @@ def i_cas_alt2mach(data_items):
     data_items['alt_units'] = _get_alt_units(data_items)
     alt_units = data_items['alt_units']
 
-    print
-    print 'CAS = ', cas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print
+    print()
+    print('CAS = ', cas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print()
 
     mach = cas_alt2mach(cas, altitude, speed_units, alt_units)
     data_items['mach'] = mach
-    print 'Mach = ', mach
+    print('Mach = ', mach)
 
 
 def _cas_alt2mach2(
@@ -1246,7 +1243,7 @@ def _cas_alt2mach2(
         mach = M.sqrt(5. * (((1. / PR) * ((1. + 0.2 * (cas / A0) ** 2.)
                        ** 3.5 - 1.) + 1.) ** (2. / 7.) - 1.))
     else:
-        raise ValueError, 'CAS too high.'
+        raise ValueError('CAS too high.')
 
     return mach
 
@@ -1296,15 +1293,15 @@ def i_mach_alt2cas(data_items):
     data_items['speed_units'] = _get_speed_units(data_items)
     speed_units = data_items['speed_units']
 
-    print
-    print 'Altitude = ', altitude, alt_units
-    print 'Mach = ', mach
-    print
+    print()
+    print('Altitude = ', altitude, alt_units)
+    print('Mach = ', mach)
+    print()
 
     cas = mach_alt2cas(mach, altitude, alt_units, speed_units)
     data_items['cas'] = cas
     return_string = 'CAS = ' + str(cas) + ' ' + speed_units
-    print return_string
+    print(return_string)
 
 
 # #############################################################################
@@ -1370,8 +1367,7 @@ def mach2tas(
             temp = SA.alt2temp(altitude, temp_units=temp_units,
                                alt_units=alt_units)
         else:
-            raise ValueError, \
-                'At least one of the temperature or altitude must be specified.'
+            raise ValueError('At least one of the temperature or altitude must be specified.')
 
     tas = mach * SA.temp2speed_of_sound(temp, temp_units, speed_units)
 
@@ -1402,11 +1398,11 @@ def i_mach2tas(data_items):
     data_items['speed_units'] = _get_speed_units(data_items)
     speed_units = data_items['speed_units']
 
-    print
-    print 'Mach = ', mach
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature =', temp, temp_units
-    print
+    print()
+    print('Mach = ', mach)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature =', temp, temp_units)
+    print()
 
     tas = mach2tas(
         mach,
@@ -1417,7 +1413,7 @@ def i_mach2tas(data_items):
         speed_units,
         )
     data_items['tas'] = tas
-    print 'TAS = ', tas, speed_units
+    print('TAS = ', tas, speed_units)
 
 
 def tas2mach(
@@ -1472,8 +1468,7 @@ def tas2mach(
             temp = SA.alt2temp(altitude, temp_units=temp_units,
                                alt_units=alt_units)
         else:
-            raise ValueError, \
-                'At least one of the temperature or altitude must be specified.'
+            raise ValueError('At least one of the temperature or altitude must be specified.')
     A = SA.temp2speed_of_sound(temp, temp_units, speed_units)
 
     mach = tas / SA.temp2speed_of_sound(temp, temp_units, speed_units)
@@ -1505,11 +1500,11 @@ def i_tas2mach(data_items):
     data_items['temp'] = _get_temp(data_items)
     temp = data_items['temp']
 
-    print
-    print 'TAS = ', tas, speed_units
-    print 'Altitude = ', altitude, alt_units
-    print 'Temperature =', temp, temp_units
-    print
+    print()
+    print('TAS = ', tas, speed_units)
+    print('Altitude = ', altitude, alt_units)
+    print('Temperature =', temp, temp_units)
+    print()
 
     mach = tas2mach(
         tas,
@@ -1520,7 +1515,7 @@ def i_tas2mach(data_items):
         speed_units,
         )
     data_items['mach'] = mach
-    print 'Mach = ', mach
+    print('Mach = ', mach)
 
 
 # #############################################################################
@@ -1860,14 +1855,14 @@ def _interactive_interface(data_items):  # pragma: no cover
         ]
 
     count = 1
-    print 'The following functions are available:'
+    print('The following functions are available:')
     for func in func_list:
         if count < 10:
-            print ' ', count, '-', func[1]
+            print(' ', count, '-', func[1])
         else:
-            print '', count, '-', func[1]
+            print('', count, '-', func[1])
         count += 1
-    print '  Q - Quit'
+    print('  Q - Quit')
 
     prompt = 'Select a function to run by number: [%i] ' % data_items['function']
     item = VI.get_input2(prompt,
@@ -1881,15 +1876,15 @@ def _interactive_interface(data_items):  # pragma: no cover
         item = data_items['function']
     else:
         item = int(item)
-    print
+    print()
     data_items['function'] = item
     func_list_num = item - 1
     eval(func_list[func_list_num][0])
     prompt = '\nDo another calculation [Y/n]'
-    input_data = raw_input(prompt)
+    input_data = input(prompt)
     #  input_data = input(prompt)
     if input_data == '' or input_data == 'Y' or input_data == 'y':
-        print '\n'
+        print('\n')
         _interactive_interface(data_items)
     else:
         sys.exit()

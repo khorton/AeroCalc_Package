@@ -710,7 +710,7 @@ def dynamic_viscosity_conv(u, from_units=default_dynamic_viscosity_units, to_uni
     elif from_units == 'centipoise':
         u /= 1000.    
     else:
-        raise ValueError, 'Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".'
+        raise ValueError('Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".')
     
     if to_units == 'Pa s':
         pass
@@ -721,7 +721,7 @@ def dynamic_viscosity_conv(u, from_units=default_dynamic_viscosity_units, to_uni
     elif to_units == 'centipoise':
         u *= 1000. 
     else:
-        raise ValueError, 'Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".'
+        raise ValueError('Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".')
     
     return u
 
@@ -734,7 +734,7 @@ def kinematic_viscosity_conv(v, from_units=default_kinematic_viscosity_units, to
     elif from_units == 'centistokes':
         v /= 1000000.
     else:
-        raise ValueError, 'Units must be one of "m**2/s", "stokes" or "centistokes".'
+        raise ValueError('Units must be one of "m**2/s", "stokes" or "centistokes".')
 
     if to_units == 'm**2/s':
         pass
@@ -743,7 +743,7 @@ def kinematic_viscosity_conv(v, from_units=default_kinematic_viscosity_units, to
     elif to_units == 'centistokes':
         v *= 1000000.
     else:
-        raise ValueError, 'Units must be one of "m**2/s", "stokes" or "centistokes".'
+        raise ValueError('Units must be one of "m**2/s", "stokes" or "centistokes".')
 
 
     return v

@@ -83,34 +83,34 @@ def get_input(
     if type == 'float':
         while not input_validated:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             try:
                 input_data = float(input_data)
                 input_validated = True
             except ValueError:
-                print error_string
+                print(error_string)
 
     if type == 'float+':
 
         # data is a positive float
 
         # input_data = raw_input(prompt)
-        input_data = input(prompt)
+        input_data = eval(input(prompt))
         try:
             input_data = float(input_data)
             if input_data < 0:
-                print error_string
+                print(error_string)
             else:
                 input_validated = True
         except ValueError:
-            print error_string
+            print(error_string)
     elif type == 'float_or_blank':
 
         # data is a float or blank
 
         while not input_validated:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             if input_data == '':
                 input_data = default
                 input_validated = True
@@ -119,14 +119,14 @@ def get_input(
                     input_data = float(input_data)
                     input_validated = True
                 except ValueError:
-                    print error_string
+                    print(error_string)
     elif type == 'float_str_or_blank':
 
         # data is a float, a string in kwds['str_list'] or blank
 
         while not input_validated:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             if input_data == '':
                 input_data = default
                 input_validated = True
@@ -137,14 +137,14 @@ def get_input(
                     input_data = float(input_data)
                     input_validated = True
                 except ValueError:
-                    print error_string
+                    print(error_string)
     elif type == 'float+_or_blank':
 
         # data is a float, >= 0, or blank
 
         while not input_validated:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             if input_data == '':
                 input_data = default
                 input_validated = True
@@ -152,21 +152,21 @@ def get_input(
             try:
                 input_data = float(input_data)
                 if input_data < 0:
-                    print error_string
+                    print(error_string)
                 else:
                     input_validated = True
             except ValueError:
-                print error_string
+                print(error_string)
 
     if type == 'int':
         while 1:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             try:
                 input_data = int(input_data)
                 break
             except ValueError:
-                print error_string
+                print(error_string)
 
     if type == 'int_or_str':
 
@@ -174,30 +174,30 @@ def get_input(
 
         while 1:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             if input_data in kwds['str_list']:
                 break
             try:
                 input_data = int(input_data)
                 try:
                     if input_data < kwds['min']:
-                        print 'You must enter an integer no less than', \
-                            kwds['min']
+                        print('You must enter an integer no less than', \
+                            kwds['min'])
                 except KeyError:
                     pass
                 try:
                     if input_data > kwds['max']:
-                        print 'You must enter an integer less than', \
-                            kwds['max']
+                        print('You must enter an integer less than', \
+                            kwds['max'])
                 except KeyError:
                     break
             except ValueError:
-                print 'You must enter an integer'
+                print('You must enter an integer')
     elif type == 'list':
 
         while not input_validated:
             # input_data = raw_input(prompt)
-            input_data = input(prompt)
+            input_data = eval(input(prompt))
             if input_data == '':
                 input_data = default
                 input_validated = True
@@ -205,7 +205,7 @@ def get_input(
             if input_data in check_list:
                 input_validated = True
             else:
-                print error_string
+                print(error_string)
 
     return input_data
 
@@ -250,7 +250,7 @@ def get_input2(
     input_validated = False
 
     while not input_validated:
-        X = raw_input(prompt)
+        X = input(prompt)
         # X = input(prompt)
         validated_any = False
         validated_all = True
@@ -261,18 +261,18 @@ def get_input2(
             error_string = conditions_any[0]
             for condition in conditions_any[1:]:
                 if debug:
-                    print 'Testing condition', condition
+                    print('Testing condition', condition)
                 try:
                     if eval(condition):
                         validated_any = True
                         if debug:
-                            print 'Test of ', condition, 'passed'
+                            print('Test of ', condition, 'passed')
                     else:
                         if debug:
-                            print 'Test of ', condition, 'failed'
+                            print('Test of ', condition, 'failed')
                 except:
                     if debug:
-                        print 'Exception during test'
+                        print('Exception during test')
                     pass
 
         # does input meet all conditions in conditions_all?
@@ -280,25 +280,25 @@ def get_input2(
         if len(conditions_all) > 0:
             for condition in conditions_all:
                 if debug:
-                    print 'Testing condition', condition[0]
+                    print('Testing condition', condition[0])
                 try:
                     if eval(condition[0]):
                         if debug:
-                            print 'Test of ', condition[0], 'passed'
+                            print('Test of ', condition[0], 'passed')
                         pass
                     else:
                         if debug:
-                            print 'Test of ', condition[0], 'failed'
+                            print('Test of ', condition[0], 'failed')
                         validated_all = False
-                        print condition[1]
+                        print(condition[1])
                 except:
                     if debug:
-                        print 'Exception during test'
+                        print('Exception during test')
                     validated_all = False
-                    print condition[1]
+                    print(condition[1])
 
         if not validated_any:
-            print error_string, '\n'
+            print(error_string, '\n')
         elif validated_all:
             input_validated = True
     return X
