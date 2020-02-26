@@ -77,8 +77,8 @@ class Prop:
                     base_path = 'C:\\Documents and Settings\\hortonk\\My Documents\\rv\\Prop\\Hartzell_prop_maps\\'
                 elif node_name == 'eeepc':
                     base_path = '/home/kwh/RV/Hartzell_prop_maps/'
-                elif node_name[:4] == 'sage':
-                    base_path = '/home/kwh/python/prop_maps/Hartzell_prop_maps/'
+                elif node_name == 'sage-BHYVE':
+                    base_path = '/home/kwh/Prop_Maps/Hartzell_prop_maps/'
                 elif node_name == 'sage-ubuntu-1404':
                     base_path = '/home/kwh/python/prop_maps/Hartzell_prop_maps/'
                 else:
@@ -344,8 +344,8 @@ class Prop:
                     base_path = 'C:\\Documents and Settings\\hortonk\\My Documents\\rv\\Prop\\MT_Prop\\'
                 elif node_name == 'eeepc':
                     base_path = '/home/kwh/RV/MT_Prop/'
-                elif node_name[:4] == 'sage':
-                    base_path = '/home/kwh/python/prop_maps/'
+                elif node_name == 'sage-BHYVE':
+                    base_path = '/home/kwh/Prop_Maps/MT_Prop/'
                 elif node_name == 'sage-ubuntu-1204':
                     base_path = '/home/kwh/python//prop_maps/'
                 else:
