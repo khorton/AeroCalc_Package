@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Performs various functions with data files
@@ -30,7 +30,7 @@ Performs various functions with data files
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 #
-# version 0.11, 30 Jun 2009
+# version 0.20, 26 Feb 2019
 #
 # Version History:
 # vers     date     Notes
@@ -38,6 +38,7 @@ Performs various functions with data files
 # 0.11   30 Jun 09  Python 3.0 compatibility.  Removed from __future__ 
 #                   import division
 # 0.12   06 Sep 10  Add col_index()
+# 0.20   26 Feb 19   Python 3.7 compatibility tweaks
 ##############################################################################
 #
 # To Do:  1.

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,13 +27,14 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.11, 30 Jun 2009
+# version 0.20, 26 Feb 2019
 #
 # Version History:
 # vers     date     Notes
 # 0.10   04 May 08  First public release.
 # 0.11   30 Jun 09  Python 3.0 compatibility.  Removed from __future__ 
 #                   import division
+# 0.20   26 Feb 19  Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do:  1. Add doctests or unit tests for all functions.
@@ -46,7 +47,7 @@ Various functions related to lift coefficients.
 """
 
 import airspeed as A
-import std_atm as S
+import std_atm as SA
 import unit_conversion as U
 import constants
 
@@ -218,7 +219,7 @@ def mach2cl(
     0.17847495222708878
     """
     
-    P = S.alt2press(altitude, alt_units=alt_units, press_units="pa")
+    P = SA.alt2press(altitude, alt_units=alt_units, press_units="pa")
     wing_area=U.area_conv(wing_area, from_units=area_units, to_units="m**2")
     weight=U.wt_conv(weight, from_units=weight_units, to_units="kg")
     

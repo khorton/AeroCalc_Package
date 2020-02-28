@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # #############################################################################
 # Copyright (c) 2008, Kevin Horton
@@ -26,7 +26,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.13, 30 Jun 2009
+# version 0.20, 26 Feb 2019
 #
 # Version History:
 # vers     date      Notes
@@ -45,6 +45,7 @@
 #                   * Added some meat to SSEC module
 #                   * Added interpolator module, with functions for linear
 #                     interpolation in one, two or three dimensions
+# 0.20   26 Feb 19  Python 3.7 compatibility tweaks
 #
 # #############################################################################
 #

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -48,6 +48,7 @@
 # 0.28   15 Apr 10  Rename len_conv to length_conv
 #                   Add viscosity conversions
 # 0.29   07 Sep 13  Add ft/mn to speed_conv
+# 0.30   26 Feb 19  Python 3.7 compatibility tweaks
 # #############################################################################
 
 """ 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,7 +27,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.30, 11 Mar 2011
+# version 0.40, 26 Feb 2019
 #
 # Version History:
 # vers     date      Notes
@@ -44,6 +44,7 @@
 # 0.28   18 Nov 08   Add ioat2tas
 # 0.29   30 Jun 09   Python 3.0 compatibility
 # 0.30   11 Mar 11   Rework interactive mode to remember the last function used
+# 0.40   26 Feb 19   Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do:  1. Add functions:
@@ -96,16 +97,14 @@ Convert between pitot static system pressures and air speed.
 
 Provide interactive airspeed conversions when script is run directly, e.g. 
 'python airspeed.py'.
-
-Not compatible with Python 3.  For Python 3, use airspeed_p3k.
 """
 
 import math as M
-from . import std_atm as SA
-from . import constants
+import std_atm as SA
+import constants
 
 try:
-    from .default_units import *
+    from default_units import *
 except ImportError:
     default_area_units = 'ft**2'
     default_power_units = 'hp'
@@ -118,8 +117,8 @@ except ImportError:
     default_alt_units = default_length_units
     default_avgas_units = 'lb'
 
-from . import unit_conversion as U
-from . import val_input as VI
+import unit_conversion as U
+import val_input as VI
 
 Rho0 = constants.Rho0  # Density at sea level, kg/m**3
 P0 = constants.P0  # Pressure at sea level, pa

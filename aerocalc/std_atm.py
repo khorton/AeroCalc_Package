@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,7 +27,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.20, 14 Apr 2010
+# version 0.30, 26 Feb 2019
 #
 # Version History:
 # vers     date     Notes
@@ -53,6 +53,8 @@
 # 0.19   30 Jun 09  Python 3.0 compatible.  Tested with 2.5, 2.6 and 3.0.
 #
 # 0.20   18 Apr 10  Added dynamic and kinematic viscosity.
+#
+# 0.30   26 Feb 19  Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do: 1. Done.

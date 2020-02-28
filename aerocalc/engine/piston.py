@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,13 +27,13 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.02, 03 June 2010
+# version 0.10, 26 Feb 2019
 #
 # Version History:
-# vers     date     Notes
-# 0.01   14 Jul 09  First release.
-# 0.02   03 Jun 10  Added BMEP and CR_corr functions
-#
+# vers     date       Notes
+# 0.01   14 Jul 2009  First release.
+# 0.02   03 Jun 2010  Added BMEP and CR_corr functions
+# 0.10   26 Feb 2019  Added doctests.  Confirmed python3 compatibility
 # #############################################################################
 #
 # To Do: 1. 
@@ -72,6 +72,10 @@ def power_drop_off(sigma, pwr0, C=0.12):
             indicated power at sea level standard day conditions.  Typically
             about 0.12 for Lycoming and Continental horizontally opposed, 
             direct drive, non-supercharged engines.
+    
+    Example:
+    >>> power_drop_off(0.57, 200) 
+    102.27272727272725
     """
     
     return pwr0 * (sigma - C) / ( 1 - C)
@@ -81,6 +85,10 @@ def BMEP(bhp, rpm, disp, power_units=default_power_units, vol_units=default_vol_
     Return brake mean effective pressure, given brake power, rpm and displacement.
     
     Rpm is revolutions per minute.
+    
+    Example:
+    >>> BMEP(200, 2700, 360, vol_units="in**3") 
+    162.96296296296296
     """
     bhp = U.power_conv(bhp, power_units, 'hp')
     disp = U.vol_conv(disp, vol_units, 'in**3')
@@ -99,7 +107,19 @@ def CR_corr(pwr1, CR1, CR2, K=1.27):
            K = 1.4 for pure air
            K = about 1.27 for typical combustion gases, from:
                http://courses.washington.edu/me341/oct22v2.htm
+    
+    Example:
+    >>> CR_corr(150, 7.0, 8.5)
+    161.08444145636562
     """
     pwr2 = pwr1 * (1 - 1./(CR2**(K-1))) / (1 - 1./(CR1**(K-1)))
     
     return pwr2
+
+if __name__ == '__main__':  # pragma: no cover
+
+    # run doctest to check the validity of the examples in the doc strings.
+
+    import doctest
+    import sys
+    doctest.testmod(sys.modules[__name__])

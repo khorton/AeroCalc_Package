@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 # Copyright (c) 2006, Kevin Horton
 # All rights reserved.
@@ -24,16 +24,16 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# version 0.2, 14 May 2006
+# version 0.3, 26 Feb 2019
 
 # Version History:
-# vers     date     Notes
-#  0.1   14 May 06  First release.
+# vers     date       Notes
+#  0.1   14 May 2006  First release.
 #
-#  0.2   16 May 06  Corrected errors in examples.  Added percent power functions
-#                   pp, pp2mp and pp2rpm.  Changed pwr2mp and pwr2rpm functions 
-#                   to round off results to two decimal places.
-
+#  0.2   16 May 2006  Corrected errors in examples.  Added percent power functions
+#                     pp, pp2mp and pp2rpm.  Changed pwr2mp and pwr2rpm functions 
+#                     to round off results to two decimal places.
+#  0.3   26 Feb 2019  Python3 compatibility tweaks
 
 """ 
 Calculate Lycoming IO-360-A series horsepower.
@@ -74,7 +74,7 @@ to 12" HG, so powers for rpms less than 1800 or manifold pressures less than
 # NOTES   1. Takes about 1.5e-5 sec per calculation on a 1.33 GHz PPC G4, so 
 #            this should be suitable for every record in the FT data.
 
-from __future__ import division
+
 import math as M
 import std_atm as SA
 import unit_conversion as U
@@ -410,7 +410,7 @@ def pwr2mp(pwr_seek, rpm, altitude, temp = 'std', alt_units = 'ft', temp_units =
     '18.18'
     """
     if pwr_seek <= 0:
-        raise ValueError, 'Power input must be positive.'
+        raise ValueError('Power input must be positive.')
     
     low = 0 # initial lower guess
     high = 35 # initial upper guess
@@ -424,11 +424,11 @@ def pwr2mp(pwr_seek, rpm, altitude, temp = 'std', alt_units = 'ft', temp_units =
     # confirm initial low and high are OK:
     pwr_low = pwr(rpm, low, altitude, temp)
     if pwr_low > pwr_seek:
-        raise ValueError, 'Initial low guess too high.'
+        raise ValueError('Initial low guess too high.')
     
     pwr_high = pwr(rpm, high, altitude, temp)
     if pwr_high < pwr_seek:
-        raise ValueError, 'Initial high guess too low.'
+        raise ValueError('Initial high guess too low.')
     
     guess = (low + high) / 2.
     pwr_guess = pwr(rpm, guess, altitude, temp)
@@ -476,7 +476,7 @@ def pwr2rpm(pwr_seek, mp, altitude, temp = 'std', alt_units = 'ft', temp_units =
     2423
     """
     if pwr_seek <= 0:
-        raise ValueError, 'Power input must be positive.'
+        raise ValueError('Power input must be positive.')
     
     low = 1000 # initial lower guess
     high = 3500 # initial upper guess
@@ -491,14 +491,14 @@ def pwr2rpm(pwr_seek, mp, altitude, temp = 'std', alt_units = 'ft', temp_units =
     pwr_low = pwr(low, mp, altitude, temp)
     # print "pwr_low=", pwr_low
     if pwr_low > pwr_seek:
-        raise ValueError, 'Initial low guess too high.'
+        raise ValueError('Initial low guess too high.')
     
     pwr_high = pwr(high, mp, altitude, temp)
     # print "pwr_high=", pwr_high
     if pwr_high < pwr_seek:
         # print "pwr_high=", pwr_high
-        print "Function called was IO.pwr(%f, %f, %f, %f)" % (high, mp, altitude, temp)
-        raise ValueError, 'Initial high guess too low.'
+        print("Function called was IO.pwr(%f, %f, %f, %f)" % (high, mp, altitude, temp))
+        raise ValueError('Initial high guess too low.')
     
     guess = (low + high) / 2.
     pwr_guess = pwr(guess, mp, altitude, temp)
@@ -543,7 +543,7 @@ def pp2mp(percent_power, rpm, altitude, temp = 'std', alt_units = 'ft', temp_uni
     '18.18'
     """
     if percent_power <= 0:
-        raise ValueError, 'Power input must be positive.'
+        raise ValueError('Power input must be positive.')
     
     # convert units
     altitude = U.length_conv(altitude, from_units = alt_units, to_units = 'ft')
@@ -582,7 +582,7 @@ def pp2rpm(percent_power, mp, altitude, temp = 'std', alt_units = 'ft', temp_uni
     2423
     """
     if percent_power <= 0:
-        raise ValueError, 'Power input must be positive.'
+        raise ValueError('Power input must be positive.')
     
     # convert units
     altitude = U.length_conv(altitude, from_units = alt_units, to_units = 'ft')
@@ -681,7 +681,7 @@ def pwr2ff(pwr, rpm, mixture = 'pwr', ff_units = 'gph'):
         ff1 = _pwr_ff_econ(rpm1, pwr)
         ff2 = _pwr_ff_econ(rpm2, pwr)
     else:
-        raise ValueError, 'mixture must be one of "econ" or "pwr"' 
+        raise ValueError('mixture must be one of "econ" or "pwr"') 
         
 #    else:
 #        raise ValueError, 'Invalid value for mixture.'
@@ -694,7 +694,7 @@ def pwr2ff(pwr, rpm, mixture = 'pwr', ff_units = 'gph'):
     elif ff_units == 'l/hr':
         ff = U.avgas_conv(ff, to_units = 'l')
     else:
-        raise ValueError, 'Invalid fuel flow units'
+        raise ValueError('Invalid fuel flow units')
     
     return ff
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -32,6 +32,7 @@
 # Version History:
 # vers     date      Notes
 # 0.10   17 May 07   Initial version.
+# 0.20   26 Feb 19   Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do:  1. Done.
