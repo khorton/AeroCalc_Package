@@ -77,7 +77,7 @@ rpm, compression ratio, engine displacement, and geared vs ungeared engine.
 """
 
 
-from __future__ import division
+
 
 import piston as P
 import std_atm as SA
@@ -366,7 +366,7 @@ def iSFC(CR, imep=150):
             return 0.8016382542597682 + -0.0070362208555203 * imep + 0.0000397959939526 * imep**2 + -0.0000000716015877 * imep**3 - 0.01
 
     else:
-        print 'The compression ratio must be one of 6.75, 7, 7.2, 7.3, 8, 8.5, 8.7, 9 or 10'
+        print('The compression ratio must be one of 6.75, 7, 7.2, 7.3, 8, 8.5, 8.7, 9 or 10')
         return 'The compression ratio must be one of 6.75, 7, 7.2, 7.3, 8, 8.5, 8.7, 9 or 10'
         
 
@@ -424,10 +424,10 @@ def friction_hp(disp, n):
 
 def ff_table(FFP, n, CR, disp):
     import numpy
-    print "%6s %6s %6s %9s" % ('Fuel', 'Pwr', 'Pwr', 'bSFC')
-    print "%6s %6s %6s %9s" % ('Flow', ' ', 'per', '')
-    print "%6s %6s %6s %9s" % ('', ' ', 'GPH', '')
-    print "%6s %6s %6s %9s" % ('(GPH)', '(hp)', '(hp/GPH)', '(lb/h/hp)')
+    print("%6s %6s %6s %9s" % ('Fuel', 'Pwr', 'Pwr', 'bSFC'))
+    print("%6s %6s %6s %9s" % ('Flow', ' ', 'per', ''))
+    print("%6s %6s %6s %9s" % ('', ' ', 'GPH', ''))
+    print("%6s %6s %6s %9s" % ('(GPH)', '(hp)', '(hp/GPH)', '(lb/h/hp)'))
     for ff in numpy.arange(FFP-3, FFP+5, 0.01):
         FF_best_power = FFP / .849
         p = power(ff, FFP, n, CR, disp)
@@ -438,4 +438,4 @@ def ff_table(FFP, n, CR, disp):
         else:
             remarks = ' '
             
-        print "%5.2f %7.2f %7.2f %9.3f %23s" % (ff, p, p/ff, ff * 6.01/p, remarks)
+        print("%5.2f %7.2f %7.2f %9.3f %23s" % (ff, p, p/ff, ff * 6.01/p, remarks))
