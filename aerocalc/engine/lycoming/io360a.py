@@ -700,10 +700,6 @@ def pwr2ff(pwr, rpm, mixture = 'pwr', ff_units = 'gph'):
 
     
 if __name__=='__main__':
-#     from timeit import Timer
-#     t1 = Timer("pwr(2555, 23.1, 4592, 5, temp_units = 'F')", "from __main__ import pwr")
-#     print "pwr(2555, 23.1, 4592, 5):", t1.timeit(10000)
-
     # run doctest to check the validity of the examples in the doc strings.
     import doctest, sys
     doctest.testmod(sys.modules[__name__])

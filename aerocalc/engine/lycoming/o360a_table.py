@@ -1,7 +1,15 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 """
 Example of how to use the o360a.py script to create a custom power chart.
+
+version 0.2, 28 Feb 2019
+
+# Version History:
+# vers     date       Notes
+#  0.1   14 May 2006  First release.
+#  0.2   28 Feb 2019  Python3 compatibility tweaks
+
 """
 
 import o360a as O
@@ -114,3 +122,7 @@ for alt in range(0, 16000, 1000):
 
 print('-' * full_width)
 
+if __name__=='__main__':
+    # run doctest to check the validity of the examples in the doc strings.
+    import doctest, sys
+    doctest.testmod(sys.modules[__name__])
