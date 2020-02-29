@@ -44,7 +44,7 @@ class Test_eas2cl(unittest.TestCase):
             speed_units='kt',
             )
         Truth = 1.9333626157
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
 
@@ -57,7 +57,7 @@ class Test_eas2cl(unittest.TestCase):
             speed_units='mph',
             )
         Truth = 0.49889058073
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_cas2cl(unittest.TestCase):
