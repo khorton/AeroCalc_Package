@@ -1,4 +1,6 @@
-from __future__ import division
+#!/usr/bin/env python3
+
+
 import commands
 
 def l(t):

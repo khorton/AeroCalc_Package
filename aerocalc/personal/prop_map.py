@@ -1,9 +1,9 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 
 """prop efficiency map decoding
 """
-from __future__ import division
+
 import csv
 import glob
 import interpolator as I
@@ -17,11 +17,12 @@ import unit_conversion as U
 
 # #############################################################################
 #
-# version 0.1, 29 May 2009
+# version 0.2, 28 Feb 2020
 #
 # Version History:
-# vers     date      Notes
-# 0.1    29 May  09  Initial release
+# vers     date       Notes
+# 0.1    29 May 2009  Initial release
+# 0.2    28 Feb 2020  Python 3 compatibility
 # #############################################################################
 #
 # To Do:  1. Remove hard coded pointers to directories on kwh's computers.
@@ -82,20 +83,20 @@ class Prop:
                 elif node_name == 'sage-ubuntu-1404':
                     base_path = '/home/kwh/python/prop_maps/Hartzell_prop_maps/'
                 else:
-                    raise ValueError, 'Unknown computer'
+                    raise ValueError('Unknown computer')
 
             # confirm the path to the data files exists
             if os.path.exists(base_path):
                 pass
             else:
-                raise ValueError, 'The path specified for the prop map files does not exist'
+                raise ValueError('The path specified for the prop map files does not exist')
 
             file_glob = base_path + base_name + '*.csv'
             file_names = glob.glob(file_glob)
 
             # confirm that at least one data file was found
             if len(file_names) < 1:
-                raise ValueError, 'No prop data files were found.'
+                raise ValueError('No prop data files were found.')
 
             # need names in sorted order, so the array ends up in order of mach
             # sorting seems to not be needed on OS X, as glob.glob() returns a sorted list
@@ -126,7 +127,7 @@ class Prop:
                 # load block of CT values into temp storage
                 temp_lines1 = []
                 while 1:
-                    value_line = raw_data.next()
+                    value_line = next(raw_data)
                     try:
                         value_line_search = re.match('[0\.\d+,CP]', value_line[0])
                     except IndexError:
@@ -164,7 +165,7 @@ class Prop:
                 temp_lines3 = []
                 while 1:
                     try:
-                        value_line = raw_data.next()
+                        value_line = next(raw_data)
                     except StopIteration:
                         break
                     try:
@@ -208,7 +209,7 @@ class Prop:
                 temp_lines2 = []
                 while 1:
                     try:
-                        value_line = raw_data.next()
+                        value_line = next(raw_data)
                     except StopIteration:
                         break
                     try:
@@ -257,8 +258,8 @@ class Prop:
                         if line[-1] == 0:
                             line.pop(-1)
                         else:
-                            print 'Problem line =', line
-                            raise ValueError, 'Problem - Trying to remove real data from end of line'
+                            print('Problem line =', line)
+                            raise ValueError('Problem - Trying to remove real data from end of line')
 
             for i, item in enumerate(temp_data_storage1):
                 self.prop_CT_map[i] = temp_data_storage1[i]
@@ -281,7 +282,7 @@ class Prop:
                         if line[-1] == 0:
                             line.pop(-1)
                         else:
-                            raise ValueError, 'Problem - Trying to remove real data from end of line'
+                            raise ValueError('Problem - Trying to remove real data from end of line')
 
             for i, item in enumerate(temp_data_storage1):
                 self.blade_angle_map[i] = temp_data_storage3[i]
@@ -304,7 +305,7 @@ class Prop:
                         if line[-1] == 0:
                             line.pop(-1)
                         else:
-                            raise ValueError, 'Problem - Trying to remove real data from end of line'
+                            raise ValueError('Problem - Trying to remove real data from end of line')
 
             for i, item in enumerate(temp_data_storage1):
                 self.prop_eff_map[i] = temp_data_storage2[i]
@@ -328,7 +329,7 @@ class Prop:
             elif base_name == '7666-2RV':
                 self.dia = 74
             else:
-                raise ValueError, 'Invalid prop'
+                raise ValueError('Invalid prop')
         elif 'MTV' in base_name:
             if base_path == '': 
                 node_name = node()
@@ -349,13 +350,13 @@ class Prop:
                 elif node_name == 'sage-ubuntu-1204':
                     base_path = '/home/kwh/python//prop_maps/'
                 else:
-                    raise ValueError, 'Unknown computer'
+                    raise ValueError('Unknown computer')
 
             # confirm the path to the data files exists
             if os.path.exists(base_path):
                 pass
             else:
-                raise ValueError, 'The path specified for the prop map files does not exist'
+                raise ValueError('The path specified for the prop map files does not exist')
             file_glob = base_path + base_name + '*.csv'
 #            file_glob = base_path + '*' + base_name + '*.csv'
             
@@ -363,30 +364,30 @@ class Prop:
 
             # confirm that at least one data file was found
             if len(file_names) < 1:
-                raise ValueError, 'No prop data files were found.'
+                raise ValueError('No prop data files were found.')
 
             for file_name in file_names:
                 temp_lines = []
                 FILE = open(file_name)  
                 raw_data = csv.reader(FILE)
                 header_lines = 2
-                line1 = raw_data.next()
+                line1 = next(raw_data)
                 model_match = re.search('(\S+)\s+(\S+)\s.*', line1[0])
                 self.manufacturer = model_match.group(1)
                 self.model = model_match.group(2)
                 self.dia = float(re.search('[^-]+-[^-]+-[^-]+-(\d+).*', line1[0]).group(1))
                 self.dia = U.length_conv(self.dia, from_units='cm', to_units='in')
                 for n in range(header_lines - 1):
-                    raw_data.next()
+                    next(raw_data)
 
                 #replace "J" with mach 0
-                temp_lines.append(raw_data.next())
+                temp_lines.append(next(raw_data))
                 temp_lines[0][0] = 0
 
                 # load block of efficiency values into temp storage
                 while 1:
                     try:
-                        temp_lines.append(raw_data.next())
+                        temp_lines.append(next(raw_data))
                     except StopIteration:
                         break
                 for l, line in enumerate(temp_lines):
@@ -425,7 +426,7 @@ class Prop:
                 self.eff_J_max = max(self.prop_eff_map[0,0,1:])
                 
         else:
-            print 'prop type not known'
+            print('prop type not known')
 
 
 def ct2thrust(Ct, Rho, rpm, dia, thrust_units = 'lb', density_units = 'lb/ft**3', dia_units = 'in'):
@@ -563,7 +564,7 @@ def prop_eff(prop, bhp, rpm, tas, altitude, temp = 'std', power_units = 'hp', al
     prop_eff = cp2eff(prop, Cp, J, blade_tip_mach)
     
     if N.isnan(prop_eff):
-        raise ValueError, 'Out of range inputs'
+        raise ValueError('Out of range inputs')
 
     return prop_eff
     
@@ -608,40 +609,40 @@ def prop_eff_vs_tas(prop, alt, bhp, rpm):
     """
     Prints prop efficiency over a range of speeds.
     """
-    print 'Prop:', prop.prop
-    print 'Altitude:', alt
-    print 'Power:', bhp
-    print 'RPM:', rpm
+    print('Prop:', prop.prop)
+    print('Altitude:', alt)
+    print('Power:', bhp)
+    print('RPM:', rpm)
     for tas in range(10, 230, 10):
         p_eff = prop_eff(prop, bhp, rpm, tas, alt)
         pe_format = '%.1f' % (p_eff * 100)
-        print 'TAS:', tas, 'Prop eff:', pe_format, '%'
+        print('TAS:', tas, 'Prop eff:', pe_format, '%')
 
 def prop_eff_vs_bhp(prop, alt, tas, rpm):
     """
     Prints prop efficiency over a range of powers.
     """
-    print 'Prop:', prop.prop
-    print 'Altitude:', alt
-    print 'TAS:', tas
-    print 'RPM:', rpm
+    print('Prop:', prop.prop)
+    print('Altitude:', alt)
+    print('TAS:', tas)
+    print('RPM:', rpm)
     for bhp in range(50, 350, 10):
         p_eff = prop_eff(prop, bhp, rpm, tas, alt)
         pe_format = '%.1f' % (p_eff * 100)
-        print 'Power:', bhp, 'Prop eff:', pe_format, '%'
+        print('Power:', bhp, 'Prop eff:', pe_format, '%')
 
 def prop_eff_vs_rpm(prop, alt, tas, bhp):
     """
     Prints prop efficiency over a range of rpms.
     """
-    print 'Prop:', prop.prop
-    print 'Altitude:', alt
-    print 'TAS:', tas
-    print 'Power:', bhp
+    print('Prop:', prop.prop)
+    print('Altitude:', alt)
+    print('TAS:', tas)
+    print('Power:', bhp)
     for rpm in range(1500, 3500, 100):
         p_eff = prop_eff(prop, bhp, rpm, tas, alt)
         pe_format = '%.1f' % (p_eff * 100)
-        print 'RPM:', rpm, 'Prop eff:', pe_format, '%'
+        print('RPM:', rpm, 'Prop eff:', pe_format, '%')
 
 def prop_data(prop, bhp, rpm, tas, altitude, temp = 'std', power_units = 'hp', alt_units = 'ft', temp_units = 'C', speed_units = 'kt', dia_units = 'in', thrust_units = 'lb'):
     """
@@ -673,14 +674,14 @@ def prop_data(prop, bhp, rpm, tas, altitude, temp = 'std', power_units = 'hp', a
         thrust = ct2thrust(Ct, density, rpm, prop.dia, thrust_units = thrust_units, density_units = 'kg/m**3', dia_units = dia_units)
     # data_block = 'J = ' + str(J) + '\nCp = ' + str(Cp) + '\n Tip mach = ' + str(blade_tip_mach) + '\n Ct = ' + str(Ct) + '\n Thrust = ' + str(thrust) + ' ' + thrust_units + '\n Prop efficiency = ' + str(prop_eff)
     
-    print '           prop = ', prop.prop
-    print '              J = %.3f' % J
-    print '             Cp = %.5f' % Cp
-    print '       Tip Mach = %.3f' % blade_tip_mach
-    print '             Ct = %.3f' % Ct
-    print '         Thrust = %.2f' % thrust, thrust_units
-    print 'Prop efficiency = %.4f' % prop_eff
-    print '      Thrust HP = %.2f' % bhp * prop_eff
+    print('           prop = ', prop.prop)
+    print('              J = %.3f' % J)
+    print('             Cp = %.5f' % Cp)
+    print('       Tip Mach = %.3f' % blade_tip_mach)
+    print('             Ct = %.3f' % Ct)
+    print('         Thrust = %.2f' % thrust, thrust_units)
+    print('Prop efficiency = %.4f' % prop_eff)
+    print('      Thrust HP = %.2f' % bhp * prop_eff)
     
     return
 

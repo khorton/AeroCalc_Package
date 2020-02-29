@@ -26,14 +26,14 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.11, 30 Jun 2009
+# version 0.30, 26 Feb 2020
 #
 # Version History:
-# vers     date      Notes
-# 0.10   17 Mar 08   Initial version.
-# 0.11   30 Jun 09   Python 3.0 changes
-# 0.20   18 Apr 10   Add viscosity units
-# 0.30   26 Feb 19   Python 3.7 compatibility tweaks
+# vers     date        Notes
+# 0.10   17 Mar 2008   Initial version.
+# 0.11   30 Jun 2009   Python 3.0 changes
+# 0.20   18 Apr 2010   Add viscosity units
+# 0.30   26 Feb 2020   Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do: 1. Add option to use config file in user's home directory to override

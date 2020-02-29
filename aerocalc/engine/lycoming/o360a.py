@@ -27,7 +27,7 @@
 # version 0.3, 27 Feb 2020
 
 # Version History:
-# vers     date     Notes
+# vers     date       Notes
 #  0.1   14 May 2006  First release.
 #
 #  0.2   16 May 2006  Corrected errors in examples.  Added percent power functions

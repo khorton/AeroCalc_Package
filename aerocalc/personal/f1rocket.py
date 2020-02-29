@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 """
 Various performance calculations for F-1 Rocket with EVO wing.
 
@@ -81,12 +81,12 @@ def speed(altitude, weight, power, rpm, temp = 'std', temp_units = 'C', \
         temp = temp, temp_units = temp_units, rv = rv, wing_area = wing_area, \
         speed_units = speed_units, flap = 0)
     if error_low < 0:
-        raise ValueError, 'Initial low quess too high'
+        raise ValueError('Initial low quess too high')
     error_high, tas_guess = _pwr_error(eas_high, altitude, weight, power, rpm,\
         temp = temp, temp_units = temp_units, rv = rv, wing_area = 110, \
         speed_units = speed_units, flap = 0)
     if error_high > 0:
-        raise ValueError, 'Initial high guess too low'
+        raise ValueError('Initial high guess too low')
     eas_guess = (eas_low + eas_high) / 2.
     error_guess, tas_guess = _pwr_error(eas_guess, altitude, weight, power, \
         rpm, temp = temp, temp_units = temp_units, rv = rv, wing_area = 110, \
@@ -127,7 +127,7 @@ def WOT_speed(altitude, weight = 2100, rpm = 2700, temp = 'std', \
 #       print 'Ram rise =', ram_press
         MP = press - MP_loss + ram_press
         pwr = O.pwr(rpm, MP, altitude, temp = temp, temp_units = temp_units) * rated_power/180
-        print 'MP =', MP, 'Power =', pwr
+        print('MP =', MP, 'Power =', pwr)
         tas = speed(altitude, weight, pwr, rpm, temp = temp, \
             temp_units = temp_units, rv = rv, wing_area = wing_area, \
             speed_units = speed_units, prop_eff = prop_eff)
@@ -168,7 +168,7 @@ def roca(altitude, weight = 2100, press_drop = 1.2, temp = 'std', \
     MP = SA.alt2press(altitude) - press_drop
     pwr = O.pwr(rpm, MP, altitude, temp = temp, temp_units = temp_units) * rated_power/180
     roc_max = -100000
-    eass = range(60, 150, 1)
+    eass = list(range(60, 150, 1))
     rocs = []
     for eas in eass:
         rocs.append((roc(altitude, eas, weight, pwr, 2700, temp = temp, \
@@ -187,5 +187,5 @@ def roc_sweep(start, end, interval, altitude, weight, power, rpm, \
             temp_units = temp_units, rv = rv, wing_area = wing_area, \
             speed_units = speed_units, flap = flap, prop_eff = prop_eff, \
             load_factor = load_factor)
-        print 'eas =', eas, speed_units, 'Rate of climb =', ROC, 'ft/mn'
+        print('eas =', eas, speed_units, 'Rate of climb =', ROC, 'ft/mn')
     

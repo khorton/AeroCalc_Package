@@ -27,31 +27,33 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.25, 16 Aug 2014
+# version 0.30, 28 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-#  0.1   27 Nov 08  First release.
+# vers     date       Notes
+#  0.1   27 Nov 2008  First release.
+#                
+# 0.11   01 May 2009  Cleaned up documentation.
+#                
+# 0.2    24 May 2009  Added fixed pitch prop variant of power from fuel flow
+#                
+# 0.21   24 Oct 2010  Added data for 10:1 CR
+#                
+# 0.22   31 Oct 2010  Added approximate friction hp data for 290, 340, 375, 390 and 400 in**3 engines
+#                
+# 0.23   11 Mar 2011  Corrected notes by removing reference to temperature
+#                
+# 0.24   02 Mar 2012  Add pwr2ff
+#                
+# 0.25   16 Aug 2014  Add additional engine displacements to friction power calculation.  
+#                     The friction power for the additional displacements is assumed to 
+#                     vary linearly with displacement, based on one of the engines with 
+#                     data from Lycoming.
+#                    
+#                     Correct logic error that caused crash if using displacement = '540S' 
+#                     (or similar) to designate geared supercharged engines.
 #
-# 0.11   01 May 09  Cleaned up documentation.
-#
-# 0.2    24 May 09  Added fixed pitch prop variant of power from fuel flow
-#
-# 0.21   24 Oct 10  Added data for 10:1 CR
-#
-# 0.22   31 Oct 10  Added approximate friction hp data for 290, 340, 375, 390 and 400 in**3 engines
-#
-# 0.23   11 Mar 11  Corrected notes by removing reference to temperature
-#
-# 0.24   02 Mar 12  Add pwr2ff
-#
-# 0.25   16 Aug 14  Add additional engine displacements to friction power calculation.  
-#                   The friction power for the additional displacements is assumed to 
-#                   vary linearly with displacement, based on one of the engines with 
-#                   data from Lycoming.
-#
-#                   Correct logic error that caused crash if using displacement = '540S' 
-#                   (or similar) to designate geared supercharged engines.
+# 0.30  28 Feb 2020   Python 3 compatibility
 # #############################################################################
 #
 # To Do: 1. Done

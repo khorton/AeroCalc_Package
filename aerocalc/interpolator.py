@@ -27,12 +27,12 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.20, 26 Feb 2019
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.10   30 Jun 09  First public release.
-# 0.20   26 Feb 19  Python 3.7 compatibility tweaks
+# vers     date       Notes
+# 0.10   30 Jun 2009  First public release.
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 # #############################################################################
 
 """

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 """
 Various performance calculations for RV-8.
 
@@ -36,7 +36,7 @@ Various performance calculations for RV-8.
 #                           'nan'
 ##############################################################################
 
-from __future__ import division
+
 import ft_data_reduction as FT
 import unit_conversion as U
 import io360a as IO
@@ -109,13 +109,13 @@ def run_tests(cd0 = 0.0221, e = 0.825):
         thrust_power = power * prop_eff
         excess_power = thrust_power - drag_power
         
-        print 'Case', n, 'Altitude =', dalt, 'TAS =', tas, 'EAS =', eas, 'Excess power =', excess_power
+        print('Case', n, 'Altitude =', dalt, 'TAS =', tas, 'EAS =', eas, 'Excess power =', excess_power)
         
         sum_sq += wt_value * excess_power ** 2
         wt_value_tot += wt_value
         
-    print 'Average sum of squares of excess power =', \
-        (sum_sq / wt_value_tot) ** 0.5
+    print('Average sum of squares of excess power =', \
+        (sum_sq / wt_value_tot) ** 0.5)
 
 def _pwr_error(prop, eas_guess, altitude, weight, power, rpm, temp = 'std', \
     temp_units = 'C', rv = '8', wing_area = 110, speed_units = 'kt', \
@@ -158,12 +158,12 @@ def speed(prop, altitude, weight, power, rpm, temp = 'std', temp_units = 'C', \
         temp = temp, temp_units = temp_units, rv = rv, wing_area = wing_area, \
         speed_units = speed_units, flap = 0, wheel_pants = wheel_pants)
     if error_low < 0:
-        raise ValueError, 'Initial low guess too high'
+        raise ValueError('Initial low guess too high')
     error_high, tas_guess = _pwr_error(prop, eas_high, altitude, weight, power, rpm,\
         temp = temp, temp_units = temp_units, rv = rv, wing_area = wing_area, \
         speed_units = speed_units, flap = 0, wheel_pants = wheel_pants)
     if error_high > 0:
-        raise ValueError, 'Initial high guess too low'
+        raise ValueError('Initial high guess too low')
     eas_guess = (eas_low + eas_high) / 2.
     error_guess, tas_guess = _pwr_error(prop, eas_guess, altitude, weight, power, \
         rpm, temp = temp, temp_units = temp_units, rv = rv, wing_area = wing_area, \
@@ -204,7 +204,7 @@ def WOT_speed_orig(prop, altitude, weight = 1800, rpm = 2700, temp = 'std', \
     elif mixture == 'pwr':
         pass
     else:
-        raise ValueError, 'mixture must be one of "pwr" or "econ"'
+        raise ValueError('mixture must be one of "pwr" or "econ"')
     while error > 0.0001:
         dp = A.cas2dp(cas_guess, press_units = 'in HG')
 #       print 'dp =', dp
@@ -242,7 +242,7 @@ def WOT_speed(engine, prop, altitude, weight = 1800, rpm = 2700, temp = 'std', \
     elif mixture == 'pwr':
         pass
     else:
-        raise ValueError, 'mixture must be one of "pwr" or "econ"'
+        raise ValueError('mixture must be one of "pwr" or "econ"')
     while error > 0.0001:
         MP = MP_pred(tas_guess, altitude, rpm, rpm_base = 2700., MP_loss = 1.322, ram = 0.5, temp='std')
         pwr = engine.pwr(rpm, MP, altitude, temp = temp, temp_units = temp_units) * pwr_factor
@@ -381,7 +381,7 @@ def cafe_speed():
         eas = A.tas2eas(tas, dalt, speed_units = 'mph')
         calc_tas = speed(prop, dalt, wt, IO.pwr(rpm, mp, dalt), rpm, \
             speed_units = 'mph')
-        print 'Actual TAS =', tas, 'Calc TAS =', calc_tas
+        print('Actual TAS =', tas, 'Calc TAS =', calc_tas)
 
 def prop_test_cases():
     speed_units = 'mph'
@@ -394,7 +394,7 @@ def prop_test_cases():
                     (8000, 2300, 110)]
                     
     for prop in props:
-        print 'Prop =', prop.model
+        print('Prop =', prop.model)
 #       if prop == '7666-4RV':
 #           dia = 72
 #       elif prop == '7666-2RV':
@@ -403,15 +403,15 @@ def prop_test_cases():
 #           raise ValueError, 'Invalid prop'
         # PM.read_data_files_csv(base_name = prop)
         for rv in rvs:
-            print 'RV model =', rv
+            print('RV model =', rv)
             for test in level_tests:
                 alt = test[0]
                 rpm = test[1]
                 power = test[2]
                 tas = speed(prop, alt, 1800, power, rpm, prop = prop, rv = rv, \
                     speed_units = speed_units)
-                print 'Alt =', alt, 'Power =', power, 'Speed =', tas, \
-                    speed_units, 'TAS'
+                print('Alt =', alt, 'Power =', power, 'Speed =', tas, \
+                    speed_units, 'TAS')
 
 def roc(prop, altitude, eas, weight, power, rpm, temp = 'std', temp_units = 'C', \
     rv = '8',  wing_area = 110, speed_units = 'kt', flap = 0, \
@@ -443,7 +443,7 @@ def roca(prop, altitude, weight = 1800, press_drop = 1.2, temp = 'std', \
     MP = SA.alt2press(altitude) - press_drop
     pwr = IO.pwr(2700, MP, altitude, temp = temp)
     roc_max = -100000
-    eass = range(600, 1500, 1)
+    eass = list(range(600, 1500, 1))
     rocs = []
     for eas in eass:
         rocs.append((roc(prop, altitude, eas/10., weight, pwr, 2700, temp = temp, \
@@ -488,9 +488,9 @@ def aoca(prop, altitude, weight = 1800, press_drop = 1.2, temp = 'std', \
     pwr = IO.pwr(2700, MP, altitude, temp = temp)
 
     if climb == True:
-        eass = range(550, 800, 1)
+        eass = list(range(550, 800, 1))
     else:
-        eass = range(700, 1200, 1)
+        eass = list(range(700, 1200, 1))
     aocs = []
     if climb == True:
         for eas in eass:
@@ -512,7 +512,7 @@ def roc_sweep(prop, start, end, interval, altitude, weight, power, rpm, \
             temp_units = temp_units, rv = rv, wing_area = 110, \
             speed_units = speed_units, flap = 0, load_factor = load_factor)
         # print 'eas =', eas, speed_units, 'Rate of climb =', ROC, 'ft/mn'
-        print 'eas = %.0f %s Rate of climb = %.0f ft/mn' % (eas, speed_units, ROC)
+        print('eas = %.0f %s Rate of climb = %.0f ft/mn' % (eas, speed_units, ROC))
     
 def pwr_vs_alt_temp(temps):
     """
@@ -563,19 +563,19 @@ def pwr_vs_alt_temp(temps):
 87.7    84.4    81.5    78.9    88.5 
 
     """
-    alts = range(0,22000, 2000)
+    alts = list(range(0,22000, 2000))
     for alt in alts:
-        print alt, 'ft'
+        print(alt, 'ft')
         for temp in temps:
-            print temp, '\t',
-        print 'ISA'
+            print(temp, '\t', end=' ')
+        print('ISA')
         for temp in temps:
             power = alt2pwr(alt, temp = temp)
-            print '%.1f' % (power), '\t',
+            print('%.1f' % (power), '\t', end=' ')
         press = SA.alt2press(alt)
         MP = press - (29.9213 - 28.6)
         isa_pwr = IO.pwr(2700, MP, alt)
-        print '%.1f' % (isa_pwr), '\n'
+        print('%.1f' % (isa_pwr), '\n')
 
 def alt2pwr(alt, rpm = 2700, MP_max = 30, temp  = 'std', alt_units = 'ft', \
     temp_units = 'C'):
@@ -616,7 +616,7 @@ def roc_vs_temp(prop, alt_max = 20000, alt_interval=2000, weight=1800, temps=[-2
         rpm = 2500
         MP_max = 30
     else:
-        raise ValueError, "pwr must be on of 'max', 'cc', or 2500"
+        raise ValueError("pwr must be on of 'max', 'cc', or 2500")
 
     alt = 0
     while alt<alt_max:
@@ -629,14 +629,14 @@ def roc_vs_temp(prop, alt_max = 20000, alt_interval=2000, weight=1800, temps=[-2
 #        for temp  in temps:
 #            print temp, '\t\t\t',
 #        print '\n',
-        print '%.0f\t%.0f\t%.0f\t' % (weight, alt, cas),
+        print('%.0f\t%.0f\t%.0f\t' % (weight, alt, cas), end=' ')
         for temp in temps:
             # power = IO.pwr(rpm, MP, alt, temp) * pwr_factor
             power = alt2pwr(alt, rpm = rpm, MP_max = MP_max, temp = temp)
             ROC = roc(prop, alt, eas, weight, power, rpm, temp) /10
             ROC = int('%.0f' % (ROC)) * 10
-            print '%.0f\t' % (ROC), 
-        print '\n'
+            print('%.0f\t' % (ROC), end=' ') 
+        print('\n')
         alt += alt_interval
 
 def aoc_sweep(prop, start, end, interval, altitude, weight, power, rpm, \
@@ -650,7 +650,7 @@ def aoc_sweep(prop, start, end, interval, altitude, weight, power, rpm, \
         AOC = aoc(prop, altitude, eas, weight, power, rpm, temp = temp, \
             temp_units = temp_units, rv = rv,  wing_area = 110, \
             speed_units = speed_units, flap = 0)
-        print 'eas =', eas, 'Climb gradient', AOC
+        print('eas =', eas, 'Climb gradient', AOC)
 
 def plot_roc_vs_speed(prop, start, end, interval, altitude, weight, power, rpm, \
     temp = 'std', temp_units = 'C', rv = '8',  wing_area = 110, \
@@ -692,7 +692,7 @@ def alt2roc_speed(alt, climb_speed = 'max'):
         else:
             roc_speed = 100 - ((alt - 10000)/500.)
     else:
-        raise ValueError, 'Invalid climb profile'
+        raise ValueError('Invalid climb profile')
         
     return roc_speed
     
@@ -747,34 +747,34 @@ def climb_data(prop, weight = 1800., alt_max = 20000., TO_fuel = 0, TO_dist = 0,
         rpm = 2500
         MP_max = 30
     else:
-        raise ValueError, "pwr must be one of 'max', 'cc', or 2500"
+        raise ValueError("pwr must be one of 'max', 'cc', or 2500")
     
 
     if output == 'raw':
-        print S.center('Altitude', 10),
-        print S.center('ROC', 10),
-        print S.center('Time', 10),
-        print S.center('Fuel Used', 10),
-        print S.center('Dist', 10),
-        print S.center('Speed', 10)
+        print(S.center('Altitude', 10), end=' ')
+        print(S.center('ROC', 10), end=' ')
+        print(S.center('Time', 10), end=' ')
+        print(S.center('Fuel Used', 10), end=' ')
+        print(S.center('Dist', 10), end=' ')
+        print(S.center('Speed', 10))
         
-        print S.center('(ft)', 10),
-        print S.center('(ft/mn)', 10),
-        print S.center('(mn)', 10),
+        print(S.center('(ft)', 10), end=' ')
+        print(S.center('(ft/mn)', 10), end=' ')
+        print(S.center('(mn)', 10), end=' ')
         f_units = '(' + fuel_units + ')'
-        print S.center(f_units, 10),
-        print S.center('(nm)', 10),
-        print S.center('(KCAS)', 10)
+        print(S.center(f_units, 10), end=' ')
+        print(S.center('(nm)', 10), end=' ')
+        print(S.center('(KCAS)', 10))
         
         # data for MSL
-        print S.rjust(locale.format('%.0f', 0, True), 7),
+        print(S.rjust(locale.format('%.0f', 0, True), 7), end=' ')
         # calculate ROC at MSL
-        print S.rjust(locale.format('%.0f', round(_alt2ROC(prop, 0) / 10.) * 10, \
-            True), 10),
-        print S.rjust('%.1f' % (0), 10),
-        print S.rjust('%.1f' % (TO_fuel), 10),
-        print S.rjust('%.1f' % (TO_dist), 10),
-        print S.rjust('%3d' % (alt2roc_speed(0, climb_speed = climb_speed)), 10)
+        print(S.rjust(locale.format('%.0f', round(_alt2ROC(prop, 0) / 10.) * 10, \
+            True), 10), end=' ')
+        print(S.rjust('%.1f' % (0), 10), end=' ')
+        print(S.rjust('%.1f' % (TO_fuel), 10), end=' ')
+        print(S.rjust('%.1f' % (TO_dist), 10), end=' ')
+        print(S.rjust('%3d' % (alt2roc_speed(0, climb_speed = climb_speed)), 10))
 
     elif output == 'latex':
         temp = 15 + isa_dev
@@ -790,8 +790,8 @@ def climb_data(prop, weight = 1800., alt_max = 20000., TO_fuel = 0, TO_dist = 0,
         MSL_line.append(str(TO_fuel))
         MSL_line.append(str(TO_dist))
         
-        print '&'.join(MSL_line) + '\\\\'
-        print '\\hline'
+        print('&'.join(MSL_line) + '\\\\')
+        print('\\hline')
     elif output == 'array':
         # no header rows, but make blank array
         array = [[0,0,TO_fuel,0]]
@@ -824,13 +824,13 @@ def climb_data(prop, weight = 1800., alt_max = 20000., TO_fuel = 0, TO_dist = 0,
         dist += slice_dist / 6076.115
 
         if output == 'raw':
-            print S.rjust(locale.format('%.0f', alt, True), 7),
+            print(S.rjust(locale.format('%.0f', alt, True), 7), end=' ')
             # calculate ROC at the displayed altitude
-            print S.rjust(locale.format('%.0f', ROC, True), 10),
-            print S.rjust('%.1f' % (time), 10),
-            print S.rjust('%.1f' % (fuel_out), 10),
-            print S.rjust('%.1f' % (dist), 10),
-            print S.rjust('%3d' % (int(cas_out)), 10)
+            print(S.rjust(locale.format('%.0f', ROC, True), 10), end=' ')
+            print(S.rjust('%.1f' % (time), 10), end=' ')
+            print(S.rjust('%.1f' % (fuel_out), 10), end=' ')
+            print(S.rjust('%.1f' % (dist), 10), end=' ')
+            print(S.rjust('%3d' % (int(cas_out)), 10))
         elif output == 'latex':
             line = []
             line.append(str(locale.format('%.0f', alt, True)))
@@ -840,8 +840,8 @@ def climb_data(prop, weight = 1800., alt_max = 20000., TO_fuel = 0, TO_dist = 0,
             line.append(str(locale.format('%.0f', time)))
             line.append(str(locale.format('%.1f', fuel_out)))
             line.append(str(locale.format('%.0f', dist)))
-            print '&' + '&'.join(line) + '\\\\'
-            print '\\hline'
+            print('&' + '&'.join(line) + '\\\\')
+            print('\\hline')
         elif output == 'array':
             array.append([alt, time, fuel_out, dist])
         calc_alt += alt_interval
@@ -880,20 +880,20 @@ def descent_data(prop, weight=1600., alt_max=20000., fuel_units='USG', \
     dist = 0
     
     if output == 'raw':
-        print S.center('Altitude', 10),
-        print S.center('ROD', 10),
-        print S.center('Time', 10),
-        print S.center('Fuel Used', 10),
-        print S.center('Dist', 10),
-        print S.center('Speed', 10)
+        print(S.center('Altitude', 10), end=' ')
+        print(S.center('ROD', 10), end=' ')
+        print(S.center('Time', 10), end=' ')
+        print(S.center('Fuel Used', 10), end=' ')
+        print(S.center('Dist', 10), end=' ')
+        print(S.center('Speed', 10))
         
-        print S.center('(ft)', 10),
-        print S.center('(ft/mn)', 10),
-        print S.center('(mn)', 10),
+        print(S.center('(ft)', 10), end=' ')
+        print(S.center('(ft/mn)', 10), end=' ')
+        print(S.center('(mn)', 10), end=' ')
         f_units = '(' + fuel_units + ')'
-        print S.center(f_units, 10),
-        print S.center('(nm)', 10),
-        print S.center('(KCAS)', 10)
+        print(S.center(f_units, 10), end=' ')
+        print(S.center('(nm)', 10), end=' ')
+        print(S.center('(KCAS)', 10))
         
         # # data for max altitude
         # print S.rjust(locale.format('%.0f', alt_max, True), 7),
@@ -985,13 +985,13 @@ def descent_data(prop, weight=1600., alt_max=20000., fuel_units='USG', \
     
     if output == 'raw':
         for n, alt in enumerate(alts):            
-            print S.rjust(locale.format('%.0f', alt, True), 7),
+            print(S.rjust(locale.format('%.0f', alt, True), 7), end=' ')
             # calculate ROC at the displayed altitude
-            print S.rjust(locale.format('%.0f', RODs[n], True), 10),
-            print S.rjust('%.1f' % (times[n]), 10),
-            print S.rjust('%.1f' % (fuel_useds[n]), 10),
-            print S.rjust('%.1f' % (dists[n]), 10),
-            print S.rjust('%3d' % (int(CASs[n])), 10)
+            print(S.rjust(locale.format('%.0f', RODs[n], True), 10), end=' ')
+            print(S.rjust('%.1f' % (times[n]), 10), end=' ')
+            print(S.rjust('%.1f' % (fuel_useds[n]), 10), end=' ')
+            print(S.rjust('%.1f' % (dists[n]), 10), end=' ')
+            print(S.rjust('%3d' % (int(CASs[n])), 10))
     elif output == 'latex':
         for n, alt in enumerate(alts):                    
             line = []
@@ -1002,8 +1002,8 @@ def descent_data(prop, weight=1600., alt_max=20000., fuel_units='USG', \
             line.append(str(locale.format('%.0f', times[n])))
             line.append(str(locale.format('%.1f', fuel_useds[n])))
             line.append(str(locale.format('%.0f', dists[n])))
-            print '&' + '&'.join(line) + '\\\\'
-            print '\\hline'
+            print('&' + '&'.join(line) + '\\\\')
+            print('\\hline')
     elif output == 'array':
         array = []
         for n, alt in enumerate(alts):
@@ -1039,18 +1039,18 @@ def cruise_data(prop, cruise_A=821.27884302, cruise_B=3.8201670757e-05,\
     cruise_ff = IO.pwr2ff(cruise_power, cruise_rpm, mixture=mixture)
     
     if output == 'raw':
-        print "Climb speed = %s and climb power = %s" % (climb_speed, climb_pwr)
-        print "Cruise power = %.0f and cruise fuel flow = %.2f" % (cruise_power, cruise_ff)
-        print S.center('Altitude', 10),
-        print S.center('TAS', 10),
-        print S.center('Range', 10),
-        print S.center('Fuel Flow', 10)
+        print("Climb speed = %s and climb power = %s" % (climb_speed, climb_pwr))
+        print("Cruise power = %.0f and cruise fuel flow = %.2f" % (cruise_power, cruise_ff))
+        print(S.center('Altitude', 10), end=' ')
+        print(S.center('TAS', 10), end=' ')
+        print(S.center('Range', 10), end=' ')
+        print(S.center('Fuel Flow', 10))
         
         
-        print S.center('(ft)', 10),
-        print S.center('(kt)', 10),
-        print S.center('(nm)', 10),
-        print S.center('(USG/h)', 10)
+        print(S.center('(ft)', 10), end=' ')
+        print(S.center('(kt)', 10), end=' ')
+        print(S.center('(nm)', 10), end=' ')
+        print(S.center('(USG/h)', 10))
     elif output == 'array':
         array = []
     elif output == 'data':
@@ -1058,11 +1058,11 @@ def cruise_data(prop, cruise_A=821.27884302, cruise_B=3.8201670757e-05,\
             angle_text = 'a descent angle of %s degrees' % descent_angle
         else:
             angle_text = 'a descent rate of %i ft/mn' % descent_ROD
-        print '# RV-8 Cruise Range Chart - Wheel Pants OFF'
-        print '# descent at %.0f KTAS and %s' % (descent_tas, angle_text)
-        print '# %i%% power with fuel flow of %.1f USG/hr' % (cruise_power / 2., cruise_ff)
-        print '# altitude  range'
-        print '# ft KTAS'
+        print('# RV-8 Cruise Range Chart - Wheel Pants OFF')
+        print('# descent at %.0f KTAS and %s' % (descent_tas, angle_text))
+        print('# %i%% power with fuel flow of %.1f USG/hr' % (cruise_power / 2., cruise_ff))
+        print('# altitude  range')
+        print('# ft KTAS')
         
     elif output == 'latex':
         line.append(str(locale.format('%.0f', calt, True)))
@@ -1081,11 +1081,11 @@ def cruise_data(prop, cruise_A=821.27884302, cruise_B=3.8201670757e-05,\
         total_time = ctime + cruise_time + dtime
 #        print "%5.0f %.1f %.1f %.1f %5.1f" %  (calt, cruise_tas, cruise_fuel, cruise_dist, total_dist)
         if output == 'raw':
-            print S.rjust(locale.format('%.0f', calt, True), 7),
-            print S.rjust('%.1f' % (cruise_tas), 10),
-            print S.rjust('%.1f' % (total_dist), 10),
-            print S.rjust('%.1f' % (cruise_ff), 10)
+            print(S.rjust(locale.format('%.0f', calt, True), 7), end=' ')
+            print(S.rjust('%.1f' % (cruise_tas), 10), end=' ')
+            print(S.rjust('%.1f' % (total_dist), 10), end=' ')
+            print(S.rjust('%.1f' % (cruise_ff), 10))
         elif output == 'data':
-            print '%.1f\t%.0f' % (total_dist, calt)
+            print('%.1f\t%.0f' % (total_dist, calt))
         
             
