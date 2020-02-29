@@ -27,13 +27,13 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.10, 26 Feb 2019
+# version 0.10, 26 Feb 2020
 #
 # Version History:
 # vers     date       Notes
 # 0.01   14 Jul 2009  First release.
 # 0.02   03 Jun 2010  Added BMEP and CR_corr functions
-# 0.10   26 Feb 2019  Added doctests.  Confirmed python3 compatibility
+# 0.10   26 Feb 2020  Added doctests.  Confirmed python3 compatibility
 # #############################################################################
 #
 # To Do: 1. 

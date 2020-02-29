@@ -27,25 +27,25 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.40, 26 Feb 2019
+# version 0.40, 26 Feb 2020
 #
 # Version History:
-# vers     date      Notes
-# 0.21   10 June 06  Started to add interactive mode
-# 0.22   10 July 06  Error correction in some default units
-# 0.23   07 Jan 07   Added several more interactive functions
-# 0.24   05 May 07   Reworked to use default units from default_units module.
-# 0.25   06 May 07   Added several more interactive functions
-# 0.26   12 May 07   Reworked the interactive mode to move common idioms to
-#                    functions
-# 0.27   16 May 07   Reworked to respect default units, to stay open after
-#                    running, and to save results between functions.
-#
-# 0.28   18 Nov 08   Add ioat2tas
-# 0.29   30 Jun 09   Python 3.0 compatibility
-# 0.30   11 Mar 11   Rework interactive mode to remember the last function used
-# 0.40   26 Feb 19   Python 3.7 compatibility tweaks
-# #############################################################################
+# vers     date        Notes
+# 0.21   10 Jun 2006   Started to add interactive mode
+# 0.22   10 Jul 2006   Error correction in some default units
+# 0.23   07 Jan 2007   Added several more interactive functions
+# 0.24   05 May 2007   Reworked to use default units from default_units module.
+# 0.25   06 May 2007   Added several more interactive functions
+# 0.26   12 May 2007   Reworked the interactive mode to move common idioms to
+#                      functions
+# 0.27   16 May 2007   Reworked to respect default units, to stay open after
+#                      running, and to save results between functions.
+#                 
+# 0.28   18 Nov 2008   Add ioat2tas
+# 0.29   30 Jun 2009   Python 3.0 compatibility
+# 0.30   11 Mar 2011   Rework interactive mode to remember the last function used
+# 0.40   26 Feb 2020   Python 3.7 compatibility tweaks
+# ##############20###############################################################
 #
 # To Do:  1. Add functions:
 #

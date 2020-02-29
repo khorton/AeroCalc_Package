@@ -27,35 +27,35 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.30, 26 Feb 2019
+# version 0.30, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-#  0.1   14 May 06  First release.
-#
-# 0.11   17 May 06  Cleaned up documentation.
-#
-# 0.12   24 May 06  Added temp2speed_of_sound function.
-#
-# 0.13   02 Jun 06  Added temp2isa and isa2temp functions.
-#
-# 0.14   22 Apr 07  Added density altitude vs temperature functions
-#
-# 0.15   29 Apr 07  Broke out sat_press and dry_press as public functions.
-#
-# 0.16   05 May 07  Reworked to use default units from default_units module.
-#
-# 0.17   04 May 08  Reworked pressure calculations to use all metric units for 
-#                   internal calculations.
-#
-# 0.18   19 Nov 08  Add temp2temp_ratio and alt_temp2density_ratio functions.
-#
-# 0.19   30 Jun 09  Python 3.0 compatible.  Tested with 2.5, 2.6 and 3.0.
-#
-# 0.20   18 Apr 10  Added dynamic and kinematic viscosity.
-#
-# 0.30   26 Feb 19  Python 3.7 compatibility tweaks
-# #############################################################################
+# vers     date       Notes
+#  0.1   14 May 2006  First release.
+#                 
+# 0.11   17 May 2006  Cleaned up documentation.
+#                 
+# 0.12   24 May 2006  Added temp2speed_of_sound function.
+#                 
+# 0.13   02 Jun 2006  Added temp2isa and isa2temp functions.
+#                 
+# 0.14   22 Apr 2007  Added density altitude vs temperature functions
+#                 
+# 0.15   29 Apr 2007  Broke out sat_press and dry_press as public functions.
+#                 
+# 0.16   05 May 2007  Reworked to use default units from default_units module.
+#                 
+# 0.17   04 May 2008  Reworked pressure calculations to use all metric units for 
+#                     internal calculations.
+#                 
+# 0.18   19 Nov 2008  Add temp2temp_ratio and alt_temp2density_ratio functions.
+#                 
+# 0.19   30 Jun 2009  Python 3.0 compatible.  Tested with 2.5, 2.6 and 3.0.
+#                 
+# 0.20   18 Apr 2010  Added dynamic and kinematic viscosity.
+#                 
+# 0.30   26 Feb 2020  Python 3.7 compatibility tweaks
+# ##############20###############################################################
 #
 # To Do: 1. Done.
 #

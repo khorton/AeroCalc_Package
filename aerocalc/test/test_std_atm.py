@@ -1,7 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# version 0.20, 30 Jun 09
+# version 0.30  28 Feb 2020
+
+# Ver   Date         Notes
+# 0.20  30 Jun 2009
+# 0.30  28 Feb 2020  Python 3 compatibility
+
 
 # % coverage.py -x test_std_atm.py
 # % coverage.py -r -m ../std_atm.py
@@ -135,18 +140,18 @@ class Test_temp2isa(unittest.TestCase):
     def test_01(self):
         Value = SA.temp2isa(25, 0)
         Truth = 10
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
         Value = SA.temp2isa(0, 10000, temp_units='F')
         Truth = -23.3384
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
         Value = SA.temp2isa(233.15, 10000, temp_units='K', alt_units='m'
                             )
         Truth = 10
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_isa2temp(unittest.TestCase):
@@ -154,17 +159,17 @@ class Test_isa2temp(unittest.TestCase):
     def test_01(self):
         Value = SA.isa2temp(25, 0)
         Truth = 40
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
         Value = SA.isa2temp(-10, 10000, temp_units='F')
         Truth = 13.3384
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
         Value = SA.isa2temp(10, 10000, temp_units='K', alt_units='m')
         Truth = 233.15
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_alt2press_ratio(unittest.TestCase):
@@ -179,7 +184,7 @@ class Test_alt2press_ratio(unittest.TestCase):
 
         Value = SA.alt2press_ratio(-1000)
         Truth = 2193.82 / 2116.22
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -187,7 +192,7 @@ class Test_alt2press_ratio(unittest.TestCase):
 
         Value = SA.alt2press_ratio(20000, alt_units='m')
         Truth = 5474.87 / 101325
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_alt2press(unittest.TestCase):
@@ -198,7 +203,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(5000)
         Truth = 24.8959
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
 
@@ -207,7 +212,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(49000, press_units='psf')
         Truth = 254.139
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -216,7 +221,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(25000, alt_units='m', press_units='pa')
         Truth = 2511.01
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_04(self):
 
@@ -226,7 +231,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(39750, press_units='pa', alt_units='m')
         Truth = 287.14
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_05(self):
 
@@ -235,7 +240,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(49610, press_units='pa', alt_units='m')
         Truth = 79.779
-        self.failUnless(RE(Value, Truth) <= 3e-5)
+        self.assertTrue(RE(Value, Truth) <= 3e-5)
 
     def test_06(self):
 
@@ -244,7 +249,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(65322, press_units='pa', alt_units='m')
         Truth = 9.4609
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
     def test_07(self):
 
@@ -254,7 +259,7 @@ class Test_alt2press(unittest.TestCase):
 
         Value = SA.alt2press(80956, press_units='pa', alt_units='m')
         Truth = 0.75009
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_08(self):
 
@@ -275,7 +280,7 @@ class Test_alt2density_ratio(unittest.TestCase):
 
         Value = SA.alt2density_ratio(8000)
         Truth = 0.06011 / 0.076474
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -284,7 +289,7 @@ class Test_alt2density_ratio(unittest.TestCase):
 
         Value = SA.alt2density_ratio(1999, alt_units='m')
         Truth = .82168
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
 
 class Test_alt_temp2density_ratio(unittest.TestCase):
@@ -299,7 +304,7 @@ class Test_alt_temp2density_ratio(unittest.TestCase):
 
         Value = SA.alt_temp2density_ratio(8000, -0.8496)
         Truth = 0.06011 / 0.076474
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -308,7 +313,7 @@ class Test_alt_temp2density_ratio(unittest.TestCase):
 
         Value = SA.alt_temp2density_ratio(1999, 275.1565, alt_units='m', temp_units='K')
         Truth = .82168
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
 
 class Test_alt2density(unittest.TestCase):
@@ -319,7 +324,7 @@ class Test_alt2density(unittest.TestCase):
 
         Value = SA.alt2density(8000)
         Truth = 0.06011
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
 
@@ -328,7 +333,7 @@ class Test_alt2density(unittest.TestCase):
 
         Value = SA.alt2density(49000)
         Truth = 0.012215
-        self.failUnless(RE(Value, Truth) <= 2e-5)
+        self.assertTrue(RE(Value, Truth) <= 2e-5)
 
     def test_03(self):
 
@@ -338,7 +343,7 @@ class Test_alt2density(unittest.TestCase):
         Value = SA.alt2density(25000, alt_units='m',
                                density_units='kg/m**3')
         Truth = 0.039466
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_04(self):
 
@@ -350,7 +355,7 @@ class Test_alt2density(unittest.TestCase):
                                alt_units='m')
 
         Truth = 3.9957e-3
-        self.failUnless(RE(Value, Truth) <= 3e-5)
+        self.assertTrue(RE(Value, Truth) <= 3e-5)
 
     def test_05(self):
 
@@ -360,7 +365,7 @@ class Test_alt2density(unittest.TestCase):
         Value = SA.alt2density(49610, density_units='kg/m**3',
                                alt_units='m')
         Truth = 1.0269e-3
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
     def test_06(self):
 
@@ -370,7 +375,7 @@ class Test_alt2density(unittest.TestCase):
         Value = SA.alt2density(65322, density_units='kg/m**3',
                                alt_units='m')
         Truth = 1.4296e-4
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
     def test_07(self):
 
@@ -381,7 +386,7 @@ class Test_alt2density(unittest.TestCase):
         Value = SA.alt2density(80956, density_units='kg/m**3',
                                alt_units='m')
         Truth = 1.3418e-5
-        self.failUnless(RE(Value, Truth) <= 3e-5)
+        self.assertTrue(RE(Value, Truth) <= 3e-5)
 
     def test_08(self):
 
@@ -399,7 +404,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(24.8959)
         Truth = 5000
-        self.failUnless(RE(Value, Truth) <= 2e-5)
+        self.assertTrue(RE(Value, Truth) <= 2e-5)
 
     def test_02(self):
 
@@ -407,7 +412,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(254.139, press_units='psf')
         Truth = 49000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -415,7 +420,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(2511.01, alt_units='m', press_units='pa')
         Truth = 25000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_04(self):
 
@@ -425,7 +430,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(287.14, press_units='pa', alt_units='m')
         Truth = 39750
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_05(self):
 
@@ -434,7 +439,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(79.779, press_units='pa', alt_units='m')
         Truth = 49610
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_06(self):
 
@@ -443,7 +448,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(9.4609, press_units='pa', alt_units='m')
         Truth = 65322
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_07(self):
 
@@ -452,7 +457,7 @@ class Test_press2alt(unittest.TestCase):
 
         Value = SA.press2alt(0.75009, press_units='pa', alt_units='m')
         Truth = 80956
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_08(self):
 
@@ -474,7 +479,7 @@ class Test_press_ratio2alt(unittest.TestCase):
 
         Value = SA.press_ratio2alt(22.225 / 29.9213)
         Truth = 8000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -482,7 +487,7 @@ class Test_press_ratio2alt(unittest.TestCase):
 
         Value = SA.press_ratio2alt(5474.87 / 101325, alt_units='m')
         Truth = 20000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_density2alt(unittest.TestCase):
@@ -493,7 +498,7 @@ class Test_density2alt(unittest.TestCase):
 
         Value = SA.density2alt(0.06011)
         Truth = 8000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
 
@@ -501,7 +506,7 @@ class Test_density2alt(unittest.TestCase):
 
         Value = SA.density2alt(0.012215)
         Truth = 49000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -510,7 +515,7 @@ class Test_density2alt(unittest.TestCase):
         Value = SA.density2alt(0.039466, alt_units='m',
                                density_units='kg/m**3')
         Truth = 25000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_04(self):
 
@@ -521,7 +526,7 @@ class Test_density2alt(unittest.TestCase):
         Value = SA.density2alt(5.36663e-3, density_units='kg/m**3',
                                alt_units='m')
         Truth = 37774
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_05(self):
 
@@ -531,7 +536,7 @@ class Test_density2alt(unittest.TestCase):
         Value = SA.density2alt(1.0269e-3, density_units='kg/m**3',
                                alt_units='m')
         Truth = 49610
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_06(self):
 
@@ -541,7 +546,7 @@ class Test_density2alt(unittest.TestCase):
         Value = SA.density2alt(1.4296e-4, density_units='kg/m**3',
                                alt_units='m')
         Truth = 65322
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_07(self):
 
@@ -551,7 +556,7 @@ class Test_density2alt(unittest.TestCase):
         Value = SA.density2alt(1.3418e-5, density_units='kg/m**3',
                                alt_units='m')
         Truth = 80956
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_08(self):
 
@@ -573,7 +578,7 @@ class Test_density_ratio2alt(unittest.TestCase):
 
         Value = SA.density_ratio2alt(0.78601648829428272)
         Truth = 8000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -581,7 +586,7 @@ class Test_density_ratio2alt(unittest.TestCase):
 
         Value = SA.density_ratio2alt(.088035 / 1.225, alt_units='m')
         Truth = 20000
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_density_alt(unittest.TestCase):
@@ -593,12 +598,12 @@ class Test_density_alt(unittest.TestCase):
     def test_02(self):
         Value = SA.density_alt(6000, 75, 29.8, temp_units='F')
         Truth = 8492
-        self.failUnless(RE(Value, Truth) <= 2e-5)
+        self.assertTrue(RE(Value, Truth) <= 2e-5)
 
     def test_03(self):
         Value = SA.density_alt(9080, 13, 1024)
         Truth = 10554
-        self.failUnless(RE(Value, Truth) <= 5e-5)
+        self.assertTrue(RE(Value, Truth) <= 5e-5)
 
     def test_04(self):
         Value = SA.density_alt(5000, 0, 29.5)
@@ -616,12 +621,12 @@ class Test_density_alt(unittest.TestCase):
 
         Value = SA.density_alt(7000, 75, 29.75, temp_units='F', DP=45)
         Truth = 9921
-        self.failUnless(RE(Value, Truth) <= 2e-4)
+        self.assertTrue(RE(Value, Truth) <= 2e-4)
 
     def test_07(self):
         Value = SA.density_alt(2000, 20, 999, 10, alt_units='m')
         Truth = 2829
-        self.failUnless(RE(Value, Truth) <= 2e-4)
+        self.assertTrue(RE(Value, Truth) <= 2e-4)
 
     def test_08(self):
 
@@ -630,7 +635,7 @@ class Test_density_alt(unittest.TestCase):
         Value = SA.density_alt(7500, 85, temp_units='F', RH=.8,
                                alt_setting=29.8)
         Truth = 11418
-        self.failUnless(RE(Value, Truth) <= 5e-4)
+        self.assertTrue(RE(Value, Truth) <= 5e-4)
 
     def test_09(self):
 
@@ -660,7 +665,7 @@ class Test_temp2speed_of_sound(unittest.TestCase):
 
         Value = SA.temp2speed_of_sound(SA.alt2temp(5000))
         Truth = 650.01
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_02(self):
 
@@ -670,7 +675,7 @@ class Test_temp2speed_of_sound(unittest.TestCase):
         Value = SA.temp2speed_of_sound(SA.alt2temp(8000),
                 speed_units='mph')
         Truth = 739.98
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -680,7 +685,7 @@ class Test_temp2speed_of_sound(unittest.TestCase):
         Value = SA.temp2speed_of_sound(SA.alt2temp(2000, alt_units='m',
                 temp_units='R'), speed_units='km/h', temp_units='R')
         Truth = 1197.1
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_04(self):
 
@@ -690,7 +695,7 @@ class Test_temp2speed_of_sound(unittest.TestCase):
         Value = SA.temp2speed_of_sound(SA.alt2temp(10000, alt_units='m'
                 ))
         Truth = 582.11
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
 
 class Test_pressure_alt(unittest.TestCase):
@@ -701,12 +706,12 @@ class Test_pressure_alt(unittest.TestCase):
 
         Value = SA.pressure_alt(0, 29.82)
         Truth = 93
-        self.failUnless(RE(Value, Truth) <= 1e-2)
+        self.assertTrue(RE(Value, Truth) <= 1e-2)
 
     def test_02(self):
         Value = SA.pressure_alt(1000, 996)
         Truth = 1474.38
-        self.failUnless(RE(Value, Truth) <= 1e-5)
+        self.assertTrue(RE(Value, Truth) <= 1e-5)
 
     def test_03(self):
 
@@ -753,7 +758,7 @@ class Test_sat_press(unittest.TestCase):
 
         Value = SA.sat_press(DP=212, temp_units='F', press_units='pa')
         Truth = 101325
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_06(self):
 
@@ -762,7 +767,7 @@ class Test_sat_press(unittest.TestCase):
         Value = SA.sat_press(DP=373.15, temp_units='K',
                              press_units='psi')
         Truth = 14.696
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_07(self):
 
@@ -776,7 +781,7 @@ class Test_sat_press(unittest.TestCase):
 
         Value = SA.sat_press(DP=32, temp_units='F', press_units='psi')
         Truth = 0.0885
-        self.failUnless(RE(Value, Truth) <= 1e-3)
+        self.assertTrue(RE(Value, Truth) <= 1e-3)
 
     def test_09(self):
 
@@ -784,7 +789,7 @@ class Test_sat_press(unittest.TestCase):
 
         Value = SA.sat_press(DP=20, temp_units='C', press_units='mm HG')
         Truth = 17.54
-        self.failUnless(RE(Value, Truth) <= 1e-3)
+        self.assertTrue(RE(Value, Truth) <= 1e-3)
 
 
 class Test_density_alt2temp(unittest.TestCase):
@@ -795,7 +800,7 @@ class Test_density_alt2temp(unittest.TestCase):
 
         Value = SA.density_alt2temp(5000, 3700, temp_units='F')
         Truth = 66.02
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_02(self):
 
@@ -803,7 +808,7 @@ class Test_density_alt2temp(unittest.TestCase):
 
         Value = SA.density_alt2temp(450, 1500, alt_units='m')
         Truth = -22
-        self.failUnless(RE(Value, Truth) <= 1e-3)
+        self.assertTrue(RE(Value, Truth) <= 1e-3)
 
 class Test_temp2dynamic_viscosity(unittest.TestCase):
 
@@ -813,7 +818,7 @@ class Test_temp2dynamic_viscosity(unittest.TestCase):
 
         Value = SA.temp2dynamic_viscosity(15, temp_units='C')
         Truth = 1.7894e-5
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_02(self):
 
@@ -821,7 +826,7 @@ class Test_temp2dynamic_viscosity(unittest.TestCase):
 
         Value = SA.temp2dynamic_viscosity(59, temp_units='F')
         Truth = 1.7894e-5
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
 class Test_alt2dynamic_viscosity(unittest.TestCase):
 
@@ -831,7 +836,7 @@ class Test_alt2dynamic_viscosity(unittest.TestCase):
 
         Value = SA.alt2dynamic_viscosity(-5000, alt_units='m')
         Truth = 1.9421e-5
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_02(self):
 
@@ -839,7 +844,7 @@ class Test_alt2dynamic_viscosity(unittest.TestCase):
 
         Value = SA.alt2dynamic_viscosity(84500, alt_units='m')
         Truth = 1.2575e-5
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
 
 # create test suites

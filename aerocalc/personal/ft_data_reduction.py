@@ -34,7 +34,7 @@ Performs various flight test data reduction functions.
 # version 0.30, 28 Feb 2020
 #
 # Version History:
-# vers     date     Notes
+# vers     date       Notes
 # 0.21   07 Sep 2013  Added climb performance data reduction functions
 # 0.30   28 Feb 2020  Python 3 compatibility
 ##############################################################################

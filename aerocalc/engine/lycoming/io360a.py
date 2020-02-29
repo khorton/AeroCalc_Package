@@ -24,7 +24,7 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# version 0.3, 26 Feb 2019
+# version 0.3, 26 Feb 2029
 
 # Version History:
 # vers     date       Notes
@@ -33,7 +33,7 @@
 #  0.2   16 May 2006  Corrected errors in examples.  Added percent power functions
 #                     pp, pp2mp and pp2rpm.  Changed pwr2mp and pwr2rpm functions 
 #                     to round off results to two decimal places.
-#  0.3   26 Feb 2019  Python3 compatibility tweaks
+#  0.3   26 Feb 2020  Python3 compatibility tweaks
 
 """ 
 Calculate Lycoming IO-360-A series horsepower.

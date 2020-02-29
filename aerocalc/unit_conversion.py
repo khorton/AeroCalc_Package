@@ -27,29 +27,29 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.29, 07 Sep 2013
+# version 0.30, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-#  0.1   14 May 06  First release. Only has the unit conversions needed
-#                   for the std_atm module:
-#                   temperature, pressure, length and density.
+# vers     date        Notes
+#  0.1   14 May 2006   First release. Only has the unit conversions needed
+#                      for the std_atm module:
+#                      temperature, pressure, length and density.
 #
-# 0.11              Added speed conversion
-# 0.20   06 May 07  Reworked to use default units from default_units module
-# 0.21   24 Mar 08  Added fuel temperature to avgas_conv
-# 0.22   25 Apr 08  Corrected error in unit validation in press_conv()
-# 0.23   11 May 08  Renamed wt_conv to mass_conv.
-# 0.24   29 Nov 08  Added inches of water to press_conv.
-# 0.25   07 Dec 08  Added mm and cm to length_conv.
-# 0.26   29 Jun 09  Added cm H20 to press_conv
-# 0.27   30 Jun 09  Made compatible with python 3.0.  Tested on python 2.5, 
-#                   2.6 and 3.0
-# 0.28   15 Apr 10  Rename len_conv to length_conv
-#                   Add viscosity conversions
-# 0.29   07 Sep 13  Add ft/mn to speed_conv
-# 0.30   26 Feb 19  Python 3.7 compatibility tweaks
-# #############################################################################
+# 0.11                 Added speed conversion
+# 0.20   06 May 2007  Reworked to use default units from default_units module
+# 0.21   24 Mar 2008  Added fuel temperature to avgas_conv
+# 0.22   25 Apr 2008  Corrected error in unit validation in press_conv()
+# 0.23   11 May 2008  Renamed wt_conv to mass_conv.
+# 0.24   29 Nov 2008  Added inches of water to press_conv.
+# 0.25   07 Dec 2008  Added mm and cm to length_conv.
+# 0.26   29 Jun 2009  Added cm H20 to press_conv
+# 0.27   30 Jun 2009  Made compatible with python 3.0.  Tested on python 2.5, 
+#                     2.6 and 3.0
+# 0.28   15 Apr 2010  Rename len_conv to length_conv
+#                     Add viscosity conversions
+# 0.29   07 Sep 2013  Add ft/mn to speed_conv
+# 0.30   26 Feb 2020  Python 3.7 compatibility tweaks
+# ###############################################################################
 
 """ 
 Convert between various units.

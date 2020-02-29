@@ -29,7 +29,7 @@
 # version 0.20, 28 Feb 2020
 #
 # Version History:
-# vers     date     Notes
+# vers   date         Notes
 # 0.10   11 Nov 2014  First public release.
 # 0.20   28 Feb 2020  Python 3 compatibility
 #

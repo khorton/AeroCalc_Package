@@ -20,7 +20,7 @@ import unit_conversion as U
 # version 0.2, 28 Feb 2020
 #
 # Version History:
-# vers     date      Notes
+# vers     date       Notes
 # 0.1    29 May 2009  Initial release
 # 0.2    28 Feb 2020  Python 3 compatibility
 # #############################################################################

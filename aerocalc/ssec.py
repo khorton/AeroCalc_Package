@@ -27,14 +27,14 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.20, 26 Feb 2019
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.10   25 Apr 08  First public release.
-# 0.11   27 Oct 08  Add tas2ssec
-# 0.12   01 Jun 09  Reworked tas2ssec to use USAF TPS method
-# 0.20   26 Feb 19   Python 3.7 compatibility tweaks
+# vers     date       Notes
+# 0.10   25 Apr 2008  First public release.
+# 0.11   27 Oct 2008  Add tas2ssec
+# 0.12   01 Jun 2009  Reworked tas2ssec to use USAF TPS method
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 #
 # #############################################################################
 #
