@@ -27,7 +27,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.30, 26 Feb 2020
+# version 0.31, 26 Apr 2020
 #
 # Version History:
 # vers     date        Notes
@@ -49,6 +49,7 @@
 #                     Add viscosity conversions
 # 0.29   07 Sep 2013  Add ft/mn to speed_conv
 # 0.30   26 Feb 2020  Python 3.7 compatibility tweaks
+# 0.31   26 Apr 2020  Added daN to force_conv
 # ###############################################################################
 
 """ 
@@ -178,17 +179,21 @@ def force_conv(F, from_units=default_weight_units,
 
     if from_units == 'N':
         pass
+    elif from_units == 'daN':
+        F *= 10
     elif from_units == 'lb':
         F *= 4.4482216
     else:
-        raise ValueError('from_units must be one of "lb" or "N".')
+        raise ValueError('from_units must be one of "lb", "N" or "daN".')
 
     if to_units == 'N':
         pass
+    elif to_units == 'daN':
+        F /= 10
     elif to_units == 'lb':
         F /= 4.4482216
     else:
-        raise ValueError('to_units must be one of "lb" or "N".')
+        raise ValueError('to_units must be one of "lb", "N" or "daN".')
 
     return F
 
