@@ -52,6 +52,8 @@
 #
 #                   Correct logic error that caused crash if using displacement = '540S' 
 #                   (or similar) to designate geared supercharged engines.
+#
+# 0.3    25 Jan 21  Revise iSFC() to handle any CR between 9 and 10
 # #############################################################################
 #
 # To Do: 1. Done
@@ -87,7 +89,7 @@ import math as M
                     # development.  this function has been commented out.
 
 
-def power(ff, ff_at_pk_EGT, rpm, CR=8.7, displacement=360, ff_units='USG/h', fric_power_factor=1):
+def iSFC(ff, ff_at_pk_EGT, rpm, CR=8.7, displacement=360, ff_units='USG/h', fric_power_factor=1):
     """
     Returns engine power, based on fuel flow data.  Based on an internal 
     Lycoming document, apparently for use during flight test programs.
@@ -359,11 +361,12 @@ def iSFC(CR, imep=150):
             return .4
         else:
             return 0.8016382542597682 + -0.0070362208555203 * imep + 0.0000397959939526 * imep**2 + -0.0000000716015877 * imep**3
-    elif CR == 10:
+
+    elif CR <= 10:
         if imep >= 140:
-            return .39
+            return .4 - ( CR - 9 ) * 0.01
         else:
-            return 0.8016382542597682 + -0.0070362208555203 * imep + 0.0000397959939526 * imep**2 + -0.0000000716015877 * imep**3 - 0.01
+            return 0.8016382542597682 + -0.0070362208555203 * imep + 0.0000397959939526 * imep**2 + -0.0000000716015877 * imep**3 - ( CR - 9 ) * 0.01
 
     else:
         print 'The compression ratio must be one of 6.75, 7, 7.2, 7.3, 8, 8.5, 8.7, 9 or 10'
