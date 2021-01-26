@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,12 +27,13 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.11, 30 Jun 2009
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.10   04 May 08  First public release.
-# 0.11   30 Jun 09  Python 3.0 compatibility
+# vers     date       Notes
+# 0.10   04 May 2008  First public release.
+# 0.11   30 Jun 2009  Python 3.0 compatibility
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 # #############################################################################
 
 """

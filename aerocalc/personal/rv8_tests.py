@@ -1,4 +1,4 @@
-#! /usr/bin/env python2.4
+#! /usr/bin/env python3
 
 import rv8_test as R
 import prop_map as PM

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,13 +27,14 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.11, 30 Jun 2009
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.10   04 May 08  First public release.
-# 0.11   30 Jun 09  Python 3.0 compatibility.  Removed from __future__ 
-#                   import division
+# vers     date       Notes
+# 0.10   04 May 2008  First public release.
+# 0.11   30 Jun 2009  Python 3.0 compatibility.  Removed from __future__ 
+#                     import division
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 # #############################################################################
 #
 # To Do:  1. Add doctests or unit tests for all functions.
@@ -46,6 +47,7 @@ Various functions related to lift coefficients.
 """
 
 import airspeed as A
+import std_atm as SA
 import unit_conversion as U
 import constants
 
@@ -157,7 +159,7 @@ def cas2cl(
     >>> Alt = 3000
     >>> cas2cl(CAS, Alt, W, S, load_factor = 2**0.5, speed_units='km/h',\
     alt_units='m', weight_units='kg', area_units='m**2') 
-    0.73578131117130885
+    0.7357813111713088
     
     """
 
@@ -176,6 +178,55 @@ def cas2cl(
     return Cl
 
 
+# ############################################################################
+#
+# mach2cl
+#
+# calculate lift coefficient, given mach
+#
+# ############################################################################
+
+def mach2cl(
+    mach,
+    altitude,
+    weight,
+    wing_area,
+    load_factor=1,
+    alt_units=default_alt_units,
+    weight_units=default_weight_units,
+    area_units=default_area_units,
+    ):
+    """
+    Returns the coefficient of lift, given equivalent mach, altitude, weight,
+    and wing area.
+    
+    Load factor is an optional input.  The load factor, if not provided, 
+    defaults to 1.
+    
+    Example:
+    if the wing area is 110 square feet,
+    altitude is 10,000 ft,
+    the weight is 1800 lb,
+    and the Mach number is 0.3 kt,
+    in straight and level flight (so the load factor = 1),
+    
+    then:
+    >>> Hp = 10000
+    >>> S = 110
+    >>> W = 1800
+    >>> Mach = 0.3
+    >>> mach2cl(Mach, Hp, W, S, weight_units='lb', area_units='ft**2')
+    0.17847495222708878
+    """
+    
+    P = SA.alt2press(altitude, alt_units=alt_units, press_units="pa")
+    wing_area=U.area_conv(wing_area, from_units=area_units, to_units="m**2")
+    weight=U.wt_conv(weight, from_units=weight_units, to_units="kg")
+    
+    Cl  = (weight * g * load_factor) / (0.7 * P * wing_area * mach**2)
+    
+    return Cl
+    
 # #############################################################################
 #
 # tas2cl

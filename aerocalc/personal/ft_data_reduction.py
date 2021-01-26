@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Performs various flight test data reduction functions.
@@ -31,11 +31,12 @@ Performs various flight test data reduction functions.
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##############################################################################
 #
-# version 0.21, 07 Sep 2013
+# version 0.30, 28 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.21   07 Sep 13  Added climb performance data reduction functions
+# vers     date       Notes
+# 0.21   07 Sep 2013  Added climb performance data reduction functions
+# 0.30   28 Feb 2020  Python 3 compatibility
 ##############################################################################
 #
 # To Do:  1.  Add functions:
@@ -66,7 +67,7 @@ Performs various flight test data reduction functions.
 
 ##############################################################################
 
-from __future__ import division
+
 import airspeed as A
 import math as M
 import std_atm as SA
@@ -219,7 +220,7 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
         oswald_eff = .86 #guess
         cd0 = 0.021 # guess
     else:
-        raise ValueError, 'invalid RV model'
+        raise ValueError('invalid RV model')
 
     # increased drag due to flaps based on XFoil calculations over a range of flap angles
     if flap <= 10:
@@ -236,9 +237,9 @@ def cl2cd(cl, rv = '8', flap = 0, wheel_pants = 1):
     cd0 += delta_cd0_flap
     
     if flap > 40:
-        raise ValueError, 'This function does not support flap angle other than 0 to 40'
+        raise ValueError('This function does not support flap angle other than 0 to 40')
     if flap < 0:
-        raise ValueError, 'This function does not support flap angle other than 0 to 40'
+        raise ValueError('This function does not support flap angle other than 0 to 40')
     
     if wheel_pants == 0:
     	  cd0 += 0.00155
@@ -729,15 +730,15 @@ def gps2tas(GS, TK, verbose = 0):
     if 2 < len(GS) < 5:
         pass
     else:
-        raise ValueError, 'GS must be a list of three or four items'
+        raise ValueError('GS must be a list of three or four items')
         
     if 2 < len(TK) < 5:
         pass
     else:
-        raise ValueError, 'TK must be a list of three or four items'
+        raise ValueError('TK must be a list of three or four items')
     
     if len(GS) != len(TK):
-        raise ValueError, 'The ground speed and track arrays must have the same number of elements.'
+        raise ValueError('The ground speed and track arrays must have the same number of elements.')
         
     if len(GS) == 3:
         result = gps2tas3(GS, TK, verbose)
@@ -784,7 +785,7 @@ def gps2tas(GS, TK, verbose = 0):
         elif verbose == 2:
             return ave_TAS, std_dev_TAS, ((results[0][1][0], results[0][1][1]),(results[1][1][0], results[1][1][1]),(results[2][1][0], results[2][1][1]),(results[3][1][0], results[3][1][1]))
         else:
-            raise ValueError, 'The value of verbose must be equal to 0, 1 or 2'
+            raise ValueError('The value of verbose must be equal to 0, 1 or 2')
 
 
 def gps2tas3(GS, TK, verbose=0):
@@ -838,7 +839,7 @@ def gps2tas3(GS, TK, verbose=0):
     elif verbose == 0:
         return TAS
     else:
-        raise ValueError, 'The value of verbose must be equal to 0, 1 or 2'
+        raise ValueError('The value of verbose must be equal to 0, 1 or 2')
 
 
 def gps_data_file2tas(data_file, header_rows, timeslices, gs_column_name, tk_column_name, sep = '\t', verbose = 0):
@@ -951,7 +952,7 @@ def _gt(verbose):
     gs_column = 43
     tk_column = 44
     
-    print gps_data_file2tas(data_file, header_rows, timeslices, gs_column, tk_column, verbose = verbose)
+    print(gps_data_file2tas(data_file, header_rows, timeslices, gs_column, tk_column, verbose = verbose))
     
 
 
@@ -1088,7 +1089,7 @@ def pwr_humid_corr(H, T, DP='FALSE', RH=0.0, alt_units="ft", temp_units='C',
         base_dry_press = SA.dry_press(H, base_water_press, 
                                       alt_units = alt_units)
     else:
-        raise ValueError, 'base must be either "FAR23" or "dry".'
+        raise ValueError('base must be either "FAR23" or "dry".')
 
     water_press = SA.sat_press(T=T, DP = DP, RH = RH, temp_units = temp_units)
     dry_press = SA.dry_press(H, water_press, alt_units = alt_units)
@@ -1419,6 +1420,14 @@ def climb_equivalent_altitude_reduction(Hp, T, RoC_observed, W, Ws, Ve, b, e=0.8
 #
 ##############################################################################
 # Add someday
+
+def wd2hp(W, wd, alt_units="ft"):
+    """Return pressure altitude for a given weight and W/delta"""
+    d = W/wd
+    hp = SA.press_ratio2alt(d, alt_units=alt_units)
+    
+    return hp
+
 
 if __name__ == "__main__":
     # run doctest to check the validity of the examples in the doc strings.

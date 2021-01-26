@@ -1,7 +1,15 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 """
 Example of how to use the o360a.py script to create a custom power chart.
+
+version 0.2, 28 Feb 2019
+
+# Version History:
+# vers     date       Notes
+#  0.1   14 May 2006  First release.
+#  0.2   28 Feb 2019  Python3 compatibility tweaks
+
 """
 
 import o360a as O
@@ -18,7 +26,7 @@ full_width = col1 + col2 + 12 * cols + 15
 diff = 0.75 # amount the MP must be less than the atmospheric pressure.  
             # otherwise it is assumed that full throttle is reached.
 
-print '-' * full_width
+print('-' * full_width)
 
 piece = []
 piece.append('Press.'.center(col1))
@@ -27,7 +35,7 @@ piece.append('100 HP -- 55% Rated'.center(cols * 4 + 3))
 piece.append('117 HP -- 65% Rated'.center(cols * 4 + 3))
 piece.append('135 HP -- 75% Rated'.center(cols * 4 + 3))
 full_line = '|'.join(piece)
-print '|' + full_line + '|'
+print('|' + full_line + '|')
 
 piece = []
 piece.append('Alt.'.center(col1))
@@ -36,7 +44,7 @@ piece.append('Approx. Fuel 7.8 Gal/Hr'.center(cols * 4 + 3))
 piece.append('Approx. Fuel 9 Gal/Hr.'.center(cols * 4 + 3))
 piece.append('Approx. Fuel 10.6 Gal/Hr'.center(cols * 4 + 3))
 full_line = '|'.join(piece)
-print '|' + full_line + '|'
+print('|' + full_line + '|')
 
 piece = []
 piece.append('1000'.center(col1))
@@ -45,7 +53,7 @@ piece.append(' '.center(cols * 4 + 3))
 piece.append(' '.center(cols * 4 + 3))
 piece.append(' '.center(cols * 4 + 3))
 full_line = '|'.join(piece)
-print '|' + full_line + '|'
+print('|' + full_line + '|')
 
 piece = []
 piece.append('Feet'.center(col1))
@@ -54,9 +62,9 @@ piece.append('RPM & Man. Press.'.center(cols * 4 + 3))
 piece.append('RPM & Man. Press.'.center(cols * 4 + 3))
 piece.append('RPM & Man. Press.'.center(cols * 4 + 3))
 full_line = '|'.join(piece)
-print '|' + full_line + '|'
+print('|' + full_line + '|')
 
-print '-' * full_width
+print('-' * full_width)
 
 piece = []
 piece.append(' '.center(col1))
@@ -74,7 +82,7 @@ piece.append('2300'.center(cols))
 piece.append('2400'.center(cols))
 piece.append('2500'.center(cols))
 full_line = '|'.join(piece)
-print '|' + full_line + '|'
+print('|' + full_line + '|')
 
 
 for alt in range(0, 16000, 1000):
@@ -110,7 +118,11 @@ for alt in range(0, 16000, 1000):
 			piece.append(str(round(mp,1)).center(col2))
 	
 	full_line = '|'.join(piece)
-	print '|' + full_line + '|'
+	print('|' + full_line + '|')
 
-print '-' * full_width
+print('-' * full_width)
 
+if __name__=='__main__':
+    # run doctest to check the validity of the examples in the doc strings.
+    import doctest, sys
+    doctest.testmod(sys.modules[__name__])

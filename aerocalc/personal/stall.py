@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # #############################################################################
 # Copyright (c) 2014, Kevin Horton
@@ -26,11 +26,12 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.10, 11 Nov 2014
+# version 0.20, 28 Feb 2020
 #
 # Version History:
-# vers     date     Notes
+# vers   date         Notes
 # 0.10   11 Nov 2014  First public release.
+# 0.20   28 Feb 2020  Python 3 compatibility
 #
 # #############################################################################
 #

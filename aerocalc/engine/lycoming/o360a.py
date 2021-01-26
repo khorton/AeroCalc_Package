@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 # Copyright (c) 2006, Kevin Horton
 # All rights reserved.
@@ -24,16 +24,16 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# version 0.2, 14 May 2006
+# version 0.3, 27 Feb 2020
 
 # Version History:
-# vers     date     Notes
-#  0.1   14 May 06  First release.
+# vers     date       Notes
+#  0.1   14 May 2006  First release.
 #
-#  0.2   16 May 06  Corrected errors in examples.  Added percent power functions
-#                   pp, pp2mp and pp2rpm.  Changed pwr2mp and pwr2rpm functions 
-#                   to round off results to two decimal places.
-
+#  0.2   16 May 2006  Corrected errors in examples.  Added percent power functions
+#                     pp, pp2mp and pp2rpm.  Changed pwr2mp and pwr2rpm functions 
+#                     to round off results to two decimal places.
+# 0.3    27 Feb 2020  Corrected errors in examples.  Confirmed compatibility with Python 3.7
 
 """ 
 Calculate Lycoming O-360-A series horsepower.
@@ -76,7 +76,7 @@ to 12" HG, so powers for rpms less than 2000 or manifold pressures less than
 # NOTES   1. Takes about 1.5e-5 sec per calculation on a 1.33 GHz PPC G4, so 
 #            this should be suitable for every record in the FT data.
 
-from __future__ import division
+
 import math as M
 import std_atm as SA
 import unit_conversion as U
@@ -261,7 +261,7 @@ def pwr(rpm, MP, altitude, temp  = 'std', alt_units = 'ft', temp_units = 'C'):
 	Determine power at 2620 rpm, 28 inches HG manifold pressure, 0 ft, 
 	and -10 deg C:
 	>>> pwr(2620, 28, 0, -10)
-	183.91485642478889
+	183.9148564247889
 	
 	Determine power at 2500 rpm, 25" MP, 5000 ft and 0 deg F:
 	>>> pwr(2500, 25, 5000, 0, temp_units = 'F')
@@ -325,12 +325,12 @@ def pp(rpm, MP, altitude, temp  = 'std', alt_units = 'ft', temp_units = 'C'):
 	
 	Determine power at 2200 rpm, 20" MP, 2000 metres and -5 deg C
 	>>> pp(2200, 20, 2000, -5, alt_units = 'm')
-	'54.30%'
+	'62.07%'
 	
 	Determine power at 2200 rpm, 20" MP, 2000 metres and standard 
 	temperature:
 	>>> pp(2200, 20, 2000, alt_units = 'm')
-	'62.07%'
+	'61.28%'
 	
 	"""
 	altitude = U.length_conv(altitude, from_units = alt_units, to_units = 'ft')
@@ -369,7 +369,7 @@ def pwr2mp(pwr_seek, rpm, altitude, temp = 'std', alt_units = 'ft', temp_units =
 	'17.06'
 	"""
 	if pwr_seek <= 0:
-		raise ValueError, 'Power input must be positive.'
+		raise ValueError('Power input must be positive.')
 	
 	low = 0 # initial lower guess
 	high = 35 # initial upper guess
@@ -383,11 +383,11 @@ def pwr2mp(pwr_seek, rpm, altitude, temp = 'std', alt_units = 'ft', temp_units =
 	# confirm initial low and high are OK:
 	pwr_low = pwr(rpm, low, altitude, temp)
 	if pwr_low > pwr_seek:
-		raise ValueError, 'Initial low guess too high.'
+		raise ValueError('Initial low guess too high.')
 	
 	pwr_high = pwr(rpm, high, altitude, temp)
 	if pwr_high < pwr_seek:
-		raise ValueError, 'Initial high guess too low.'
+		raise ValueError('Initial high guess too low.')
 	
 	guess = (low + high) / 2.
 	pwr_guess = pwr(rpm, guess, altitude, temp)
@@ -435,7 +435,7 @@ def pwr2rpm(pwr_seek, mp, altitude, temp = 'std', alt_units = 'ft', temp_units =
 	2219
 	"""
 	if pwr_seek <= 0:
-		raise ValueError, 'Power input must be positive.'
+		raise ValueError('Power input must be positive.')
 	
 	low = 1000 # initial lower guess
 	high = 3500 # initial upper guess
@@ -450,11 +450,11 @@ def pwr2rpm(pwr_seek, mp, altitude, temp = 'std', alt_units = 'ft', temp_units =
 	# confirm initial low and high are OK:
 	pwr_low = pwr(low, mp, altitude, temp)
 	if pwr_low > pwr_seek:
-		raise ValueError, 'Initial low guess too high.'
+		raise ValueError('Initial low guess too high.')
 	
 	pwr_high = pwr(high, mp, altitude, temp)
 	if pwr_high < pwr_seek:
-		raise ValueError, 'Initial high guess too low.'
+		raise ValueError('Initial high guess too low.')
 	
 	guess = (low + high) / 2.
 # 	print 'Guess is:', guess
@@ -495,12 +495,12 @@ def pp2mp(percent_power, rpm, altitude, temp = 'std', alt_units = 'ft', temp_uni
 	
 	
 	Determine manifold pressure required for 55% power at 2400 rpm at 
-	9,500 ft at standard temperature:
-	>>> pp2mp(55, 2400, 9500)
-	'17.06'
+	8,500 ft at standard temperature:
+	>>> pp2mp(55, 2400, 8500)
+	'17.26'
 	"""
 	if percent_power <= 0:
-		raise ValueError, 'Power input must be positive.'
+		raise ValueError('Power input must be positive.')
 	
 	# convert units
 	altitude = U.length_conv(altitude, from_units = alt_units, to_units = 'ft')
@@ -535,11 +535,11 @@ def pp2rpm(percent_power, mp, altitude, temp = 'std', alt_units = 'ft', temp_uni
 	
 	Determine rpm required for 55% power at at 18 inches HG manifold 
 	pressure at 9,500 ft at standard temperature:
-	>>> pp2rpm(55, 18, 9500)
-	2423
+	>>> pp2rpm(55, 18, 8500)
+	2219
 	"""
 	if percent_power <= 0:
-		raise ValueError, 'Power input must be positive.'
+		raise ValueError('Power input must be positive.')
 	
 	# convert units
 	altitude = U.length_conv(altitude, from_units = alt_units, to_units = 'ft')
@@ -549,7 +549,7 @@ def pp2rpm(percent_power, mp, altitude, temp = 'std', alt_units = 'ft', temp_uni
 
 	pwr_seek = percent_power * 1.8
 # 	print 'Temp:', temp
-	print 'Power seeked:', pwr_seek
+#	print('Power seeked:', pwr_seek)
 	rpm = pwr2rpm(pwr_seek, mp, altitude, temp)
 	
 	return rpm

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # #############################################################################
 # Copyright (c) 2008, Kevin Horton
@@ -26,25 +26,26 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.13, 30 Jun 2009
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date      Notes
-# 0.10   17 Mar 08   Initial version.
+# vers     date        Notes
+# 0.10   17 Mar 2008   Initial version.
 #
-# 0.11   25 Apr 08   Added ssec module (mostly empty yet)
-# 0.12   24 Nov 08   Added cd and cl modules.  Bug fixes in other modules.
-# 0.13   30 Jun 09   * Python 3.0 compatibility.  
-#                    * Added airspeed_p3k and val_input_p3k modules to address
-#                      aspects that had no easy solution that was compatible 
-#                      with both python 2.5 and python 3.0.
-#                    * Removed "from __future__ import division" statements 
-#                      from most files for python 3.0 compatibility (bug in
-#                      python 3.0 causes doctest failures in presence of
-#                      "from __future__ import division" statement).
-#                   * Added some meat to SSEC module
-#                   * Added interpolator module, with functions for linear
-#                     interpolation in one, two or three dimensions
+# 0.11   25 Apr 2008   Added ssec module (mostly empty yet)
+# 0.12   24 Nov 2008   Added cd and cl modules.  Bug fixes in other modules.
+# 0.13   30 Jun 2009   * Python 3.0 compatibility.  
+#                      * Added airspeed_p3k and val_input_p3k modules to address
+#                        aspects that had no easy solution that was compatible 
+#                        with both python 2.5 and python 3.0.
+#                      * Removed "from __future__ import division" statements 
+#                        from most files for python 3.0 compatibility (bug in
+#                        python 3.0 causes doctest failures in presence of
+#                        "from __future__ import division" statement).
+#                     * Added some meat to SSEC module
+#                     * Added interpolator module, with functions for linear
+#                       interpolation in one, two or three dimensions
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 #
 # #############################################################################
 #

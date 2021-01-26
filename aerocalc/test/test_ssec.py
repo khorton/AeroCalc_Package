@@ -1,7 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# version 0.15, 29 Apr 07
+# version 0.20, 28 Feb 2020
+
+# Ver   Date         Notes
+# 0.15  29 Apr 2007
+# 0.20  28 Feb 2020  Python 3 compatibility
+
 
 """ Test cases for ssec module.
 Run this script directly to do all the tests.
@@ -32,7 +37,7 @@ class Test_gps2tas(unittest.TestCase):
 
         Value = SS.gps2tas([178, 185, 188], [178, 82, 355])
         Truth = 183.05
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_02(self):
 
@@ -43,15 +48,15 @@ class Test_gps2tas(unittest.TestCase):
         TAS_Truth = 183.05
         WS_Truth = 5.26
         Dir_Truth = 194.5
-        self.failUnless(RE(TAS, TAS_Truth) <= 1e-4)
-        self.failUnless(RE(WS, WS_Truth) <= 1e-3)
-        self.failUnless(RE(Dir, Dir_Truth) <= 1e-4)
+        self.assertTrue(RE(TAS, TAS_Truth) <= 1e-4)
+        self.assertTrue(RE(WS, WS_Truth) <= 1e-3)
+        self.assertTrue(RE(Dir, Dir_Truth) <= 1e-4)
 
         # four legs, returning TAS only
 
         Value = SS.gps2tas([178, 185, 188, 184], [178, 82, 355, 265])
         Truth = 183.73
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_03(self):
 
@@ -65,12 +70,12 @@ class Test_gps2tas(unittest.TestCase):
         H0_T = 178.46
         H1_T = 83.52
         H2_T = 354.45
-        self.failUnless(RE(TAS, TAS_Truth) <= 1e-4)
-        self.failUnless(RE(WS, WS_Truth) <= 1e-3)
-        self.failUnless(RE(Dir, Dir_Truth) <= 1e-4)
-        self.failUnless(RE(H0, H0_T) <= 1e-4)
-        self.failUnless(RE(H1, H1_T) <= 1e-4)
-        self.failUnless(RE(H2, H2_T) <= 1e-4)
+        self.assertTrue(RE(TAS, TAS_Truth) <= 1e-4)
+        self.assertTrue(RE(WS, WS_Truth) <= 1e-3)
+        self.assertTrue(RE(Dir, Dir_Truth) <= 1e-4)
+        self.assertTrue(RE(H0, H0_T) <= 1e-4)
+        self.assertTrue(RE(H1, H1_T) <= 1e-4)
+        self.assertTrue(RE(H2, H2_T) <= 1e-4)
 
     def test_04(self):
 
@@ -78,7 +83,7 @@ class Test_gps2tas(unittest.TestCase):
 
         Value = SS.gps2tas([178, 185, 188, 184], [178, 82, 355, 265])
         Truth = 183.73
-        self.failUnless(RE(Value, Truth) <= 1e-4)
+        self.assertTrue(RE(Value, Truth) <= 1e-4)
 
     def test_05(self):
 
@@ -88,8 +93,8 @@ class Test_gps2tas(unittest.TestCase):
                                265], 1)
         TAS_Truth = 183.73
         SD_Truth = 0.827
-        self.failUnless(RE(TAS, TAS_Truth) <= 1e-4)
-        self.failUnless(RE(SD, SD_Truth) <= 1e-3)
+        self.assertTrue(RE(TAS, TAS_Truth) <= 1e-4)
+        self.assertTrue(RE(SD, SD_Truth) <= 1e-3)
 
     def test_06(self):
 
@@ -103,16 +108,16 @@ class Test_gps2tas(unittest.TestCase):
         (W1_T, D1_T) = (3.58, 181.52)
         (W2_T, D2_T) = (5.15, 162.7)
         (W3_T, D3_T) = (6.44, 177.95)
-        self.failUnless(RE(TAS, TAS_Truth) <= 1e-4)
-        self.failUnless(RE(SD, SD_Truth) <= 1e-3)
-        self.failUnless(RE(D0, D0_T) <= 1e-4)
-        self.failUnless(RE(D1, D1_T) <= 1e-4)
-        self.failUnless(RE(D2, D2_T) <= 1e-4)
-        self.failUnless(RE(D3, D3_T) <= 1e-4)
-        self.failUnless(RE(W0, W0_T) <= 1e-3)
-        self.failUnless(RE(W1, W1_T) <= 1e-3)
-        self.failUnless(RE(W2, W2_T) <= 1e-3)
-        self.failUnless(RE(W3, W3_T) <= 1e-3)
+        self.assertTrue(RE(TAS, TAS_Truth) <= 1e-4)
+        self.assertTrue(RE(SD, SD_Truth) <= 1e-3)
+        self.assertTrue(RE(D0, D0_T) <= 1e-4)
+        self.assertTrue(RE(D1, D1_T) <= 1e-4)
+        self.assertTrue(RE(D2, D2_T) <= 1e-4)
+        self.assertTrue(RE(D3, D3_T) <= 1e-4)
+        self.assertTrue(RE(W0, W0_T) <= 1e-3)
+        self.assertTrue(RE(W1, W1_T) <= 1e-3)
+        self.assertTrue(RE(W2, W2_T) <= 1e-3)
+        self.assertTrue(RE(W3, W3_T) <= 1e-3)
 
 
 # create test suites

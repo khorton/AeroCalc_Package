@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,28 +27,30 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.29, 07 Sep 2013
+# version 0.31, 26 Apr 2020
 #
 # Version History:
-# vers     date     Notes
-#  0.1   14 May 06  First release. Only has the unit conversions needed
-#                   for the std_atm module:
-#                   temperature, pressure, length and density.
+# vers     date        Notes
+#  0.1   14 May 2006   First release. Only has the unit conversions needed
+#                      for the std_atm module:
+#                      temperature, pressure, length and density.
 #
-# 0.11              Added speed conversion
-# 0.20   06 May 07  Reworked to use default units from default_units module
-# 0.21   24 Mar 08  Added fuel temperature to avgas_conv
-# 0.22   25 Apr 08  Corrected error in unit validation in press_conv()
-# 0.23   11 May 08  Renamed wt_conv to mass_conv.
-# 0.24   29 Nov 08  Added inches of water to press_conv.
-# 0.25   07 Dec 08  Added mm and cm to length_conv.
-# 0.26   29 Jun 09  Added cm H20 to press_conv
-# 0.27   30 Jun 09  Made compatible with python 3.0.  Tested on python 2.5, 
-#                   2.6 and 3.0
-# 0.28   15 Apr 10  Rename len_conv to length_conv
-#                   Add viscosity conversions
-# 0.29   07 Sep 13  Add ft/mn to speed_conv
-# #############################################################################
+# 0.11                 Added speed conversion
+# 0.20   06 May 2007  Reworked to use default units from default_units module
+# 0.21   24 Mar 2008  Added fuel temperature to avgas_conv
+# 0.22   25 Apr 2008  Corrected error in unit validation in press_conv()
+# 0.23   11 May 2008  Renamed wt_conv to mass_conv.
+# 0.24   29 Nov 2008  Added inches of water to press_conv.
+# 0.25   07 Dec 2008  Added mm and cm to length_conv.
+# 0.26   29 Jun 2009  Added cm H20 to press_conv
+# 0.27   30 Jun 2009  Made compatible with python 3.0.  Tested on python 2.5, 
+#                     2.6 and 3.0
+# 0.28   15 Apr 2010  Rename len_conv to length_conv
+#                     Add viscosity conversions
+# 0.29   07 Sep 2013  Add ft/mn to speed_conv
+# 0.30   26 Feb 2020  Python 3.7 compatibility tweaks
+# 0.31   26 Apr 2020  Added daN to force_conv
+# ###############################################################################
 
 """ 
 Convert between various units.
@@ -95,7 +97,7 @@ def area_conv(A, from_units=default_area_units,
 
     Convert 10 square metres to square inches:
     >>> area_conv(1000, from_units = 'm**2', to_units = 'in**2')
-    1550003.1000061999
+    1550003.1000062
     """
 
     if from_units == 'ft**2':
@@ -143,7 +145,7 @@ def density_conv(D, from_units, to_units):
     
     Convert 1.225 kg per metre cubed to lb per foot cubed:
     >>> density_conv(1.225, from_units = 'kg/m**3', to_units = 'lb/ft**3')
-    0.076474253491112101
+    0.0764742534911121
 
     """
 
@@ -177,17 +179,21 @@ def force_conv(F, from_units=default_weight_units,
 
     if from_units == 'N':
         pass
+    elif from_units == 'daN':
+        F *= 10
     elif from_units == 'lb':
         F *= 4.4482216
     else:
-        raise ValueError('from_units must be one of "lb" or "N".')
+        raise ValueError('from_units must be one of "lb", "N" or "daN".')
 
     if to_units == 'N':
         pass
+    elif to_units == 'daN':
+        F /= 10
     elif to_units == 'lb':
         F /= 4.4482216
     else:
-        raise ValueError('to_units must be one of "lb" or "N".')
+        raise ValueError('to_units must be one of "lb", "N" or "daN".')
 
     return F
 
@@ -212,11 +218,11 @@ def length_conv(L, from_units=default_length_units,
     Convert 1 nautical mile to feet, with feet already defined as the default
     units:
     >>> length_conv(1, from_units = 'nm')
-    6076.1154855643044
+    6076.115485564304
 
     Convert 1000 metres to kilometres:
     >>> length_conv(1000, from_units = 'm', to_units = 'km')
-    0.99999999999999989
+    0.9999999999999999
     """
 
     if from_units == 'ft':
@@ -325,11 +331,11 @@ def press_conv(P, from_units=default_press_units,
 
     Convert 29.9213 default pressure units to mm of HG:
     >>> press_conv(29.9213, to_units = 'mm HG')
-    760.00128931459176
+    760.0012893145918
     
     Convert 2116.22 lb per sq. ft to lb per sq. inch:
     >>> press_conv(2116.22, from_units = 'psf', to_units = 'psi')
-    14.695973160069311
+    14.695983817430996
     """
 
     if from_units == 'in HG':
@@ -452,7 +458,7 @@ def temp_conv(T, from_units=default_temp_units,
 
     Convert 59 deg F to deg K
     >>> temp_conv(59, from_units = 'F', to_units = 'K')
-    288.14999999999998
+    288.15
     """
 
     if from_units == 'C':
@@ -499,11 +505,11 @@ def vol_conv(V, from_units=default_vol_units,
     Convert 1 Imperial gallon to cubic feet, with cubic feet already defined 
     as the default units:
     >>> vol_conv(1, from_units = 'ImpGal')
-    0.16054365323600001
+    0.160543653236
 
     Convert 10 US gallon to litres:
     >>> vol_conv(10, from_units = 'USG', to_units = 'l')
-    37.854117840125852
+    37.85411784012585
     """
 
     if from_units == 'ft**3':
@@ -710,7 +716,7 @@ def dynamic_viscosity_conv(u, from_units=default_dynamic_viscosity_units, to_uni
     elif from_units == 'centipoise':
         u /= 1000.    
     else:
-        raise ValueError, 'Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".'
+        raise ValueError('Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".')
     
     if to_units == 'Pa s':
         pass
@@ -721,7 +727,7 @@ def dynamic_viscosity_conv(u, from_units=default_dynamic_viscosity_units, to_uni
     elif to_units == 'centipoise':
         u *= 1000. 
     else:
-        raise ValueError, 'Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".'
+        raise ValueError('Units must be one of"Pa s", "N s/m**2", "poise" or "centipoise".')
     
     return u
 
@@ -734,7 +740,7 @@ def kinematic_viscosity_conv(v, from_units=default_kinematic_viscosity_units, to
     elif from_units == 'centistokes':
         v /= 1000000.
     else:
-        raise ValueError, 'Units must be one of "m**2/s", "stokes" or "centistokes".'
+        raise ValueError('Units must be one of "m**2/s", "stokes" or "centistokes".')
 
     if to_units == 'm**2/s':
         pass
@@ -743,7 +749,7 @@ def kinematic_viscosity_conv(v, from_units=default_kinematic_viscosity_units, to
     elif to_units == 'centistokes':
         v *= 1000000.
     else:
-        raise ValueError, 'Units must be one of "m**2/s", "stokes" or "centistokes".'
+        raise ValueError('Units must be one of "m**2/s", "stokes" or "centistokes".')
 
 
     return v

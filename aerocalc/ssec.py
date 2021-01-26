@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # #############################################################################
@@ -27,13 +27,14 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # #############################################################################
 #
-# version 0.12, 01 Jun 2009
+# version 0.20, 26 Feb 2020
 #
 # Version History:
-# vers     date     Notes
-# 0.10   25 Apr 08  First public release.
-# 0.11   27 Oct 08  Add tas2ssec
-# 0.12   01 Jun 09  Reworked tas2ssec to use USAF TPS method
+# vers     date       Notes
+# 0.10   25 Apr 2008  First public release.
+# 0.11   27 Oct 2008  Add tas2ssec
+# 0.12   01 Jun 2009  Reworked tas2ssec to use USAF TPS method
+# 0.20   26 Feb 2020  Python 3.7 compatibility tweaks
 #
 # #############################################################################
 #
@@ -48,7 +49,7 @@
 """
 Various functions related to static source error correction.
 """
-from __future__ import division
+
 import airspeed as A
 import math as M
 import std_atm as SA
@@ -139,16 +140,15 @@ def gps2tas(GS, TK, verbose=0):
     if 2 < len(GS) < 5:
         pass
     else:
-        raise ValueError, 'GS must be a list of three or four items'
+        raise ValueError('GS must be a list of three or four items')
 
     if 2 < len(TK) < 5:
         pass
     else:
-        raise ValueError, 'TK must be a list of three or four items'
+        raise ValueError('TK must be a list of three or four items')
 
     if len(GS) != len(TK):
-        raise ValueError, \
-            'The ground speed and track arrays must have the same number of elements.'
+        raise ValueError('The ground speed and track arrays must have the same number of elements.')
 
     if len(GS) == 3:
         result = gps2tas3(GS, TK, verbose)
@@ -200,8 +200,7 @@ def gps2tas(GS, TK, verbose=0):
                     results[2][1][1]), (results[3][1][0],
                     results[3][1][1])))
         else:
-            raise ValueError, \
-                'The value of verbose must be equal to 0, 1 or 2'
+            raise ValueError('The value of verbose must be equal to 0, 1 or 2')
 
 
 def gps2tas3(GS, TK, verbose=0):
@@ -259,8 +258,7 @@ def gps2tas3(GS, TK, verbose=0):
     elif verbose == 0:
         return TAS
     else:
-        raise ValueError, \
-            'The value of verbose must be equal to 0, 1 or 2'
+        raise ValueError('The value of verbose must be equal to 0, 1 or 2')
 
 
 # #############################################################################
@@ -337,14 +335,14 @@ def tas2ssec2(tas, ind_alt, oat, ias, std_alt = 0, speed_units=default_speed_uni
     oat = U.temp_conv(oat, temp_units, 'C')
     M = A.tas2mach(tas, oat, temp_units='C', speed_units='kt')
     if M > 1:
-        raise ValueError, 'This method only works for Mach < 1'
+        raise ValueError('This method only works for Mach < 1')
     delta_ic = SA.alt2press_ratio(ind_alt, alt_units='ft')
     qcic_over_Psl = A.cas2dp(ias, speed_units='kt', press_units=press_units) / U.press_conv(constants.P0, 'pa', to_units=press_units)
     qcic_over_Ps = qcic_over_Psl / delta_ic
     Mic = A.dp_over_p2mach(qcic_over_Ps)
     delta_mach_pc = M - Mic
     if Mic > 1:
-        raise ValueError, 'This method only works for Mach < 1'
+        raise ValueError('This method only works for Mach < 1')
     deltaPp_over_Ps = (1.4 * delta_mach_pc * (Mic + delta_mach_pc / 2)) / (1 + 0.2 * (Mic + delta_mach_pc / 2 )**2)
     deltaPp_over_qcic = deltaPp_over_Ps / qcic_over_Ps
     delta_Hpc = SA.alt2temp_ratio(std_alt, alt_units='ft') * deltaPp_over_Ps / 3.61382e-5
