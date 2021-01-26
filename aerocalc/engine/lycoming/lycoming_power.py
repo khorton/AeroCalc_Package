@@ -111,7 +111,7 @@ import math as M
                     # development.  this function has been commented out.
 
 
-def iSFC(ff, ff_at_pk_EGT, rpm, CR=8.7, displacement=360, ff_units='USG/h', fric_power_factor=1):
+def power(ff, ff_at_pk_EGT, rpm, CR=8.7, displacement=360, ff_units='USG/h', fric_power_factor=1):
     """
     Returns engine power, based on fuel flow data.  Based on an internal 
     Lycoming document, apparently for use during flight test programs.
